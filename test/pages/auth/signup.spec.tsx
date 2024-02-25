@@ -1,8 +1,9 @@
 import {render} from '@testing-library/react'
 import SignUpPage from '../../../src/pages/auth/signup'
-import {SignUp} from '../../../src/templates/accounts'
+import {SignUp} from '../../../src/components/templates/auth'
 
-jest.mock('../../../src/templates/accounts/signup/SignUp')
+
+jest.mock('../../../src/components/templates/auth/signup/SignUp')
 
 describe('SignUp page test', () => {
   beforeEach(jest.clearAllMocks)

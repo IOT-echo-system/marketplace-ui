@@ -12,7 +12,7 @@ export type SiteStateType = {
 }
 export const initSiteState: SiteStateType = {
   theme: 'light',
-  title: 'Cloud'
+  title: 'SC Hobby center'
 }
 
 const siteReducer = (state: SiteStateType, action: TRootActions): SiteStateType => {

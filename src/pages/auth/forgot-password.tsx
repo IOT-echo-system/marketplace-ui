@@ -1,10 +1,10 @@
 import type {NextPage} from 'next'
 import React, {useState} from 'react'
-import {ResetPassword, VerifyOtp} from '../../templates/accounts'
 import {Config} from '../../config'
-import {CenteredContainer, Link} from '../../atoms'
 import {useMedia} from '../../hooks'
 import {Stack, Typography} from '@mui/material'
+import {CenteredContainer, Link} from '../../components/atoms'
+import {ResetPassword, VerifyOtp} from '../../components/templates/auth'
 
 const ForgotPasswordPage: NextPage = () => {
   const [otpVerified, setOtpVerified] = useState(false)
@@ -25,8 +25,8 @@ const ForgotPasswordPage: NextPage = () => {
         m={2}
       >
         <Stack direction={'row'} spacing={1} alignItems={'center'}>
-          <Typography>Already have an account?</Typography>
-          <Link href={Config.LOGIN_PAGE_PATH}>Login</Link>
+          <Typography>Don't have an account?</Typography>
+          <Link href={Config.SIGN_UP_PAGE_PATH}>Signup</Link>
         </Stack>
       </Stack>
     </CenteredContainer>

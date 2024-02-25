@@ -56,7 +56,7 @@ describe('Configure Store Test', () => {
     expect(container).toMatchSnapshot()
     expect(store!.state).toStrictEqual(rootState)
 
-    expect(store!.state.site.title).toStrictEqual('Cloud')
+    expect(store!.state.site.title).toStrictEqual('SC Hobby center')
     const site = siteBuilder({title: 'updated Title'})
     act(() => {
       store.dispatch({type: 'SITE_UPDATE_STATE', payload: {site}})

@@ -5,6 +5,6 @@ describe('useMedia hook test', () => {
   it('should get initial values', () => {
     const {result} = renderHook(useMedia)
 
-    expect(result.current).toStrictEqual({sm: false, md: false, lg: false, xl: false, xxl: false})
+    expect(result.current).toStrictEqual({sm: false, md: false, lg: false, xl: false})
   })
 })

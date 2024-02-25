@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StyledHeader Molecules test should match with the snapshot 1`] = `
+<div>
+  <div
+    class="css-1iz4iln"
+  />
+</div>
+`;
+
+exports[`StyledHeader Molecules test should match with the snapshot for FooterContainer 1`] = `
+<div>
+  <div
+    class="MuiStack-root css-1ytwu3c-MuiStack-root"
+  />
+</div>
+`;
+
+exports[`StyledHeader Molecules test should match with the snapshot for Search 1`] = `
+<div>
+  <div
+    class="css-96uuyl"
+  />
+</div>
+`;
+
+exports[`StyledHeader Molecules test should match with the snapshot for styled input base 1`] = `
+<div>
+  <div
+    class="MuiInputBase-root MuiInputBase-colorPrimary css-1mb3tsu-MuiInputBase-root"
+  >
+    <input
+      class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
+      type="text"
+      value=""
+    />
+  </div>
+</div>
+`;

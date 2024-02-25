@@ -1,4 +1,5 @@
 import type {Reducer} from 'react'
+import type {rootState, rootActions} from '../store'
 
 type ActionsMap<A> = {
   [K in keyof A]: A[K] extends Record<keyof A[K], (...arg: never[]) => infer R> ? R : never
