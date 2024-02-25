@@ -5,7 +5,6 @@ import * as UseLoginHooks from '../../../../../src/components/templates/auth/log
 import {Form} from '../../../../../src/components/molecules'
 import * as MediaHook from '../../../../../src/hooks/useMedia'
 
-
 jest.mock('../../../../../src/components/molecules/Form')
 jest.mock('../../../../../src/components/templates/auth/login/useLogin')
 jest.mock('../../../../../src/hooks/useMedia')

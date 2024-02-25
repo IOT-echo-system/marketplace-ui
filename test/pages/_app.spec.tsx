@@ -1,9 +1,7 @@
-import {act, render} from '@testing-library/react'
+import {render} from '@testing-library/react'
 
 import type {Router} from 'next/router'
 import App from '../../src/pages/_app'
-import type {AuthService} from '../../src/services'
-import * as AuthApiService from '../../src/services'
 
 jest.mock('../../src/services/authService')
 describe('_App page test', () => {
@@ -25,7 +23,7 @@ describe('_App page test', () => {
 
     expect(container).toMatchSnapshot()
   })
-/*
+  /*
   it('should match with the snapshot for authorized path', () => {
     const mockRouter = {asPath: '/', pathname: '/'} as unknown as Router
     const mockValidate = jest.fn().mockResolvedValue({userId: 'userId'})

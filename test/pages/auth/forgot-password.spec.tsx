@@ -33,7 +33,7 @@ describe('Forgot password page test', () => {
 
   it('should match with the snapshot if OTP verified', () => {
     mockUseState.mockReturnValue([true, jest.fn()])
-    jest.spyOn(MediaHook, 'useMedia').mockReturnValue({md: true, sm: true, xl: false,  lg: false})
+    jest.spyOn(MediaHook, 'useMedia').mockReturnValue({md: true, sm: true, xl: false, lg: false})
 
     const {container} = render(<ForgotPasswordPage />)
 
@@ -53,7 +53,7 @@ describe('Forgot password page test', () => {
 
   it('should match with the snapshot if OTP verified for mobile', () => {
     mockUseState.mockReturnValue([true, jest.fn()])
-    jest.spyOn(MediaHook, 'useMedia').mockReturnValue({md: false, sm: true, xl: false,  lg: false})
+    jest.spyOn(MediaHook, 'useMedia').mockReturnValue({md: false, sm: true, xl: false, lg: false})
 
     const {container} = render(<ForgotPasswordPage />)
 

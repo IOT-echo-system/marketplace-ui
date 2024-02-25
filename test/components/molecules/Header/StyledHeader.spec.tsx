@@ -1,5 +1,10 @@
 import {render} from '@testing-library/react'
-import {FooterContainer, Search, SearchIconWrapper, StyledInputBase} from '../../../../src/components/molecules/Header/StyledHeader'
+import {
+  FooterContainer,
+  Search,
+  SearchIconWrapper,
+  StyledInputBase
+} from '../../../../src/components/molecules/Header/StyledHeader'
 
 describe('StyledHeader Molecules test', () => {
   it('should match with the snapshot', () => {
