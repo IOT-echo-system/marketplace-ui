@@ -11,14 +11,14 @@ export const PageTemplate: React.FC<PageTemplatePropsType> = ({pageDetails}) => 
         const Component = widgets[content.widget as keyof typeof widgets]
         return <Component key={`content_${index}`} data={content.data} />
       })}
-      {pageDetails.mainContent.map((content, index) => {
-        const Component = widgets[content.widget as keyof typeof widgets]
-        return <Component key={`content_${index}`} data={content.data} />
-      })}
-      {pageDetails.ctaBanner.map((content, index) => {
-        const Component = widgets[content.widget as keyof typeof widgets]
-        return <Component key={`content_${index}`} data={content.data} />
-      })}
+      {/*{pageDetails.mainContent.map((content, index) => {*/}
+      {/*  const Component = widgets[content.widget as keyof typeof widgets]*/}
+      {/*  return <Component key={`content_${index}`} data={content.data} />*/}
+      {/*})}*/}
+      {/*{pageDetails.ctaBanner.map((content, index) => {*/}
+      {/*  const Component = widgets[content.widget as keyof typeof widgets]*/}
+      {/*  return <Component key={`content_${index}`} data={content.data} />*/}
+      {/*})}*/}
     </Stack>
   )
 }

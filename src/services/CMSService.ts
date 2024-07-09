@@ -4,17 +4,20 @@ import type {FooterInfo, MenuLink, SiteInfo, SiteStateType} from '../store/reduc
 import type {
   FooterResponse,
   MainMenuResponse,
+  OfficeLocationResponse,
+  PageDetails,
+  PageDetailsResponse,
   PageListResponse,
   PageSummaryResponse,
-  SiteInfoResponse,
-  OfficeLocationResponse,
-  ProductDetailsResponse
+  ProductDetailsResponse,
+  SiteInfoResponse
 } from './typing/CMSService'
 import type {LocationPropsType} from '../components/molecules'
 import type {ContactFormValuesType} from '../components/templates/ContactUs/useContactForm'
 import type {TRootState} from '../typing/store'
 import {rootState} from '../store'
-import {ProductDetails} from '../components/templates/products/Product'
+import type {ProductDetails} from '../components/templates/products/Product'
+import {HeaderComponentNameMap} from '../components/widgets/widgets'
 
 class CMSService_ {
   private readonly config = apiConfig
@@ -74,29 +77,29 @@ class CMSService_ {
     })
   }
 
-  // async getPageContent(slug: string): Promise<PageDetails> {
-  //   const response = await WebClient.get<PageDetailsResponse>({
-  //     baseUrl: this.config.baseUrl,
-  //     path: this.config.pageDetails,
-  //     uriVariables: {slug}
-  //   })
-  //   response.data[0]?.attributes?.ctaBanner.forEach(content => {
-  //     content.widget = CTABannerComponentNameMap[content.__component]
-  //     content.data = {...content}
-  //   })
-  //   response.data[0]?.attributes?.mainContent.forEach(content => {
-  //     content.widget = ComponentNameMap[content.__component]
-  //     content.data = {...content}
-  //   })
-  //   response.data[0]?.attributes?.header.forEach(content => {
-  //     content.widget = HeaderComponentNameMap[content.__component]
-  //     content.data = {...content}
-  //   })
-  //   if (response.data.length === 0) {
-  //     throw new Error('Data not found')
-  //   }
-  //   return response.data[0].attributes
-  // }
+  async getPageContent(slug: string): Promise<PageDetails> {
+    const response = await WebClient.get<PageDetailsResponse>({
+      baseUrl: this.config.baseUrl,
+      path: this.config.pageDetails,
+      uriVariables: {slug}
+    })
+    // response.data[0]?.attributes?.ctaBanner.forEach(content => {
+    //   content.widget = CTABannerComponentNameMap[content.__component]
+    //   content.data = {...content}
+    // })
+    // response.data[0]?.attributes?.mainContent.forEach(content => {
+    //   content.widget = ComponentNameMap[content.__component]
+    //   content.data = {...content}
+    // })
+    response.data[0]?.attributes?.header.forEach(content => {
+      content.widget = HeaderComponentNameMap[content.__component]
+      content.data = {...content}
+    })
+    if (response.data.length === 0) {
+      throw new Error('Data not found')
+    }
+    return response.data[0].attributes
+  }
 
   async getInitialValue(): Promise<TRootState> {
     return {site: await this.getSiteInfoWithHeaderAndFooter()}

@@ -1,17 +1,21 @@
-import type {GetServerSideProps, NextPage} from 'next'
+import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
 import {CMSService} from '../services'
+import type {PagePropsType} from './[page]'
+import Page from './[page]'
+import type {PageDetails} from '../services/typing/CMSService'
 
-const HomePage: NextPage = () => {
-  return <>Home page</>
+const HomePage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({pageDetails}) => {
+  return <Page pageDetails={pageDetails}/>
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps<PagePropsType> = async () => {
   try {
+    const pageDetails = await CMSService.getPageContent('index')
     const initialValue = await CMSService.getInitialValue()
-    return {props: {initialValue}}
+    return {props: {pageDetails, initialValue}}
   } catch (error) {
-    // const pageDetails: PageDetails = {ctaBanner: [], header: [], mainContent: [], seo: null, slug: ''}
-    return {props: {}}
+    const pageDetails: PageDetails = {ctaBanner: [], header: [], mainContent: [], seo: null, slug: ''}
+    return {props: {pageDetails}}
   }
 }
 

@@ -5,12 +5,9 @@ const TextContainer = styled('div')(({theme}) => ({
   fontSize: theme.spacing(2.5),
   lineHeight: theme.spacing(4),
   textAlign: 'justify',
-  margin: theme.spacing(2),
   '& > *': {
-    margin: theme.spacing(2, 0)
   },
   '& h1, & h2': {
-    margin: theme.spacing(4, 0, 2, 0),
     fontWeight: 500
   },
   '& h1': {
@@ -23,7 +20,7 @@ const TextContainer = styled('div')(({theme}) => ({
     color: theme.palette.primary.main
   },
   '& ul,& ol': {
-    marginLeft: theme.spacing(2)
+    marginLeft: theme.spacing(2.5)
   },
   '& table,& tbody,& thead,& tr,& th,& td': {
     border: `1px solid ${theme.palette.grey[300]}`,
@@ -31,9 +28,6 @@ const TextContainer = styled('div')(({theme}) => ({
     padding: theme.spacing(1)
   },
 
-  [theme.breakpoints.up('md')]: {
-    margin: theme.spacing(4)
-  }
 }))
 
 export type RTEPropsType = {rte: string}

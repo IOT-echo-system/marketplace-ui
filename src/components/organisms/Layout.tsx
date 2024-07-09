@@ -5,8 +5,9 @@ import {Header} from './Header'
 import {useMedia} from '../../hooks'
 import {Footer} from './Footer'
 
-const Container = styled(Stack)(() => ({
-  minHeight: '100vh'
+const Container = styled(Stack)(({theme}) => ({
+  minHeight: '100vh',
+  background: theme.palette.background.default
 }))
 
 export const Layout: React.FC<PropsWithChildren> = ({children}) => {
@@ -16,14 +17,14 @@ export const Layout: React.FC<PropsWithChildren> = ({children}) => {
     <Container justifyContent={'space-between'}>
       <Stack>
         <header>
-          <Header />
+          <Header/>
         </header>
         <main>
           <Stack mt={media.md ? 6 : 8}>{children}</Stack>
         </main>
       </Stack>
       <footer>
-        <Footer />
+        <Footer/>
       </footer>
     </Container>
   )

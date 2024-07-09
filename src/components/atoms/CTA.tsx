@@ -1,13 +1,13 @@
 import React from 'react'
 import {Button, Link} from './StyledComponents'
 
-export type CTAPropsType = {link: string; text: string; newTab: boolean}
+export type CTAPropsType = { link: string; label: string; }
 
-export const CTA: React.FC<{cta: CTAPropsType}> = ({cta}) => {
+export const CTA: React.FC<{ cta: CTAPropsType }> = ({cta}) => {
   return (
-    <Link href={cta.link} target={cta.newTab ? '_blank' : '_self'}>
+    <Link href={cta.link}>
       <Button variant={'contained'} size={'large'}>
-        {cta.text}
+        {cta.label}
       </Button>
     </Link>
   )

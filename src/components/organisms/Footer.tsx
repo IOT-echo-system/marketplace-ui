@@ -1,9 +1,11 @@
+import type {PropsWithChildren} from 'react'
 import React from 'react'
-import {Divider, Stack, styled, Typography} from '@mui/material'
-import {useMedia, useSelector} from '../../hooks'
+import {Divider, Fab, Stack, styled, Typography, useScrollTrigger, Zoom} from '@mui/material'
+import {useMedia, useScroll, useSelector} from '../../hooks'
 import {MenuItem} from '../atoms'
-import * as icons from '@mui/icons-material'
 import type {SvgIconComponent} from '@mui/icons-material'
+import * as icons from '@mui/icons-material'
+import {KeyboardArrowUp} from '@mui/icons-material'
 import Link from 'next/link'
 
 const Container = styled(Stack)(({theme}) => ({
@@ -17,6 +19,32 @@ const MenuContainer = styled(Stack)(({theme}) => ({
     borderTop: `1px solid ${theme.palette.background.default}`
   }
 }))
+
+const Scroll = styled('div')(({theme}) => ({
+  position: 'fixed',
+  bottom: theme.spacing(2),
+  right: theme.spacing(2)
+}))
+
+const ScrollTop: React.FC<PropsWithChildren> = ({children}) => {
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 100,
+    target: typeof window !== 'undefined' ? window : undefined
+  })
+  const {scroll} = useScroll()
+  const handleScroll = () => {
+    scroll()
+  }
+
+  return (
+    <Zoom in={trigger}>
+      <Scroll onClick={handleScroll} role="presentation">
+        {children}
+      </Scroll>
+    </Zoom>
+  )
+}
 
 export const Footer: React.FC = () => {
   const {sections, copyrights, social} = useSelector(state => state.site.footer)
@@ -32,15 +60,15 @@ export const Footer: React.FC = () => {
                 <strong>{title}</strong>
               </Typography>
               <Stack spacing={2} pl={2}>
-                {navLinks.map(({link, label, newTab}, index) => (
-                  <MenuItem key={`${link}-${index}`} link={link} label={label} newTab={newTab} />
+                {navLinks.map(({link, label}, index) => (
+                  <MenuItem key={`${link}-${index}`} link={link} label={label}/>
                 ))}
               </Stack>
             </MenuContainer>
           )
         })}
       </Stack>
-      {media.md && <Divider />}
+      {media.md && <Divider/>}
       {social.socials.length > 0 && (
         <Stack m={1} spacing={1}>
           <Stack direction={'row'} justifyContent={'center'}>
@@ -56,7 +84,7 @@ export const Footer: React.FC = () => {
               }
               return (
                 <Link href={link} key={`${link}-${index}`} aria-label={name}>
-                  <Icon fontSize={'medium'} />
+                  <Icon fontSize={'medium'}/>
                 </Link>
               )
             })}
@@ -66,6 +94,11 @@ export const Footer: React.FC = () => {
       <Stack direction={'row'} justifyContent={'center'} alignItems={'center'} m={1}>
         <Typography variant={'body2'}>{copyrights}</Typography>
       </Stack>
+      <ScrollTop>
+        <Fab color="primary" size="small" aria-label="scroll back to top">
+          <KeyboardArrowUp/>
+        </Fab>
+      </ScrollTop>
     </Container>
   )
 }
