@@ -17,14 +17,14 @@ export const Layout: React.FC<PropsWithChildren> = ({children}) => {
     <Container justifyContent={'space-between'}>
       <Stack>
         <header>
-          <Header/>
+          <Header />
         </header>
         <main>
           <Stack mt={media.md ? 6 : 8}>{children}</Stack>
         </main>
       </Stack>
       <footer>
-        <Footer/>
+        <Footer />
       </footer>
     </Container>
   )

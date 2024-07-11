@@ -1,4 +1,4 @@
-import {ProductDetails as ProductDetailsType} from '../Product'
+import type {ProductDetails as ProductDetailsType} from '../Product'
 import React from 'react'
 import {Stack} from '@mui/material'
 import {RTE} from '../../../molecules'

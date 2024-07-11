@@ -6,18 +6,18 @@ import {Loader} from '../components/atoms'
 import React from 'react'
 import {useRouter} from 'next/router'
 
-export type PagePropsType = { pageDetails: PageDetails }
+export type PagePropsType = {pageDetails: PageDetails}
 
 const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({pageDetails}) => {
   const router = useRouter()
   if (router.isFallback) {
-    return <Loader/>
+    return <Loader />
   }
 
   return (
     <>
       {/*<SEODetails seo={pageDetails.seo} />*/}
-      <PageTemplate pageDetails={pageDetails}/>
+      <PageTemplate pageDetails={pageDetails} />
     </>
   )
 }

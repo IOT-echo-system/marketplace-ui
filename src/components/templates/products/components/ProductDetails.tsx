@@ -2,12 +2,17 @@ import type {ProductDetails as ProductDetailsType} from '../Product'
 import React from 'react'
 import {Stack, Typography} from '@mui/material'
 import {Breadcrumb, RTE} from '../../../molecules'
+import {Price} from '../../../atoms'
 
-export const ProductDetails: React.FC<{ product: ProductDetailsType }> = ({product}) => {
+export const ProductDetails: React.FC<{product: ProductDetailsType}> = ({product}) => {
   return (
     <Stack spacing={2}>
       <Breadcrumb
-        links={product.categories.data.map(({attributes}) => ({link: attributes.link, label: attributes.name}))}/>
+        links={product.categories.data.map(({attributes}) => ({
+          link: `/categories/${attributes.link}`,
+          label: attributes.name
+        }))}
+      />
       <Typography variant={'h5'} component={'h1'}>
         {product.title}
       </Typography>
@@ -25,26 +30,20 @@ export const ProductDetails: React.FC<{ product: ProductDetailsType }> = ({produ
       </Stack>
       <Stack>
         <Typography sx={{color: 'success.main'}}>Special price</Typography>
-        <Stack direction={'row'} spacing={2} alignItems={'center'}>
-          <Typography variant={'h5'} component={'div'}>
-            ₹{product.price.toFixed(2)}
-          </Typography>
-          <Typography sx={{color: 'grey'}}>
-            <s>₹{(product.price + (product.price * 0.18)).toFixed(2)}</s>
-          </Typography>
-          <Typography sx={{color: 'success.main'}}>
-            18% off
-          </Typography>
-        </Stack>
+        <Price price={product.price} mrp={product.price * 1.18} />
         <Typography variant={'caption'}>(Excluding 18% GST)</Typography>
       </Stack>
       <Stack>
-        <Typography variant={'h5'} component={'h2'}>Description</Typography>
-        <RTE rte={product.description}/>
+        <Typography variant={'h5'} component={'h2'}>
+          Description
+        </Typography>
+        <RTE rte={product.description} />
       </Stack>
       <Stack>
-        <Typography variant={'h5'} component={'h2'}>Additional details</Typography>
-        <RTE rte={product.additionalDetails}/>
+        <Typography variant={'h5'} component={'h2'}>
+          Additional details
+        </Typography>
+        <RTE rte={product.additionalDetails} />
       </Stack>
     </Stack>
   )

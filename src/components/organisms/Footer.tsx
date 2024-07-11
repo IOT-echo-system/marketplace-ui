@@ -61,14 +61,14 @@ export const Footer: React.FC = () => {
               </Typography>
               <Stack spacing={2} pl={2}>
                 {navLinks.map(({link, label}, index) => (
-                  <MenuItem key={`${link}-${index}`} link={link} label={label}/>
+                  <MenuItem key={`${link}-${index}`} link={link} label={label} />
                 ))}
               </Stack>
             </MenuContainer>
           )
         })}
       </Stack>
-      {media.md && <Divider/>}
+      {media.md && <Divider />}
       {social.socials.length > 0 && (
         <Stack m={1} spacing={1}>
           <Stack direction={'row'} justifyContent={'center'}>
@@ -84,7 +84,7 @@ export const Footer: React.FC = () => {
               }
               return (
                 <Link href={link} key={`${link}-${index}`} aria-label={name}>
-                  <Icon fontSize={'medium'}/>
+                  <Icon fontSize={'medium'} />
                 </Link>
               )
             })}
@@ -96,7 +96,7 @@ export const Footer: React.FC = () => {
       </Stack>
       <ScrollTop>
         <Fab color="primary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUp/>
+          <KeyboardArrowUp />
         </Fab>
       </ScrollTop>
     </Container>

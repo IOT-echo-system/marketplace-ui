@@ -1,4 +1,4 @@
-export const useScroll = (selector?: string): { scroll: (currentSelector?: string) => void } => {
+export const useScroll = (selector?: string): {scroll: (currentSelector?: string) => void} => {
   const scroll = (currentSelector?: string) => {
     const querySelector = currentSelector ?? selector
     if (querySelector) {
@@ -10,4 +10,3 @@ export const useScroll = (selector?: string): { scroll: (currentSelector?: strin
   }
   return {scroll}
 }
-

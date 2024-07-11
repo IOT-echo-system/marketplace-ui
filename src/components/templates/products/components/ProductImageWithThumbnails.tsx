@@ -6,13 +6,13 @@ import {Image} from '../../../atoms'
 import theme from '../../../../theme/theme'
 import {useMedia} from '../../../../hooks'
 
-const ThumbnailContainer = styled(Stack)<StackProps & { active?: boolean }>(({theme, active}) => ({
+const ThumbnailContainer = styled(Stack)<StackProps & {active?: boolean}>(({theme, active}) => ({
   border: active ? `2px solid ${theme.palette.primary.main}` : `1px solid ${theme.palette.grey[400]}`,
   width: theme.spacing(7),
   padding: '2px'
 }))
 
-export const ProductImageWithThumbnails: React.FC<{ product: ProductDetails }> = ({product}) => {
+export const ProductImageWithThumbnails: React.FC<{product: ProductDetails}> = ({product}) => {
   const [currentImage, setCurrentImage] = useState(0)
   const media = useMedia()
 
@@ -21,20 +21,22 @@ export const ProductImageWithThumbnails: React.FC<{ product: ProductDetails }> =
   }
 
   return (
-    <Stack direction={media.xl ? 'column-reverse' : 'row'} spacing={2}
-           alignItems={media.md ? 'center' : 'start'}>
+    <Stack direction={media.xl ? 'column-reverse' : 'row'} spacing={2} alignItems={media.md ? 'center' : 'start'}>
       <Stack direction={media.xl ? 'row' : 'column'} flexWrap={'wrap'}>
         {product.images.map((image, index) => {
           return (
-            <ThumbnailContainer key={`image-${index}`} active={currentImage === index}
-                                onMouseOver={handleImageUpdate(index)}>
-              <Image image={image} width={'98%'}/>
+            <ThumbnailContainer
+              key={`image-${index}`}
+              active={currentImage === index}
+              onMouseOver={handleImageUpdate(index)}
+            >
+              <Image image={image} width={'98%'} />
             </ThumbnailContainer>
           )
         })}
       </Stack>
       <Stack border={`1px solid ${theme.palette.grey[400]}`} sx={{maxWidth: media.lg ? 360 : 540}}>
-        <Image image={product.images[currentImage]} width={'100%'}/>
+        <Image image={product.images[currentImage]} width={'100%'} />
       </Stack>
     </Stack>
   )

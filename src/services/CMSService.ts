@@ -2,6 +2,7 @@ import WebClient from 'web-client-starter'
 import {apiConfig} from '../config/apiConfig'
 import type {FooterInfo, MenuLink, SiteInfo, SiteStateType} from '../store/reducers/site'
 import type {
+  CategoryResponse,
   FooterResponse,
   MainMenuResponse,
   OfficeLocationResponse,
@@ -9,7 +10,7 @@ import type {
   PageDetailsResponse,
   PageListResponse,
   PageSummaryResponse,
-  ProductDetailsResponse,
+  ProductResponse,
   SiteInfoResponse
 } from './typing/CMSService'
 import type {LocationPropsType} from '../components/molecules'
@@ -24,9 +25,9 @@ class CMSService_ {
 
   async getSiteInfoWithHeaderAndFooter(): Promise<SiteStateType> {
     const siteInfo = await this.getSiteInfo()
-    const mainMenu = await this.getMainMenu()
+    // const mainMenu = await this.getMainMenu()
     // const footer = await this.getFooter()
-    return {siteInfo, header: {menus: mainMenu}, footer: rootState.site.footer}
+    return {siteInfo, header: {menus: []}, footer: rootState.site.footer}
   }
 
   async getSiteInfo(): Promise<SiteInfo> {
@@ -106,12 +107,28 @@ class CMSService_ {
   }
 
   async getProductDetails(productSlug: string): Promise<ProductDetails> {
-    const response = await WebClient.get<ProductDetailsResponse>({
+    const response = await WebClient.get<ProductResponse>({
       baseUrl: this.config.baseUrl,
       path: this.config.productDetails,
       uriVariables: {productSlug}
     })
     return response.data[0].attributes
+  }
+
+  async getProductsByCategory(category: string, page: number): Promise<ProductResponse> {
+    return WebClient.get<ProductResponse>({
+      baseUrl: this.config.baseUrl,
+      path: this.config.productsSummary,
+      uriVariables: {category, page, pageSize: 36}
+    })
+  }
+
+  async getCategory(category: string): Promise<CategoryResponse> {
+    return WebClient.get<CategoryResponse>({
+      baseUrl: this.config.baseUrl,
+      path: this.config.category,
+      uriVariables: {category}
+    })
   }
 }
 

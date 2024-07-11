@@ -11,17 +11,26 @@ export const BoxedContainer = styled(Stack)(({theme}) => ({
   },
   [theme.breakpoints.down('md')]: {
     width: '95%'
-  },
+  }
 }))
 
-export const Link = styled(LinkComponent)<LinkProps & { disableUnderline?: 'true' | 'false' }>(
-  ({theme, disableUnderline}) => ({
-    textDecoration: disableUnderline !== 'true' ? 'underline' : 'none',
-    ['&:hover']: {
-      color: theme.palette.primary.dark
-    }
-  })
-)
+export const WiderBoxedContainer = styled(Stack)(({theme}) => ({
+  margin: 'auto',
+  width: '90%',
+  [theme.breakpoints.down('lg')]: {
+    width: '95%'
+  },
+  [theme.breakpoints.down('md')]: {
+    width: '98%'
+  }
+}))
+
+export const Link = styled(LinkComponent)<LinkProps & {underline?: 'true' | 'false'}>(({theme, underline}) => ({
+  textDecoration: underline === 'true' ? 'underline' : 'none',
+  ['&:hover']: {
+    color: theme.palette.primary.dark
+  }
+}))
 
 export const Button = styled(LoadingButton)(({theme}) => ({
   textTransform: 'initial',

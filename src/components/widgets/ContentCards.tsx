@@ -1,10 +1,9 @@
 import React from 'react'
 import type {WidgetPropType} from './widget'
-import {Button, Card, CardActions, CardContent, CardMedia, Stack, styled, Typography} from '@mui/material'
+import {Button, Card, CardActions, CardContent, Stack, styled, Typography} from '@mui/material'
 import type {ImageType} from '../atoms'
 import {BoxedContainer} from '../atoms'
 import {useMedia} from '../../hooks'
-import {apiConfig} from '../../config/apiConfig'
 
 const Container = styled(Stack)(({theme}) => ({
   justifyContent: 'center',
@@ -49,12 +48,12 @@ export const ContentCards: React.FC<WidgetPropType<ContentCardsPropsType>> = ({d
                 key={`card_${index}`}
                 sx={{margin: 2, minWidth: 320, width: media.md ? 'calc(100% - 32px)' : cardWidth}}
               >
-                <CardMedia
-                  component="img"
-                  alt={card.title}
-                  height={media.md ? '180' : '220'}
-                  image={apiConfig.assets + card.image.data?.attributes.formats.small.url}
-                />
+                {/*<CardMedia*/}
+                {/*  component="img"*/}
+                {/*  alt={card.title}*/}
+                {/*  height={media.md ? '180' : '220'}*/}
+                {/*  image={apiConfig.assets + card.image.data?.attributes.formats.small.url}*/}
+                {/*/>*/}
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
                     {card.title}

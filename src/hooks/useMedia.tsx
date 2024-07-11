@@ -1,7 +1,7 @@
 import {useMediaQuery} from '@mui/material'
 import theme from '../theme/theme'
 
-type UseMediaReturnType = { [P in 'sm' | 'md' | 'lg' | 'xl']: boolean }
+type UseMediaReturnType = {[P in 'sm' | 'md' | 'lg' | 'xl']: boolean}
 
 export const useMedia = (): UseMediaReturnType => {
   return {

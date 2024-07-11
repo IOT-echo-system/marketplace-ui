@@ -5,7 +5,7 @@ import Page from './[page]'
 import type {PageDetails} from '../services/typing/CMSService'
 
 const HomePage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({pageDetails}) => {
-  return <Page pageDetails={pageDetails}/>
+  return <Page pageDetails={pageDetails} />
 }
 
 export const getServerSideProps: GetServerSideProps<PagePropsType> = async () => {

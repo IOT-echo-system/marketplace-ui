@@ -1,22 +1,23 @@
 import type {GetServerSideProps, NextPage} from 'next'
-import {formatDate} from '../utils/utils'
-import {CMSService} from '../services'
 
 const Sitemap: NextPage = () => null
 export default Sitemap
+// eslint-disable-next-line @typescript-eslint/require-await
 const generateSiteMap = async (): Promise<string> => {
-  const site = await CMSService.getSiteInfo()
-  const pageList = await CMSService.getPageList()
-  const urls = pageList.map(page => {
-    return `<url>
-                <loc>${site.seo.hostname ?? ''}/${page.slug}</loc>
-                <lastmod>${formatDate(new Date(page.updatedAt), 'YYYY-MM-DD')}</lastmod>
-            </url>`
-  })
-  return `<?xml version="1.0" encoding="UTF-8"?>
-            <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-              ${urls.join('')}
-          </urlset>`
+  // const site = await CMSService.getSiteInfo()
+  // const pageList = await CMSService.getPageList()
+  // const urls = pageList.map(page => {
+  //   return `<url>
+  //               <loc>${site.seo?.hostname ?? ''}/${page.slug}</loc>
+  //               <lastmod>${formatDate(new Date(page.updatedAt), 'YYYY-MM-DD')}</lastmod>
+  //           </url>`
+  // })
+
+  // return `<?xml version="1.0" encoding="UTF-8"?>
+  //           <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  //             ${urls.join('')}
+  //         </urlset>`
+  return ''
 }
 
 export const getServerSideProps: GetServerSideProps<Record<string, unknown>> = async ctx => {
