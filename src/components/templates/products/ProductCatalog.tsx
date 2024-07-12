@@ -20,7 +20,7 @@ export const ProductCatalog: React.FC<ProductCatalogPropsType> = ({products, cat
           <CategoryFilter category={category.category} tree={category.tree} />
         )}
       </Stack>
-      <Stack spacing={2} alignItems={'center'} width={'100%'} pt={media.md ? 2.5 : 0}>
+      <Stack spacing={2} alignItems={'center'} width={'100%'} pt={media.md ? 5 : 0}>
         <Stack p={media.sm ? 1 : 2} bgcolor={'background.paper'} width={'100%'} spacing={2}>
           <ProductCatalogHeader title={category.category.name} pagination={products.meta.pagination} />
           <Stack

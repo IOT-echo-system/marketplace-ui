@@ -1,12 +1,14 @@
 import type {ProductDetails} from '../templates/products/Product'
-import {Button, Price} from '../atoms'
+import {Price} from '../atoms'
 import {
+  Button,
   ButtonGroup,
   Card,
   CardActions,
   CardContent,
   CardMedia,
   type CardProps,
+  Divider,
   Stack,
   styled,
   Typography
@@ -67,9 +69,16 @@ export const ProductCard: React.FC<ProductDetails> = attributes => {
           variant={'contained'}
           sx={{'& button': {borderRadius: 0, zIndex: 1}, borderRadius: 1, zIndex: 2, overflow: 'hidden'}}
         >
-          <Button size={'small'} sx={{padding: 0}} startIcon={<ShoppingCart />} variant={'contained'} fullWidth>
+          <Button
+            size={'small'}
+            sx={{padding: 0, textTransform: 'inherit'}}
+            startIcon={<ShoppingCart />}
+            variant={'contained'}
+            fullWidth
+          >
             Add to cart
           </Button>
+          <Divider orientation={'vertical'} />
           <Button
             size={'small'}
             startIcon={<FavoriteBorder />}

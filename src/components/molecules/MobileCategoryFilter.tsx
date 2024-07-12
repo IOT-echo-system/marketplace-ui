@@ -16,10 +16,10 @@ const Container = styled(Stack)<StackProps>(({theme}) => ({
   width: '100%',
   top: theme.spacing(8),
   [`@media (max-width:${ScreenWidth.TABLET - 0.05}px)`]: {
-    top: theme.spacing(14)
+    top: theme.spacing(11)
   },
   [theme.breakpoints.down('sm')]: {
-    top: theme.spacing(13)
+    top: theme.spacing(11)
   },
   background: theme.palette.background.paper,
   zIndex: 3,

@@ -1,55 +1,27 @@
 import * as React from 'react'
-import {alpha, AppBar, Badge, Box, IconButton, InputBase, styled, Toolbar, Typography} from '@mui/material'
-import {AccountCircle, Menu as MenuIcon, Search as SearchIcon, ShoppingCart} from '@mui/icons-material'
-import {WiderBoxedContainer} from '../atoms'
+import {AppBar, Badge, Box, IconButton, Stack, Toolbar, Typography} from '@mui/material'
+import {AccountCircle, FavoriteBorder, Menu as MenuIcon, ShoppingCart} from '@mui/icons-material'
+import {SearchBox, WiderBoxedContainer} from '../atoms'
 import {useMedia, useSelector} from '../../hooks'
 
-const Search = styled('div')(({theme}) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25)
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto'
-  },
-  [theme.breakpoints.up('md')]: {
-    width: theme.spacing(54)
-  },
-  [theme.breakpoints.up('lg')]: {
-    width: theme.spacing(80)
-  }
-}))
-
-const SearchIconWrapper = styled('div')(({theme}) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-}))
-
-const StyledInputBase = styled(InputBase)(({theme}) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch'
-    }
-  }
-}))
-
 type SiteHeaderPropsType = {toggleDrawer: () => void}
+
+const WishlistAndCartIcons: React.FC<{size?: 'small' | 'large'}> = ({size}) => {
+  return (
+    <Stack direction={'row'}>
+      <IconButton color="inherit" size={size ?? 'medium'}>
+        <Badge color="error">
+          <FavoriteBorder fontSize={size ?? 'medium'} />
+        </Badge>
+      </IconButton>
+      <IconButton color="inherit" size={size ?? 'medium'}>
+        <Badge color="error">
+          <ShoppingCart fontSize={size ?? 'medium'} />
+        </Badge>
+      </IconButton>
+    </Stack>
+  )
+}
 
 export const SiteHeader: React.FC<SiteHeaderPropsType> = ({toggleDrawer}) => {
   const {siteInfo} = useSelector(state => state.site)
@@ -59,44 +31,43 @@ export const SiteHeader: React.FC<SiteHeaderPropsType> = ({toggleDrawer}) => {
     <Box sx={{flexGrow: 1}} width={'100%'}>
       <AppBar position="static">
         <WiderBoxedContainer>
-          <Toolbar>
+          <Toolbar
+            variant={media.tablet ? 'dense' : 'regular'}
+            sx={{
+              padding: 0,
+              width: `calc(100% + ${media.sm ? -12 : media.tablet ? 36 : 48}px)`,
+              marginLeft: `${media.sm ? 0 : -(media.tablet ? 18 : 24)}px`
+            }}
+          >
             {media.laptop && (
-              <IconButton size="large" edge="start" color="inherit" onClick={toggleDrawer}>
-                <MenuIcon />
+              <IconButton size={media.tablet ? 'small' : 'large'} edge="start" color="inherit" onClick={toggleDrawer}>
+                <MenuIcon fontSize={media.tablet ? 'small' : 'large'} />
               </IconButton>
             )}
-            <Typography variant="h6" noWrap component="div">
+            <Typography
+              variant={media.tablet ? 'subtitle1' : 'h6'}
+              noWrap
+              component="div"
+              ml={media.sm ? 1 : media.laptop ? 2 : 0}
+            >
               {siteInfo.title}
             </Typography>
             <Box sx={{flexGrow: 1}} />
-            {!media.tablet && (
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase placeholder="Search…" inputProps={{'aria-label': 'search'}} />
-              </Search>
-            )}
+            {!media.tablet && <SearchBox />}
             <Box sx={{flexGrow: 1}} />
-            <Box>
-              <IconButton color="inherit">
-                <Badge color="error">
-                  <ShoppingCart />
-                </Badge>
-              </IconButton>
+            <Stack direction={'row'}>
+              {!media.sm && <WishlistAndCartIcons />}
               <IconButton edge="end" color="inherit">
                 <AccountCircle />
               </IconButton>
-            </Box>
+            </Stack>
           </Toolbar>
           {media.tablet && (
-            <WiderBoxedContainer pb={1}>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase placeholder="Search…" inputProps={{'aria-label': 'search'}} />
-              </Search>
+            <WiderBoxedContainer pb={1} direction={'row'}>
+              <Stack width={'100%'}>
+                <SearchBox size={'small'} />
+              </Stack>
+              {media.sm && <WishlistAndCartIcons size={'small'} />}
             </WiderBoxedContainer>
           )}
         </WiderBoxedContainer>

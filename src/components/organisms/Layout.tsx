@@ -14,16 +14,16 @@ const Container = styled(Stack)(({theme}) => ({
 export const Layout: React.FC<PropsWithChildren> = ({children}) => {
   const media = useMedia()
   const getMt = () => {
-    if (media.sm) {
-      return 12
+    if (media.sm || media.tablet) {
+      return 9
     }
-    if (media.tablet) {
-      return 14
+    if (media.md) {
+      return 6
     }
-    if (media.md || media.laptop) {
+    if (media.laptop) {
       return 8
     }
-    return 15
+    return 12
   }
 
   return (
