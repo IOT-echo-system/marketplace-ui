@@ -6,7 +6,7 @@ import type {ProductDetails} from '../../components/templates/products/Product'
 
 export type MetaResponseType = {pagination: {page: number; pageSize: number; pageCount: number; total: number}}
 export type SiteInfoResponse = {data: {attributes: SiteInfo}}
-export type MainMenuResponse = {data: {attributes: {menuItems: MenuLink[]}}}
+export type MainMenuResponse = MenuLink & {children: MenuLink[]}
 export type FooterResponse = {data: {attributes: FooterInfo}}
 export type OfficeLocationResponse = {data: {attributes: LocationPropsType}}
 export type PageSummaryResponse = {slug: string; updatedAt: Date}

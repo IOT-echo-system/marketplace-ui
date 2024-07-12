@@ -57,7 +57,7 @@ export const ProductCard: React.FC<ProductDetails> = attributes => {
           <Typography className={'four-line-truncate'} gutterBottom variant="subtitle1" component="div">
             {attributes.title}
           </Typography>
-          <Price price={attributes.price} mrp={attributes.price * 1.18} size={'small'}/>
+          <Price price={attributes.price} mrp={attributes.price * 1.18} size={'small'} />
         </CardContent>
       </Stack>
       <CardActions>
@@ -67,12 +67,12 @@ export const ProductCard: React.FC<ProductDetails> = attributes => {
           variant={'contained'}
           sx={{'& button': {borderRadius: 0, zIndex: 1}, borderRadius: 1, zIndex: 2, overflow: 'hidden'}}
         >
-          <Button size={'small'} sx={{padding: 0}} startIcon={<ShoppingCart/>} variant={'contained'} fullWidth>
+          <Button size={'small'} sx={{padding: 0}} startIcon={<ShoppingCart />} variant={'contained'} fullWidth>
             Add to cart
           </Button>
           <Button
             size={'small'}
-            startIcon={<FavoriteBorder/>}
+            startIcon={<FavoriteBorder />}
             variant={'contained'}
             title={'Add to wishlist'}
             sx={{width: '25%'}}

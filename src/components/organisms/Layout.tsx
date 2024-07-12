@@ -2,16 +2,29 @@ import type {PropsWithChildren} from 'react'
 import React from 'react'
 import {Stack, styled} from '@mui/material'
 import {Header} from './Header'
-import {useMedia} from '../../hooks'
 import {Footer} from './Footer'
+import {useMedia} from '../../hooks'
 
 const Container = styled(Stack)(({theme}) => ({
   minHeight: '100vh',
+  minWidth: '100vw',
   background: theme.palette.background.default
 }))
 
 export const Layout: React.FC<PropsWithChildren> = ({children}) => {
   const media = useMedia()
+  const getMt = () => {
+    if (media.sm) {
+      return 12
+    }
+    if (media.tablet) {
+      return 14
+    }
+    if (media.md || media.laptop) {
+      return 8
+    }
+    return 15
+  }
 
   return (
     <Container justifyContent={'space-between'}>
@@ -20,7 +33,7 @@ export const Layout: React.FC<PropsWithChildren> = ({children}) => {
           <Header />
         </header>
         <main>
-          <Stack mt={media.md ? 6 : 8}>{children}</Stack>
+          <Stack mt={getMt()}>{children}</Stack>
         </main>
       </Stack>
       <footer>

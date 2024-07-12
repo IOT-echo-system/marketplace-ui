@@ -1,8 +1,6 @@
-import React from 'react'
-import {Stack, Typography, styled} from '@mui/material'
-import {useSelector} from '../../hooks'
-import {Menubar} from '../molecules'
-import Link from 'next/link'
+import React, {useState} from 'react'
+import {Stack, styled} from '@mui/material'
+import {Menubar, SiteHeader} from '../molecules'
 
 const Container = styled(Stack)(({theme}) => ({
   background: theme.palette.common.white,
@@ -18,27 +16,15 @@ const Container = styled(Stack)(({theme}) => ({
   }
 }))
 
-const SiteTitle = styled(Typography)(({theme}) => ({
-  fontSize: theme.spacing(4),
-  height: '100%',
-  '&:hover': {
-    textDecoration: 'none'
-  },
-  [theme.breakpoints.down('md')]: {
-    fontSize: theme.spacing(2.5)
-  }
-}))
-
 export const Header: React.FC = () => {
-  const metadata = useSelector(state => state.site.siteInfo)
+  const [open, setOpen] = useState(false)
+  const toggleDrawer = () => {
+    setOpen(!open)
+  }
   return (
     <Container>
-      <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} width={'90%'}>
-        <Typography component={Link} href={'/'} sx={{'&:hover': {textDecoration: 'none'}}}>
-          <SiteTitle>{metadata.title}</SiteTitle>
-        </Typography>
-        <Menubar />
-      </Stack>
+      <SiteHeader toggleDrawer={toggleDrawer} />
+      <Menubar toggleDrawer={toggleDrawer} open={open} />
     </Container>
   )
 }

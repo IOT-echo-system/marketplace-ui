@@ -1,8 +1,7 @@
 import WebClient from 'web-client-starter'
 import {apiConfig} from '../config/apiConfig'
-import type {FooterInfo, MenuLink, SiteInfo, SiteStateType} from '../store/reducers/site'
+import type {FooterInfo, SiteInfo, SiteStateType} from '../store/reducers/site'
 import type {
-  CategoryResponse,
   FooterResponse,
   MainMenuResponse,
   OfficeLocationResponse,
@@ -13,7 +12,7 @@ import type {
   ProductResponse,
   SiteInfoResponse
 } from './typing/CMSService'
-import type {LocationPropsType} from '../components/molecules'
+import type {CategoryResponse, LocationPropsType} from '../components/molecules'
 import type {ContactFormValuesType} from '../components/templates/ContactUs/useContactForm'
 import type {TRootState} from '../typing/store'
 import {rootState} from '../store'
@@ -25,9 +24,9 @@ class CMSService_ {
 
   async getSiteInfoWithHeaderAndFooter(): Promise<SiteStateType> {
     const siteInfo = await this.getSiteInfo()
-    // const mainMenu = await this.getMainMenu()
+    const mainMenu = await this.getMainMenu()
     // const footer = await this.getFooter()
-    return {siteInfo, header: {menus: []}, footer: rootState.site.footer}
+    return {siteInfo, header: {menus: mainMenu}, footer: rootState.site.footer}
   }
 
   async getSiteInfo(): Promise<SiteInfo> {
@@ -38,12 +37,11 @@ class CMSService_ {
     return response.data.attributes
   }
 
-  async getMainMenu(): Promise<MenuLink[]> {
-    const response = await WebClient.get<MainMenuResponse>({
+  async getMainMenu(): Promise<MainMenuResponse[]> {
+    return WebClient.get<MainMenuResponse[]>({
       baseUrl: this.config.baseUrl,
       path: this.config.mainMenu
     })
-    return response.data.attributes.menuItems
   }
 
   async getFooter(): Promise<FooterInfo> {

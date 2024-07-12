@@ -4,11 +4,11 @@ import {MenuItem, Stack, styled, Typography} from '@mui/material'
 import {Link} from '../atoms'
 import {useMedia} from '../../hooks'
 
-export type CategoryDetails = { name: string; link: string; parent: CategoryDetails | null }
-export type CategoryDetailsWithChildren = { children?: CategoryDetailsWithChildren[] } & CategoryDetails
-export type CategoryResponse = { category: CategoryDetails; tree: CategoryDetailsWithChildren[] }
+export type CategoryDetails = {name: string; link: string; parent: CategoryDetails | null}
+export type CategoryDetailsWithChildren = {children?: CategoryDetailsWithChildren[]} & CategoryDetails
+export type CategoryResponse = {category: CategoryDetails; tree: CategoryDetailsWithChildren[]}
 
-const MenuItemContainer = styled(Stack)<StackProps & { active: 'true' | 'false' }>(({theme, active}) => ({
+const MenuItemContainer = styled(Stack)<StackProps & {active: 'true' | 'false'}>(({theme, active}) => ({
   background: active === 'true' ? theme.palette.grey[300] : theme.palette.background.paper,
   borderTop: `1px solid ${theme.palette.grey[100]}`
 }))
@@ -17,7 +17,7 @@ const isActive = (child: CategoryDetailsWithChildren, category: CategoryDetails)
   return (child.link === category.link || child.children?.some(ch => isActive(ch, category))) ?? false
 }
 
-const Category: React.FC<CategoryResponse & { pl: number }> = ({tree, category, pl}) => {
+const Category: React.FC<CategoryResponse & {pl: number}> = ({tree, category, pl}) => {
   return (
     <Stack>
       {tree.map(child => {
@@ -28,7 +28,7 @@ const Category: React.FC<CategoryResponse & { pl: number }> = ({tree, category, 
                 <Typography pl={pl}>{child.name}</Typography>
               </MenuItem>
             </Link>
-            {child.children && <Category tree={child.children} pl={pl + 2} category={category}/>}
+            {child.children && <Category tree={child.children} pl={pl + 2} category={category} />}
           </MenuItemContainer>
         )
       })}
@@ -49,7 +49,7 @@ export const CategoryFilter: React.FC<CategoryResponse> = ({category, tree}) => 
           Categories
         </Typography>
       </Stack>
-      <Category tree={tree} pl={0} category={category}/>
+      <Category tree={tree} pl={0} category={category} />
     </Stack>
   )
 }

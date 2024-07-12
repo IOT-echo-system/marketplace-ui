@@ -60,8 +60,8 @@ export const Footer: React.FC = () => {
                 <strong>{title}</strong>
               </Typography>
               <Stack spacing={2} pl={2}>
-                {navLinks.map(({link, label}, index) => (
-                  <MenuItem key={`${link}-${index}`} link={link} label={label} />
+                {navLinks.map(({link, name}, index) => (
+                  <MenuItem key={`${link}-${index}`} link={link} label={name} />
                 ))}
               </Stack>
             </MenuContainer>
