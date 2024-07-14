@@ -107,7 +107,11 @@ const NavMenuItem: React.FC<NavMenuItemPropsType> = ({menuItem, direction, isLas
       onMouseLeave={media.laptop ? () => ({}) : handleOpen(false)}
       row={isRow ? 'true' : 'false'}
     >
-      <Link href={menuItem.link} sx={{'&:hover': {textDecoration: 'none', color: 'inherit'}}} onClick={handleClose}>
+      <Link
+        href={`/categories/${menuItem.link}`}
+        sx={{color: 'inherit', '&:hover': {textDecoration: 'none', color: 'inherit'}}}
+        onClick={handleClose}
+      >
         <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
           <Typography p={isRow ? 0 : 0.5}>{menuItem.name}</Typography>
           {isRow && (menuItem.children?.length ?? 0) > 0 && <NavigateNext fontSize={'small'} />}

@@ -6,8 +6,8 @@ import {Image} from '../../../atoms'
 import theme from '../../../../theme/theme'
 import {useMedia} from '../../../../hooks'
 
-const ThumbnailContainer = styled(Stack)<StackProps & {active?: boolean}>(({theme, active}) => ({
-  border: active ? `2px solid ${theme.palette.primary.main}` : `1px solid ${theme.palette.grey[400]}`,
+const ThumbnailContainer = styled(Stack)<StackProps & {active?: 'true' | 'false'}>(({theme, active}) => ({
+  border: active === 'true' ? `2px solid ${theme.palette.primary.main}` : `1px solid ${theme.palette.grey[400]}`,
   width: theme.spacing(7),
   padding: '2px'
 }))
@@ -27,7 +27,7 @@ export const ProductImageWithThumbnails: React.FC<{product: ProductDetails}> = (
           return (
             <ThumbnailContainer
               key={`image-${index}`}
-              active={currentImage === index}
+              active={currentImage === index ? 'true' : 'false'}
               onMouseOver={handleImageUpdate(index)}
             >
               <Image image={image} width={'98%'} />

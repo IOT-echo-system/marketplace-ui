@@ -14,11 +14,11 @@ const Container = styled(Stack)(({theme}) => ({
 export const Layout: React.FC<PropsWithChildren> = ({children}) => {
   const media = useMedia()
   const getMt = () => {
-    if (media.sm || media.tablet) {
-      return 9
+    if (media.sm || (media.md && media.tablet)) {
+      return 11.5
     }
     if (media.md) {
-      return 6
+      return 8
     }
     if (media.laptop) {
       return 8

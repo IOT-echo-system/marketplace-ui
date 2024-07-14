@@ -1,5 +1,6 @@
 import React from 'react'
 import {Stack, Typography} from '@mui/material'
+import {formatNumber} from '../../utils/utils'
 
 type PriceProps = {mrp: number; price: number; size?: 'small'}
 
@@ -8,10 +9,10 @@ export const Price: React.FC<PriceProps> = ({mrp, price, size}) => {
   return (
     <Stack direction={'row'} spacing={size === 'small' ? 0.8 : 2} alignItems={'center'} flexWrap={'wrap'}>
       <Typography variant={size === 'small' ? 'h6' : 'h5'} component={'div'}>
-        ₹{price.toFixed(2)}
+        ₹{formatNumber(price)}
       </Typography>
       <Typography sx={{color: 'grey'}}>
-        <s>₹{mrp.toFixed(2)}</s>
+        <s>₹{formatNumber(mrp)}</s>
       </Typography>
       <Typography sx={{color: 'success.main'}}>{discount}% off</Typography>
     </Stack>

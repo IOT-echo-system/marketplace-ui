@@ -1,15 +1,16 @@
 import React from 'react'
 import type {ImageType} from '../../atoms'
-import {BoxedContainer} from '../../atoms'
+import {AddToCartButton, BoxedContainer} from '../../atoms'
 import {ProductDetails, ProductImageWithThumbnails} from './components'
 import {Button, Stack} from '@mui/material'
 import {useMedia} from '../../../hooks'
-import {FlashOn, ShoppingCart} from '@mui/icons-material'
+import {FlashOn} from '@mui/icons-material'
 
 export type ProductDetails = {
   title: string
   slug: string
   price: number
+  mrp: number
   availableQty: number
   productId: string
   images: ImageType[]
@@ -37,16 +38,9 @@ export const Product: React.FC<{product: ProductDetails}> = ({product}) => {
         <Stack width={media.lg ? '100%' : '40%'} spacing={2} sx={{position: 'sticky', zIndex: 1, top: 0}}>
           <ProductImageWithThumbnails product={product} />
           <Stack spacing={media.sm ? 1 : 2} direction={media.sm ? 'column' : 'row'}>
+            <AddToCartButton productId={product.productId} />
             <Button
-              variant={'contained'}
-              startIcon={<ShoppingCart />}
-              fullWidth
-              size={media.xl ? 'small' : 'large'}
-              color={'warning'}
-            >
-              Add to cart
-            </Button>
-            <Button
+              sx={{textTransform: 'inherit'}}
               variant={'contained'}
               startIcon={<FlashOn />}
               fullWidth

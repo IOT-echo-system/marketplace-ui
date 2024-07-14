@@ -2,26 +2,36 @@ import React from 'react'
 import {Pagination, WiderBoxedContainer} from '../../atoms'
 import {Stack} from '@mui/material'
 import type {ProductResponse} from '../../../services/typing/CMSService'
-import type {CategoryResponse} from '../../molecules'
-import {CategoryFilter, MobileCategoryFilter, ProductCard} from '../../molecules'
+import type {CategoryDetails, CategoryDetailsWithChildren, CategoryResponse} from '../../molecules'
+import {Breadcrumb, CategoryFilter, isActive, ProductCard} from '../../molecules'
 import {ProductCatalogHeader} from './components/ProductCatalogHeader'
 import {useMedia} from '../../../hooks'
+
+const getBreadcrumbs = ({tree, category}: CategoryResponse): CategoryDetails[] => {
+  const breadcrumbs: CategoryDetailsWithChildren[] = []
+  tree.forEach(child => isActive(child, category) && breadcrumbs.push(child))
+  breadcrumbs.forEach(breadcrumb => {
+    if (breadcrumb.children) {
+      breadcrumbs.push(...getBreadcrumbs({tree: breadcrumb.children, category}))
+    }
+  })
+  return breadcrumbs
+}
 
 export type ProductCatalogPropsType = {products: ProductResponse; category: CategoryResponse}
 
 export const ProductCatalog: React.FC<ProductCatalogPropsType> = ({products, category}) => {
   const media = useMedia()
+  const breadcrumbs = getBreadcrumbs(category)
+
   return (
     <WiderBoxedContainer direction={media.md ? 'column' : 'row'} alignItems={'start'} pt={2} pb={2} spacing={2}>
       <Stack bgcolor={'background.paper'} spacing={2} width={media.md ? '100%' : '25%'}>
-        {media.md ? (
-          <MobileCategoryFilter category={category.category} tree={category.tree} />
-        ) : (
-          <CategoryFilter category={category.category} tree={category.tree} />
-        )}
+        <CategoryFilter category={category.category} tree={category.tree} />
       </Stack>
       <Stack spacing={2} alignItems={'center'} width={'100%'} pt={media.md ? 5 : 0}>
         <Stack p={media.sm ? 1 : 2} bgcolor={'background.paper'} width={'100%'} spacing={2}>
+          <Breadcrumb links={breadcrumbs.map(breadcrumb => ({link: breadcrumb.link, label: breadcrumb.name}))} />
           <ProductCatalogHeader title={category.category.name} pagination={products.meta.pagination} />
           <Stack
             direction={media.sm ? 'column' : 'row'}

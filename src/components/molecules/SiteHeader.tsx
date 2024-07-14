@@ -3,10 +3,21 @@ import {AppBar, Badge, Box, IconButton, Stack, Toolbar, Typography} from '@mui/m
 import {AccountCircle, FavoriteBorder, Menu as MenuIcon, ShoppingCart} from '@mui/icons-material'
 import {SearchBox, WiderBoxedContainer} from '../atoms'
 import {useMedia, useSelector} from '../../hooks'
+import {useRouter} from 'next/router'
+import {Config} from '../../config'
 
 type SiteHeaderPropsType = {toggleDrawer: () => void}
 
 const WishlistAndCartIcons: React.FC<{size?: 'small' | 'large'}> = ({size}) => {
+  const {productIds} = useSelector(state => state.cart)
+  const router = useRouter()
+  const totalItems = productIds.reduce((count, {qty}) => count + qty, 0)
+
+  const handleClickShoppingCart = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
+    router.push(Config.CART_PAGE_PATH).catch()
+  }
+
   return (
     <Stack direction={'row'}>
       <IconButton color="inherit" size={size ?? 'medium'}>
@@ -14,8 +25,8 @@ const WishlistAndCartIcons: React.FC<{size?: 'small' | 'large'}> = ({size}) => {
           <FavoriteBorder fontSize={size ?? 'medium'} />
         </Badge>
       </IconButton>
-      <IconButton color="inherit" size={size ?? 'medium'}>
-        <Badge color="error">
+      <IconButton color="inherit" size={size ?? 'medium'} onClick={handleClickShoppingCart}>
+        <Badge color="error" badgeContent={totalItems}>
           <ShoppingCart fontSize={size ?? 'medium'} />
         </Badge>
       </IconButton>
@@ -25,7 +36,11 @@ const WishlistAndCartIcons: React.FC<{size?: 'small' | 'large'}> = ({size}) => {
 
 export const SiteHeader: React.FC<SiteHeaderPropsType> = ({toggleDrawer}) => {
   const {siteInfo} = useSelector(state => state.site)
+  const router = useRouter()
   const media = useMedia()
+  const redirectToProfile = () => {
+    router.push('/profile').catch()
+  }
 
   return (
     <Box sx={{flexGrow: 1}} width={'100%'}>
@@ -57,7 +72,7 @@ export const SiteHeader: React.FC<SiteHeaderPropsType> = ({toggleDrawer}) => {
             <Box sx={{flexGrow: 1}} />
             <Stack direction={'row'}>
               {!media.sm && <WishlistAndCartIcons />}
-              <IconButton edge="end" color="inherit">
+              <IconButton edge="end" color="inherit" onClick={redirectToProfile}>
                 <AccountCircle />
               </IconButton>
             </Stack>

@@ -15,7 +15,7 @@ export const GlobalContext = createContext<GlobalContextType>({
 type StoreProviderPropsType = PropsWithChildren<{initialValue?: TRootState}>
 
 const StoreProvider: React.FC<StoreProviderPropsType> = ({children, initialValue}) => {
-  const [state, dispatch] = useReducer(rootReducer, initialValue ?? rootState)
+  const [state, dispatch] = useReducer(rootReducer, {...rootState, ...initialValue})
 
   const store = useMemo(() => ({state, dispatch}), [state])
 

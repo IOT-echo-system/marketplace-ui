@@ -1,7 +1,9 @@
-import {Stack, styled} from '@mui/material'
+import type {LoadingButtonProps} from '@mui/lab'
+import {LoadingButton} from '@mui/lab'
+import type {ButtonBaseProps, StackProps} from '@mui/material'
+import {ButtonBase, Stack, styled} from '@mui/material'
 import type {LinkProps} from 'next/link'
 import LinkComponent from 'next/link'
-import {LoadingButton} from '@mui/lab'
 
 export const BoxedContainer = styled(Stack)(({theme}) => ({
   margin: 'auto',
@@ -27,12 +29,53 @@ export const WiderBoxedContainer = styled(Stack)(({theme}) => ({
 
 export const Link = styled(LinkComponent)<LinkProps & {underline?: 'true' | 'false'}>(({theme, underline}) => ({
   textDecoration: underline === 'true' ? 'underline' : 'none',
+  color: theme.palette.primary.dark,
   ['&:hover']: {
-    color: theme.palette.primary.dark
+    textDecoration: 'underline'
   }
 }))
 
-export const Button = styled(LoadingButton)(({theme}) => ({
+export const MenuItemLink = styled(LinkComponent)<LinkProps>(() => ({
+  color: 'inherit',
+  ['&:hover']: {
+    textDecoration: 'none'
+  }
+}))
+
+export const Button = styled(LoadingButton)<LoadingButtonProps>(({theme}) => ({
   textTransform: 'initial',
-  padding: theme.spacing(1, 4)
+  padding: theme.spacing(0.5, 4)
+}))
+
+export const ButtonLink = styled(ButtonBase)<ButtonBaseProps>(({theme}) => ({
+  textTransform: 'initial',
+  color: theme.palette.primary.dark,
+  ['&:hover']: {
+    textDecoration: 'underline'
+  }
+}))
+
+export const CenteredContainer = styled(Stack)<StackProps>(({theme}) => ({
+  margin: 'auto',
+  justifyContent: 'center',
+  width: theme.spacing(72),
+  [theme.breakpoints.down('sm')]: {
+    width: '100vw'
+  }
+}))
+
+export const FormContainer = styled(Stack)<StackProps>(({theme}) => ({
+  background: theme.palette.background.paper,
+  boxShadow: theme.shadows[1],
+  borderRadius: theme.spacing(1),
+  margin: theme.spacing(1, 'auto'),
+  width: '100%',
+  padding: theme.spacing(2),
+  justifyContent: 'center',
+  '&>*': {
+    margin: theme.spacing(0.5)
+  },
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(1)
+  }
 }))

@@ -1,5 +1,5 @@
 import type {ProductDetails} from '../templates/products/Product'
-import {Price} from '../atoms'
+import {AddToCartButton, Price} from '../atoms'
 import {
   Button,
   ButtonGroup,
@@ -15,7 +15,7 @@ import {
 } from '@mui/material'
 import {apiConfig} from '../../config/apiConfig'
 import React from 'react'
-import {FavoriteBorder, ShoppingCart} from '@mui/icons-material'
+import {FavoriteBorder} from '@mui/icons-material'
 import {useRouter} from 'next/router'
 
 const CardContainer = styled(Card)<CardProps>(({theme}) => ({
@@ -24,6 +24,7 @@ const CardContainer = styled(Card)<CardProps>(({theme}) => ({
   display: 'flex',
   flexDirection: 'column',
   margin: theme.spacing(0.5),
+  border: `1px solid ${theme.palette.grey[400]}`,
   cursor: 'pointer',
   width: 'calc(25% - 8px)',
   [theme.breakpoints.down('xl')]: {
@@ -63,29 +64,10 @@ export const ProductCard: React.FC<ProductDetails> = attributes => {
         </CardContent>
       </Stack>
       <CardActions>
-        <ButtonGroup
-          fullWidth
-          size={'small'}
-          variant={'contained'}
-          sx={{'& button': {borderRadius: 0, zIndex: 1}, borderRadius: 1, zIndex: 2, overflow: 'hidden'}}
-        >
-          <Button
-            size={'small'}
-            sx={{padding: 0, textTransform: 'inherit'}}
-            startIcon={<ShoppingCart />}
-            variant={'contained'}
-            fullWidth
-          >
-            Add to cart
-          </Button>
+        <ButtonGroup fullWidth variant={'contained'}>
+          <AddToCartButton productId={attributes.productId} />
           <Divider orientation={'vertical'} />
-          <Button
-            size={'small'}
-            startIcon={<FavoriteBorder />}
-            variant={'contained'}
-            title={'Add to wishlist'}
-            sx={{width: '25%'}}
-          />
+          <Button startIcon={<FavoriteBorder />} variant={'contained'} title={'Add to wishlist'} sx={{width: '25%'}} />
         </ButtonGroup>
       </CardActions>
     </CardContainer>
