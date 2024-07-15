@@ -4,7 +4,7 @@ export const AddressAction = {
   SET_ADDRESS: 'SET_ADDRESS'
 } as const
 
-export type Address = {
+export type AddressType = {
   id: number
   name: string
   address1: string
@@ -17,7 +17,7 @@ export type Address = {
   pinCode: number
 }
 
-type AddressesType = {addresses: Address[]}
+type AddressesType = {addresses: AddressType[]}
 export const initAddressState: AddressesType = {addresses: []}
 
 const addressReducer = (state: AddressesType, action: TRootActions): AddressesType => {

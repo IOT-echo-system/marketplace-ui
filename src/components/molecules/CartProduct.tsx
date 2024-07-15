@@ -6,7 +6,7 @@ import React from 'react'
 import {useDispatch, useMedia, useSelector} from '../../hooks'
 import {removeProductFromCart, updateProductQtyToCart} from '../../store/actions/cart'
 import {ButtonLink} from '../atoms'
-import {formatNumber} from '../../utils/utils'
+import {formatPrice} from '../../utils/utils'
 
 const CardContainer = styled(Stack)<StackProps>(({theme}) => ({
   padding: theme.spacing(2),
@@ -66,7 +66,7 @@ export const CartProduct: React.FC<CartProductPropsType> = ({product}) => {
           </Typography>
           {media.tablet && (
             <Typography variant={media.sm ? 'subtitle2' : 'subtitle1'} component={'div'}>
-              ₹{formatNumber(product.price)}
+              {formatPrice(product.price)}
             </Typography>
           )}
           <Stack direction={'row'} spacing={media.sm ? 2 : 8} flexWrap={'wrap'} alignItems={'baseline'}>
@@ -86,7 +86,7 @@ export const CartProduct: React.FC<CartProductPropsType> = ({product}) => {
       </Stack>
       {!media.tablet && (
         <Typography variant={'subtitle1'} component={'div'}>
-          ₹{formatNumber(product.price)}
+          {formatPrice(product.price)}
         </Typography>
       )}
     </CardContainer>

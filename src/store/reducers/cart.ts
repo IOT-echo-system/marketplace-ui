@@ -1,5 +1,5 @@
 import type {TRootActions} from '../../typing/store'
-import type {Address} from './address'
+import type {AddressType} from './addressType'
 import type {ImageType} from '../../components/atoms'
 import type {ProductDetails} from '../../components/templates/products/Product'
 
@@ -10,7 +10,7 @@ export const CartAction = {
   REMOVE_ALL_PRODUCT_FROM_CART: 'REMOVE_ALL_PRODUCT_FROM_CART',
   ADD_BILLING_ADDRESS: 'ADD_BILLING_ADDRESS',
   ADD_SHIPPING_ADDRESS: 'ADD_SHIPPING_ADDRESS',
-  ADD_PRODUCTS: 'ADD_PRODUCTS'
+  CLEAR_CART: 'CLEAR_CART'
 } as const
 
 export type OrderProduct = {
@@ -25,9 +25,8 @@ export type OrderProduct = {
 
 export type CartStateType = {
   productIds: Array<{productId: string; qty: number}>
-  products: OrderProduct[]
-  billingAddress: Address | null
-  shippingAddress: Address | null
+  billingAddress: AddressType | null
+  shippingAddress: AddressType | null
 }
 
 export const createOrderProduct = (product: ProductDetails, qty: number): OrderProduct => {
@@ -42,7 +41,7 @@ export const createOrderProduct = (product: ProductDetails, qty: number): OrderP
   }
 }
 
-export const initCartState: CartStateType = {productIds: [], products: [], billingAddress: null, shippingAddress: null}
+export const initCartState: CartStateType = {productIds: [], billingAddress: null, shippingAddress: null}
 const getQty = (qty: number) => (qty >= 0 ? qty : 0)
 
 const cartReducer = (state: CartStateType, action: TRootActions): CartStateType => {
@@ -81,8 +80,8 @@ const cartReducer = (state: CartStateType, action: TRootActions): CartStateType 
     case CartAction.ADD_SHIPPING_ADDRESS: {
       return {...state, shippingAddress: action.payload.address}
     }
-    case CartAction.ADD_PRODUCTS: {
-      return {...state, products: action.payload.products}
+    case CartAction.CLEAR_CART: {
+      return {...initCartState}
     }
     default:
       return state

@@ -7,7 +7,7 @@ import siteReducer, {initSiteState} from './reducers/site'
 import type {TRootActions, TRootReducer, TRootState} from '../typing/store'
 import cartReducer, {initCartState} from './reducers/cart'
 import userReducer, {initUserState} from './reducers/user'
-import addressReducer, {initAddressState} from './reducers/address'
+import addressReducer, {initAddressState} from './reducers/addressType'
 
 const combineReducers = <S = TRootState>(reducers: {
   [K in keyof S]: TRootReducer<S[K]>

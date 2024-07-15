@@ -8,12 +8,16 @@ import {AccountDetails} from './AccountDetails'
 import {AddressDetails} from './AddressDetails'
 import {OrderDetails} from './OrderDetails'
 import {PaymentOptions} from './PaymentOptions'
+import type {ProductDetails} from '../products/Product'
+import {CMSService} from '../../../services'
 
 export type CheckoutStatePropsType = {onSuccess: () => void}
 
 export const Checkout: React.FC = () => {
-  const {user, cart} = useSelector(state1 => state1)
-  const [state, setState] = useState(0)
+  const {user} = useSelector(state1 => state1)
+  const [state, setState] = useState(user.username ? 1 : 0)
+  const {productIds} = useSelector(state => state.cart)
+  const [products, setProducts] = useState<ProductDetails[]>([])
 
   useEffect(() => {
     setState(user.username ? 1 : 0)
@@ -26,6 +30,12 @@ export const Checkout: React.FC = () => {
   const handleChange = (index: number) => {
     setState(index)
   }
+
+  useEffect(() => {
+    CMSService.getCartProducts(productIds.map(item => item.productId))
+      .then(setProducts)
+      .catch()
+  }, [productIds])
 
   const accordionList: AccordionType[] = [
     {
@@ -46,9 +56,13 @@ export const Checkout: React.FC = () => {
     {
       header: <Typography>Order summary</Typography>,
       disabled: state < 3,
-      content: <OrderDetails onSuccess={handleStateChange(4)} />
+      content: <OrderDetails onSuccess={handleStateChange(4)} products={products} />
     },
-    {header: <Typography>Payment options</Typography>, disabled: state < 4, content: <PaymentOptions />}
+    {
+      header: <Typography>Payment options</Typography>,
+      disabled: state < 4,
+      content: <PaymentOptions products={products} />
+    }
   ]
 
   return (
@@ -59,7 +73,6 @@ export const Checkout: React.FC = () => {
         </Typography>
         <DynamicAccordionList accordions={accordionList} expandAccordion={state} onChange={handleChange} />
       </Stack>
-      {JSON.stringify(cart)}
     </BoxedContainer>
   )
 }

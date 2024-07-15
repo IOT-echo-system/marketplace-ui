@@ -1,9 +1,10 @@
 import {apiConfig} from '../config/apiConfig'
 import '../utils/extenstions'
 import WebClient from './webClient'
-import type {AddressResponse, UserResponse} from './typing/authService'
+import type {AddressResponse, OrderResponse, PaymentResponse, UserResponse} from './typing/authService'
 import type {User} from '../store/reducers/user'
-import type {Address} from '../store/reducers/address'
+import type {AddressType} from '../store/reducers/addressType'
+import type {CartStateType} from '../store/reducers/cart'
 
 class AuthService_ {
   private readonly config = apiConfig.user
@@ -32,7 +33,7 @@ class AuthService_ {
     })
   }
 
-  async addAddress(data: unknown): Promise<Address> {
+  async addAddress(data: unknown): Promise<AddressType> {
     const response = await WebClient.post<AddressResponse>({
       baseUrl: this.baseUrl,
       path: this.config.address,
@@ -41,10 +42,35 @@ class AuthService_ {
     return {...response.data.attributes, id: response.data.id}
   }
 
-  async getAddresses(): Promise<Address[]> {
-    return WebClient.get<Address[]>({
+  async getAddresses(): Promise<AddressType[]> {
+    return WebClient.get<AddressType[]>({
       baseUrl: this.baseUrl,
       path: this.config.address
+    })
+  }
+
+  placeOrder(data: CartStateType): Promise<PaymentResponse> {
+    return WebClient.post<PaymentResponse>({
+      baseUrl: this.baseUrl,
+      path: this.config.order,
+      body: {data}
+    })
+  }
+
+  async getOrderDetails(orderId: string) {
+    const response = await WebClient.get<OrderResponse>({
+      baseUrl: this.baseUrl,
+      path: this.config.orderDetails,
+      uriVariables: {orderId}
+    })
+    return {...response.data.attributes, id: response.data.id}
+  }
+
+  verifyPayment(data: Record<string, unknown>): Promise<PaymentResponse> {
+    return WebClient.post<PaymentResponse>({
+      baseUrl: this.baseUrl,
+      path: this.config.verifyPayment,
+      body: data
     })
   }
 }

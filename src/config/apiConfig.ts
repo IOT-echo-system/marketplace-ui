@@ -23,6 +23,9 @@ export const apiConfig = {
     register: '/auth/local/register',
     login: '/auth/local',
     me: '/users/me',
-    address: '/addresses'
+    address: '/addresses',
+    order: '/orders',
+    orderDetails: '/orders/{orderId}?populate=*',
+    verifyPayment: '/payments/verify'
   }
 } as const

@@ -50,7 +50,7 @@ export const DynamicAccordionList: React.FC<DynamicAccordionListPropsType> = ({
   accordions,
   onChange
 }) => {
-  const [expanded, setExpanded] = useState(-1)
+  const [expanded, setExpanded] = useState(expandAccordion ?? -1)
   useEffect(() => {
     setExpanded(expandAccordion ?? expanded)
   }, [expandAccordion])
