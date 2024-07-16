@@ -4,13 +4,10 @@ import {InProgressFeature} from '../../components/atoms'
 import {CMSService} from '../../services'
 import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
 
-const ForgotPasswordPage: NextPage = () => {
-
-  return (
-    <ProfileWrapper requiredLoggedIn={false} title={'Forget password'}>
-      <InProgressFeature/>
-    </ProfileWrapper>
-  )
+const ResetPasswordPage: NextPage = () => {
+  return <ProfileWrapper requiredLoggedIn title={'Reset password'}>
+    <InProgressFeature/>
+  </ProfileWrapper>
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -22,4 +19,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
-export default ForgotPasswordPage
+export default ResetPasswordPage

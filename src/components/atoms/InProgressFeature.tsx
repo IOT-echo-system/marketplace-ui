@@ -4,7 +4,7 @@ import React from 'react'
 
 export const InProgressFeature: React.FC = () => {
   return (
-    <CenteredContainer>
+    <CenteredContainer height={'20vh'}>
       <Typography color={'error'} textAlign={'center'}>
         We will implement this feature soon!!
       </Typography>

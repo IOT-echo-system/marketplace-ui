@@ -3,11 +3,13 @@ import React from 'react'
 import {CMSService} from '../../services'
 import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
 import {Addresses} from '../../components/templates/profile/Addresses'
+import {useSelector} from '../../hooks'
 
 const AddressPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
+  const {addresses} = useSelector(state => state.address)
   return (
-    <ProfileWrapper requiredLoggedIn>
-      <Addresses />
+    <ProfileWrapper requiredLoggedIn title={`Address (${addresses.length})`}>
+      <Addresses/>
     </ProfileWrapper>
   )
 }

@@ -2,16 +2,12 @@ import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'ne
 import React from 'react'
 import {CMSService} from '../../services'
 import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
-import {Typography} from '@mui/material'
 import {InProgressFeature} from '../../components/atoms'
 
 const OrdersPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
   return (
-    <ProfileWrapper requiredLoggedIn>
-      <Typography variant={'h4'} component={'h1'}>
-        Rewards
-      </Typography>
-      <InProgressFeature />
+    <ProfileWrapper requiredLoggedIn title={'Rewards'}>
+      <InProgressFeature/>
     </ProfileWrapper>
   )
 }

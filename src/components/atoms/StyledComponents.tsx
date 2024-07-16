@@ -27,7 +27,7 @@ export const WiderBoxedContainer = styled(Stack)(({theme}) => ({
   }
 }))
 
-export const Link = styled(LinkComponent)<LinkProps & {underline?: 'true' | 'false'}>(({theme, underline}) => ({
+export const Link = styled(LinkComponent)<LinkProps & { underline?: 'true' | 'false' }>(({theme, underline}) => ({
   textDecoration: underline === 'true' ? 'underline' : 'none',
   color: theme.palette.primary.dark,
   ['&:hover']: {
@@ -52,7 +52,8 @@ export const Button = styled(MuiButton)<ButtonProps>(({theme}) => ({
   padding: theme.spacing(0.5, 4)
 }))
 
-export const LinkButton = styled(Link)<ButtonProps>(() => ({
+export const LinkAsText = styled(Link)<ButtonProps>(() => ({
+  color: 'inherit',
   ['&:hover']: {
     textDecoration: 'none'
   }

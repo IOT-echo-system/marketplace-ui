@@ -13,7 +13,7 @@ const LoginPage: NextPage = () => {
   return (
     <ProfileWrapper requiredLoggedIn={false}>
       <CenteredContainer p={2} spacing={2}>
-        <AuthForms getFormDetails={useLogin} redirectTo={Config.HOME_PAGE_PATH} />
+        <AuthForms getFormDetails={useLogin} redirectTo={Config.HOME_PAGE_PATH}/>
         <Stack
           direction={media.sm ? 'column' : 'row'}
           justifyContent={'space-between'}

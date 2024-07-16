@@ -6,10 +6,7 @@ import {formatDate} from '../../../utils/utils'
 export const MyAccount: React.FC = () => {
   const {user} = useSelector(state => state)
   return (
-    <Stack spacing={1}>
-      <Typography variant={'h4'} component={'h1'}>
-        My account
-      </Typography>
+    <Stack>
       <Typography>Name: {user.name}</Typography>
       <Typography>Username: {user.username}</Typography>
       <Typography>Email: {user.email}</Typography>

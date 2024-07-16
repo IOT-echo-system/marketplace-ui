@@ -1,5 +1,5 @@
 import React from 'react'
-import {Stack, Typography} from '@mui/material'
+import {Stack} from '@mui/material'
 import {useSelector} from '../../../hooks'
 import {Address, Button} from '../../atoms'
 import {AddAddress} from '../../organisms/ModalForms/formFunctions'
@@ -8,13 +8,10 @@ import {ModalForms} from '../../organisms'
 export const Addresses: React.FC = () => {
   const {addresses} = useSelector(state => state.address)
   return (
-    <Stack spacing={2}>
-      <Typography variant={'h4'} component={'h1'}>
-        Addresses ({addresses.length})
-      </Typography>
+    <Stack>
       <Stack spacing={4}>
         {addresses.map(address => (
-          <Address key={address.id} address={address} title={''} />
+          <Address key={address.id} address={address} title={''}/>
         ))}
       </Stack>
       <ModalForms getFormDetails={AddAddress}>
