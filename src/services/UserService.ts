@@ -1,7 +1,7 @@
 import {apiConfig} from '../config/apiConfig'
 import '../utils/extenstions'
 import WebClient from './webClient'
-import type {AddressResponse, OrderResponse, PaymentResponse, UserResponse} from './typing/authService'
+import type {AddressResponse, Order, OrderResponse, PaymentResponse, UserResponse} from './typing/authService'
 import type {User} from '../store/reducers/user'
 import type {AddressType} from '../store/reducers/addressType'
 import type {CartStateType} from '../store/reducers/cart'
@@ -71,6 +71,14 @@ class AuthService_ {
       baseUrl: this.baseUrl,
       path: this.config.verifyPayment,
       body: data
+    })
+  }
+
+  async getOrders(): Promise<Order[]> {
+    return WebClient.get<Order[]>({
+      baseUrl: this.baseUrl,
+      path: this.config.order,
+      queryParams: {populate: '*'}
     })
   }
 }

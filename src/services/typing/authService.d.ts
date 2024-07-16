@@ -10,6 +10,7 @@ export type Order = {
   billingAddress: AddressType
   shippingAddress: AddressType
   products: OrderProduct[]
+  createdAt: string
 }
 
 export type UserResponse = {jwt: string; user: User}

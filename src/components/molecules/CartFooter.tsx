@@ -1,7 +1,7 @@
 import type {ProductDetails} from '../templates/products/Product'
 import {Stack, Typography} from '@mui/material'
 import React from 'react'
-import {formatPrice} from '../../utils/utils'
+import {calculateTotalQtyAndPrice, formatPrice} from '../../utils/utils'
 import {useMedia, useSelector} from '../../hooks'
 import '../../utils/extenstions'
 import {useRouter} from 'next/router'
@@ -14,6 +14,7 @@ type CartProductPropsType = {
   type: 'checkout' | 'cart'
   onSuccess?: () => void
 }
+
 export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSuccess}) => {
   const media = useMedia()
   const router = useRouter()
@@ -28,13 +29,7 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
     onSuccess && onSuccess()
   }
 
-  const {qty, price} = cart.productIds.reduce(
-    (count, {qty, productId}) => {
-      const price = products.find(product => product.productId === productId)?.price ?? 0
-      return {qty: count.qty + qty, price: count.price + qty * price}
-    },
-    {price: 0, qty: 0}
-  )
+  const {qty, price} = calculateTotalQtyAndPrice(cart, products)
 
   if (products.isEmpty()) {
     return (

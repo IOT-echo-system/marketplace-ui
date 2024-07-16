@@ -9,13 +9,13 @@ const HomePage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>>
 }
 
 export const getServerSideProps: GetServerSideProps<PagePropsType> = async () => {
+  const initialValue = await CMSService.getInitialValue()
   try {
-    const pageDetails = await CMSService.getPageContent('index')
-    const initialValue = await CMSService.getInitialValue()
+    const pageDetails = await CMSService.getPageContent('index').catch()
     return {props: {pageDetails, initialValue}}
   } catch (error) {
     const pageDetails: PageDetails = {ctaBanner: [], header: [], mainContent: [], seo: null, slug: ''}
-    return {props: {pageDetails}}
+    return {props: {pageDetails, initialValue}}
   }
 }
 

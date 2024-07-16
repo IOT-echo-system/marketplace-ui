@@ -5,7 +5,7 @@ import {apiConfig} from '../../config/apiConfig'
 import React from 'react'
 import {useDispatch, useMedia, useSelector} from '../../hooks'
 import {removeProductFromCart, updateProductQtyToCart} from '../../store/actions/cart'
-import {ButtonLink} from '../atoms'
+import {ButtonAsLink} from '../atoms'
 import {formatPrice} from '../../utils/utils'
 
 const CardContainer = styled(Stack)<StackProps>(({theme}) => ({
@@ -80,7 +80,7 @@ export const CartProduct: React.FC<CartProductPropsType> = ({product}) => {
                 onChange={handleChange}
               />
             </Stack>
-            <ButtonLink onClick={handleRemove}>Remove</ButtonLink>
+            <ButtonAsLink onClick={handleRemove}>Remove</ButtonAsLink>
           </Stack>
         </Stack>
       </Stack>

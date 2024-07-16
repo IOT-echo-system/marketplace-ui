@@ -1,7 +1,7 @@
 import type {LoadingButtonProps} from '@mui/lab'
-import {LoadingButton} from '@mui/lab'
-import type {ButtonBaseProps, StackProps} from '@mui/material'
-import {ButtonBase, Stack, styled} from '@mui/material'
+import {LoadingButton as MuiLoadingButton} from '@mui/lab'
+import type {ButtonBaseProps, ButtonProps, StackProps} from '@mui/material'
+import {Button as MuiButton, ButtonBase, Stack, styled} from '@mui/material'
 import type {LinkProps} from 'next/link'
 import LinkComponent from 'next/link'
 
@@ -42,12 +42,23 @@ export const MenuItemLink = styled(LinkComponent)<LinkProps>(() => ({
   }
 }))
 
-export const Button = styled(LoadingButton)<LoadingButtonProps>(({theme}) => ({
+export const LoadingButton = styled(MuiLoadingButton)<LoadingButtonProps & ButtonProps>(({theme}) => ({
   textTransform: 'initial',
   padding: theme.spacing(0.5, 4)
 }))
 
-export const ButtonLink = styled(ButtonBase)<ButtonBaseProps>(({theme}) => ({
+export const Button = styled(MuiButton)<ButtonProps>(({theme}) => ({
+  textTransform: 'initial',
+  padding: theme.spacing(0.5, 4)
+}))
+
+export const LinkButton = styled(Link)<ButtonProps>(() => ({
+  ['&:hover']: {
+    textDecoration: 'none'
+  }
+}))
+
+export const ButtonAsLink = styled(ButtonBase)<ButtonBaseProps>(({theme}) => ({
   textTransform: 'initial',
   color: theme.palette.primary.dark,
   ['&:hover']: {

@@ -1,7 +1,7 @@
 import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
-import {CMSService} from '../services'
 import React from 'react'
-import {ShoppingCart} from '../components/templates/shoppingCart/ShoppingCart'
+import {ShoppingCart} from '../../components/templates/shoppingCart/ShoppingCart'
+import {CMSService} from '../../services'
 
 const CartPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
   return <ShoppingCart />

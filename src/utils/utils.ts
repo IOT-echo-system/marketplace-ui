@@ -1,4 +1,6 @@
 import moment from 'moment'
+import type {CartStateType, OrderProduct} from '../store/reducers/cart'
+import type {ProductDetails} from '../components/templates/products/Product'
 
 export const formatDate = (date: Date | string, format?: string): string => {
   return moment(date)
@@ -19,4 +21,29 @@ export const formatPrice = (number: number, decimalPoints = 2): string => {
     return `₹${indianFormattedNumber}.${fractionalPart}`
   }
   return `₹${indianFormattedNumber}`
+}
+
+export const calculateTotalQtyAndPrice = (
+  cart: CartStateType,
+  products: ProductDetails[]
+): {
+  qty: number
+  price: number
+} => {
+  return cart.productIds.reduce(
+    (count, {qty, productId}) => {
+      const price = products.find(product => product.productId === productId)?.price ?? 0
+      return {qty: count.qty + qty, price: count.price + qty * price}
+    },
+    {price: 0, qty: 0}
+  )
+}
+
+export const calculateTotalQtyAndPriceFromOrder = (products: OrderProduct[]): {qty: number; price: number} => {
+  return products.reduce(
+    (count, {qty, price}) => {
+      return {qty: count.qty + qty, price: count.price + qty * price}
+    },
+    {price: 0, qty: 0}
+  )
 }

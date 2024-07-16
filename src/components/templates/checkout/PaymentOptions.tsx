@@ -8,20 +8,18 @@ import {UserService} from '../../../services'
 import type {ServerError} from '../../../services/typing/authService'
 import {clearCart} from '../../../store/actions/cart'
 import {Config} from '../../../config'
+import theme from '../../../theme/theme'
 
-export const PaymentOptions: React.FC<{products: ProductDetails[]}> = ({products}) => {
+type PaymentOptionsPropsType = {onSuccess: (status: boolean) => void; products: ProductDetails[]}
+export const PaymentOptions: React.FC<PaymentOptionsPropsType> = ({products, onSuccess}) => {
   const media = useMedia()
-  const {cart, site} = useSelector(state => state)
+  const {cart, user, site} = useSelector(state => state)
   const toast = useToast()
   const dispatch = useDispatch()
 
   const paymentHandler = async function (response: Record<string, unknown>) {
     const paymentResponse = await UserService.verifyPayment(response)
-    if (paymentResponse.status === 'success') {
-      alert('Payment verified successfully')
-    } else {
-      alert('Payment verification failed')
-    }
+    onSuccess(paymentResponse.status === 'success')
   }
 
   const price = cart.productIds.reduce((count, {qty, productId}) => {
@@ -43,15 +41,12 @@ export const PaymentOptions: React.FC<{products: ProductDetails[]}> = ({products
           order_id: payment.id,
           handler: paymentHandler,
           prefill: {
-            name: 'John Doe',
-            email: 'john.doe@example.com',
-            contact: '9999999999'
-          },
-          notes: {
-            address: 'Razorpay Corporate Office'
+            name: user.name,
+            email: user.email,
+            contact: user.phone
           },
           theme: {
-            color: '#3399cc'
+            color: theme.palette.primary.main
           }
         }
         const rzp = new (window as any).Razorpay(options)

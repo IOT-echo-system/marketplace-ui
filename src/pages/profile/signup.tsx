@@ -1,34 +1,19 @@
 import type {GetServerSideProps, NextPage} from 'next'
-import React, {useEffect} from 'react'
+import React from 'react'
 import {CMSService} from '../../services'
 import {Config} from '../../config'
-import {useMedia, useSelector} from '../../hooks'
-import {useRouter} from 'next/router'
-import {BoxedContainer, CenteredContainer, FormContainer, Link, Loader} from '../../components/atoms'
+import {CenteredContainer, Link} from '../../components/atoms'
 import {Stack, Typography} from '@mui/material'
 import {AuthForms, useSignUp} from '../../components/templates/auth'
+import {useMedia} from '../../hooks'
+import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
 
 const SignUpPage: NextPage = () => {
-  const {user} = useSelector(state => state)
-  const router = useRouter()
   const media = useMedia()
-
-  useEffect(() => {
-    if (!user.loading && user.username) {
-      router.push(Config.HOME_PAGE_PATH).catch()
-    }
-  }, [user.loading])
-
-  if (user.loading) {
-    return <Loader />
-  }
-
   return (
-    <BoxedContainer minHeight={'50vh'}>
-      <CenteredContainer p={2}>
-        <FormContainer>
-          <AuthForms getFormDetails={useSignUp} redirectTo={Config.HOME_PAGE_PATH} />
-        </FormContainer>
+    <ProfileWrapper requiredLoggedIn={false}>
+      <CenteredContainer p={2} spacing={2}>
+        <AuthForms getFormDetails={useSignUp} redirectTo={Config.HOME_PAGE_PATH} />
         <Stack
           direction={media.sm ? 'column' : 'row'}
           justifyContent={'space-between'}
@@ -42,7 +27,7 @@ const SignUpPage: NextPage = () => {
           <Link href={Config.FORGOT_PASSWORD_PAGE_PATH}>Forgot password</Link>
         </Stack>
       </CenteredContainer>
-    </BoxedContainer>
+    </ProfileWrapper>
   )
 }
 

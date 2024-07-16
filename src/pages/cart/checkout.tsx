@@ -1,7 +1,7 @@
 import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
-import {CMSService} from '../services'
 import React from 'react'
-import {Checkout} from '../components/templates/checkout/Checkout'
+import {Checkout} from '../../components/templates/checkout/Checkout'
+import {CMSService} from '../../services'
 
 const CheckoutPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
   return <Checkout />

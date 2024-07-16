@@ -1,69 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import {BoxedContainer} from '../../atoms'
+import React from 'react'
+import {BoxedContainer, Button, Link} from '../../atoms'
 import {Stack, Typography} from '@mui/material'
-import type {AccordionType} from '../../molecules'
 import {DynamicAccordionList} from '../../molecules'
-import {useSelector} from '../../../hooks'
-import {AccountDetails} from './AccountDetails'
-import {AddressDetails} from './AddressDetails'
-import {OrderDetails} from './OrderDetails'
-import {PaymentOptions} from './PaymentOptions'
-import type {ProductDetails} from '../products/Product'
-import {CMSService} from '../../../services'
+import {Modal} from '../../atoms/Modal'
+import {CheckCircleOutlined, HighlightOff} from '@mui/icons-material'
+import {Config} from '../../../config'
+import {useCheckout} from './useCheckout'
 
 export type CheckoutStatePropsType = {onSuccess: () => void}
 
 export const Checkout: React.FC = () => {
-  const {user} = useSelector(state1 => state1)
-  const [state, setState] = useState(user.username ? 1 : 0)
-  const {productIds} = useSelector(state => state.cart)
-  const [products, setProducts] = useState<ProductDetails[]>([])
-
-  useEffect(() => {
-    setState(user.username ? 1 : 0)
-  }, [user])
-
-  const handleStateChange = (newState: number) => () => {
-    setState(newState)
-  }
-
-  const handleChange = (index: number) => {
-    setState(index)
-  }
-
-  useEffect(() => {
-    CMSService.getCartProducts(productIds.map(item => item.productId))
-      .then(setProducts)
-      .catch()
-  }, [productIds])
-
-  const accordionList: AccordionType[] = [
-    {
-      header: <Typography>Account details {user.username ? `(${user.name})` : ''}</Typography>,
-      disabled: !!user.username,
-      content: <AccountDetails onSuccess={handleStateChange(1)} />
-    },
-    {
-      header: <Typography>Shipping address</Typography>,
-      disabled: state < 1,
-      content: <AddressDetails type={'shipping'} onSuccess={handleStateChange(2)} />
-    },
-    {
-      header: <Typography>Billing address</Typography>,
-      disabled: state < 2,
-      content: <AddressDetails type={'billing'} onSuccess={handleStateChange(3)} />
-    },
-    {
-      header: <Typography>Order summary</Typography>,
-      disabled: state < 3,
-      content: <OrderDetails onSuccess={handleStateChange(4)} products={products} />
-    },
-    {
-      header: <Typography>Payment options</Typography>,
-      disabled: state < 4,
-      content: <PaymentOptions products={products} />
-    }
-  ]
+  const {state, accordionList, handleChange, handleClose, orderStatus} = useCheckout()
 
   return (
     <BoxedContainer pt={2} pb={2}>
@@ -73,6 +20,41 @@ export const Checkout: React.FC = () => {
         </Typography>
         <DynamicAccordionList accordions={accordionList} expandAccordion={state} onChange={handleChange} />
       </Stack>
+      <Modal open={orderStatus === 'SUCCESS' || orderStatus === 'FAIL'} handleClose={handleClose}>
+        <Stack>
+          <Stack spacing={4}>
+            <Typography variant={'h4'} textAlign={'center'}>
+              Order status
+            </Typography>
+            {orderStatus === 'SUCCESS' && (
+              <Stack alignItems={'center'}>
+                <CheckCircleOutlined color={'success'} sx={{fontSize: '12rem'}} />
+                <Typography>Your order placed successfully!!</Typography>
+              </Stack>
+            )}
+            {orderStatus === 'FAIL' && (
+              <Stack alignItems={'center'}>
+                <HighlightOff color={'error'} sx={{fontSize: '12rem'}} />
+                <Typography>Oops! Your order is not placed!!</Typography>
+              </Stack>
+            )}
+          </Stack>
+          <Stack
+            direction={'row'}
+            flexWrap={'wrap'}
+            justifyContent={'center'}
+            spacing={2}
+            sx={{'&  *': {marginTop: '1rem'}}}
+          >
+            <Link href={Config.HOME_PAGE_PATH} onClick={handleClose}>
+              <Button variant={'contained'}>Continue shopping</Button>
+            </Link>
+            <Link href={Config.ORDERS_PAGE_PATH} onClick={handleClose}>
+              <Button variant={'contained'}>View order</Button>
+            </Link>
+          </Stack>
+        </Stack>
+      </Modal>
     </BoxedContainer>
   )
 }
