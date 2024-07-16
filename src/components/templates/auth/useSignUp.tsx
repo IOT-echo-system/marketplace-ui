@@ -1,7 +1,7 @@
 import type {ChangeEvent} from 'react'
 import {useRouter} from 'next/router'
 import type {FormInputType} from '../../atoms'
-import {useResetPassword} from './resetPassword/useResetPassword'
+import {useResetPassword} from './useResetPassword'
 import {useDispatch, useForm, useToast} from '../../../hooks'
 import {UserService} from '../../../services'
 import type {ServerError} from '../../../services/typing/authService'
@@ -13,7 +13,7 @@ export const useSignUp: AuthFormType = ({redirectTo, onSuccess}) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const {values, onChange, handleSubmit} = useForm({name: '', username: '', email: ''})
-  const {inputFields: passwordInputFields} = useResetPassword(false, '')
+  const {inputFields: passwordInputFields} = useResetPassword(false)
   const toast = useToast()
 
   const handleChange = <K extends keyof typeof values>(keyName: K) => {
@@ -23,7 +23,7 @@ export const useSignUp: AuthFormType = ({redirectTo, onSuccess}) => {
   }
 
   const onSubmit = () => {
-    const password = passwordInputFields[0].value as string
+    const password = passwordInputFields[0]?.value as string
     UserService.signUp({password, ...values})
       .then(response => {
         storage.setItem(StorageKeys.AUTH, {token: response.jwt})

@@ -1,5 +1,5 @@
 import {CartAction} from '../reducers/cart'
-import type {AddressType} from '../reducers/addressType'
+import type {AddressType} from '../reducers/address'
 
 export const addProductToCart = (productId: string, qty: number) => ({
   type: CartAction.ADD_ITEM_INTO_CART,

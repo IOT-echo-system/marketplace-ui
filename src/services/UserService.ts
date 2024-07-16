@@ -3,7 +3,7 @@ import '../utils/extenstions'
 import WebClient from './webClient'
 import type {AddressResponse, Order, OrderResponse, PaymentResponse, UserResponse} from './typing/authService'
 import type {User} from '../store/reducers/user'
-import type {AddressType} from '../store/reducers/addressType'
+import type {AddressType} from '../store/reducers/address'
 import type {CartStateType} from '../store/reducers/cart'
 
 class AuthService_ {

@@ -5,10 +5,9 @@ import {CMSService} from '../../services'
 import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
 
 const ForgotPasswordPage: NextPage = () => {
-
   return (
     <ProfileWrapper requiredLoggedIn={false} title={'Forget password'}>
-      <InProgressFeature/>
+      <InProgressFeature />
     </ProfileWrapper>
   )
 }

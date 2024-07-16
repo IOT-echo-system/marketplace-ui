@@ -7,7 +7,7 @@ import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
 const MyAccountPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
   return (
     <ProfileWrapper requiredLoggedIn title={'My account'}>
-      <MyAccount/>
+      <MyAccount />
     </ProfileWrapper>
   )
 }

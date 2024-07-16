@@ -1,6 +1,6 @@
 import React from 'react'
 import {Stack, Typography} from '@mui/material'
-import type {AddressType} from '../../store/reducers/addressType'
+import type {AddressType} from '../../store/reducers/address'
 
 type AddressPropsType = {address: AddressType; title: string}
 

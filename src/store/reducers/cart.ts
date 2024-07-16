@@ -1,5 +1,5 @@
 import type {TRootActions} from '../../typing/store'
-import type {AddressType} from './addressType'
+import type {AddressType} from './address'
 import type {ImageType} from '../../components/atoms'
 import type {ProductDetails} from '../../components/templates/products/Product'
 

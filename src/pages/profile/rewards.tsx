@@ -7,7 +7,7 @@ import {InProgressFeature} from '../../components/atoms'
 const OrdersPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
   return (
     <ProfileWrapper requiredLoggedIn title={'Rewards'}>
-      <InProgressFeature/>
+      <InProgressFeature />
     </ProfileWrapper>
   )
 }

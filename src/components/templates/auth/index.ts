@@ -1,5 +1,3 @@
 export * from './AuthForms'
 export * from './useSignUp'
 export * from './useLogin'
-export * from './resetPassword/ResetPassword'
-export * from './verifyOtp/VerifyOtp'

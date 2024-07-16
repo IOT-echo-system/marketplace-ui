@@ -1,5 +1,5 @@
 import moment from 'moment'
-import type {CartStateType, OrderProduct} from '../store/reducers/cart'
+import type {CartStateType, OrderProduct} from '../store/reducers'
 import type {ProductDetails} from '../components/templates/products/Product'
 
 export const formatDate = (date: Date | string, format?: string): string => {
@@ -32,8 +32,8 @@ export const calculateTotalQtyAndPrice = (
 } => {
   return cart.productIds.reduce(
     (count, {qty, productId}) => {
-      const price = products.find(product => product.productId === productId)?.price ?? 0
-      return {qty: count.qty + qty, price: count.price + qty * price}
+      const price = (products.find(product => product.productId === productId)?.price ?? 0) * qty
+      return {qty: count.qty + qty, price: count.price + price}
     },
     {price: 0, qty: 0}
   )
@@ -42,7 +42,8 @@ export const calculateTotalQtyAndPrice = (
 export const calculateTotalQtyAndPriceFromOrder = (products: OrderProduct[]): {qty: number; price: number} => {
   return products.reduce(
     (count, {qty, price}) => {
-      return {qty: count.qty + qty, price: count.price + qty * price}
+      const totalPrice = qty * price
+      return {qty: count.qty + qty, price: totalPrice + count.price}
     },
     {price: 0, qty: 0}
   )

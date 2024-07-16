@@ -27,7 +27,7 @@ export const WiderBoxedContainer = styled(Stack)(({theme}) => ({
   }
 }))
 
-export const Link = styled(LinkComponent)<LinkProps & { underline?: 'true' | 'false' }>(({theme, underline}) => ({
+export const Link = styled(LinkComponent)<LinkProps & {underline?: 'true' | 'false'}>(({theme, underline}) => ({
   textDecoration: underline === 'true' ? 'underline' : 'none',
   color: theme.palette.primary.dark,
   ['&:hover']: {

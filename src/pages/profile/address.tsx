@@ -9,7 +9,7 @@ const AddressPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProp
   const {addresses} = useSelector(state => state.address)
   return (
     <ProfileWrapper requiredLoggedIn title={`Address (${addresses.length})`}>
-      <Addresses/>
+      <Addresses />
     </ProfileWrapper>
   )
 }

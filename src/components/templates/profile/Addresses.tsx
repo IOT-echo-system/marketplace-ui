@@ -11,7 +11,7 @@ export const Addresses: React.FC = () => {
     <Stack>
       <Stack spacing={4}>
         {addresses.map(address => (
-          <Address key={address.id} address={address} title={''}/>
+          <Address key={address.id} address={address} title={''} />
         ))}
       </Stack>
       <ModalForms getFormDetails={AddAddress}>

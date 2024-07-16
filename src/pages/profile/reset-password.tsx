@@ -5,9 +5,11 @@ import {CMSService} from '../../services'
 import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
 
 const ResetPasswordPage: NextPage = () => {
-  return <ProfileWrapper requiredLoggedIn title={'Reset password'}>
-    <InProgressFeature/>
-  </ProfileWrapper>
+  return (
+    <ProfileWrapper requiredLoggedIn title={'Reset password'}>
+      <InProgressFeature />
+    </ProfileWrapper>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {

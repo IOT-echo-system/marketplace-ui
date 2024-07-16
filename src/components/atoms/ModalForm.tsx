@@ -5,7 +5,7 @@ import {Stack, Typography} from '@mui/material'
 import {Modal} from './Modal'
 import type {FormInputType} from './FormInput'
 import {FormInput} from './FormInput'
-import {Button} from './StyledComponents'
+import {LoadingButton} from './StyledComponents'
 
 export type FormPropsType = {
   formInputs: FormInputType[]
@@ -33,9 +33,9 @@ export const ModalForm: React.FC<PropsWithChildren<ModalFormPropsType>> = ({
           {formInputs.map((formInput, index) => {
             return <FormInput key={`form-input-${index}`} {...formInput} />
           })}
-          <Button type={'submit'} variant={'contained'} size={'large'} loading={loading}>
+          <LoadingButton type={'submit'} variant={'contained'} size={'large'} loading={loading}>
             {submitLabel}
-          </Button>
+          </LoadingButton>
         </Stack>
       </form>
     </Modal>

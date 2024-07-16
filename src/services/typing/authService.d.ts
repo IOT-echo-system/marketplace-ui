@@ -1,6 +1,4 @@
-import type {User} from '../../store/reducers/user'
-import type {AddressType} from '../../store/reducers/addressType'
-import type {OrderProduct} from '../../store/reducers/cart'
+import type {AddressType, OrderProduct, User} from '../../store/reducers'
 
 export type ServerError = {error: {status: number; name: string; message: string}}
 export type Order = {

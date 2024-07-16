@@ -1,6 +1,6 @@
 import WebClient from 'web-client-starter'
 import {apiConfig} from '../config/apiConfig'
-import type {FooterInfo, SiteInfo, SiteStateType} from '../store/reducers/site'
+import type {FooterInfo, SiteInfo, SiteStateType} from '../store/reducers'
 import type {
   FooterResponse,
   MainMenuResponse,
@@ -13,7 +13,6 @@ import type {
   SiteInfoResponse
 } from './typing/CMSService'
 import type {CategoryResponse, LocationPropsType} from '../components/molecules'
-import type {ContactFormValuesType} from '../components/templates/ContactUs/useContactForm'
 import type {TRootState} from '../typing/store'
 import {rootState} from '../store'
 import type {ProductDetails} from '../components/templates/products/Product'
@@ -68,14 +67,6 @@ class CMSService_ {
       path: this.config.officeLocation
     })
     return response.data.attributes
-  }
-
-  async contact(values: ContactFormValuesType): Promise<string> {
-    return await WebClient.post<string>({
-      baseUrl: this.baseUrl,
-      path: this.config.contact,
-      body: {data: values}
-    })
   }
 
   async getPageContent(slug: string): Promise<PageDetails> {

@@ -5,7 +5,7 @@ import {BoxedContainer, Loader} from '../../atoms'
 import {Stack, Typography} from '@mui/material'
 import {ProfileSidebar} from '../../molecules'
 
-type ProfileWrapperPropsType = PropsWithChildren<{ requiredLoggedIn: boolean, title?: string }>
+type ProfileWrapperPropsType = PropsWithChildren<{requiredLoggedIn: boolean; title?: string}>
 export const ProfileWrapper: React.FC<ProfileWrapperPropsType> = ({children, requiredLoggedIn, title}) => {
   const {user} = useSelector(state => state)
 
@@ -13,7 +13,7 @@ export const ProfileWrapper: React.FC<ProfileWrapperPropsType> = ({children, req
     <BoxedContainer pt={2} pb={2}>
       <Stack direction={'row'} spacing={2}>
         <Stack bgcolor={'background.paper'} width={'20%'} pt={2} pb={2}>
-          <ProfileSidebar requiredLoggedIn={requiredLoggedIn}/>
+          <ProfileSidebar requiredLoggedIn={requiredLoggedIn} />
         </Stack>
         <Stack bgcolor={'background.paper'} p={4} width={'80%'}>
           <Stack spacing={2} width={'100%'}>
@@ -21,7 +21,7 @@ export const ProfileWrapper: React.FC<ProfileWrapperPropsType> = ({children, req
               {title}
             </Typography>
             <Stack width={'100%'} height={'100%'}>
-              {user.loading ? <Loader/> : <>{children}</>}
+              {user.loading ? <Loader /> : <>{children}</>}
             </Stack>
           </Stack>
         </Stack>

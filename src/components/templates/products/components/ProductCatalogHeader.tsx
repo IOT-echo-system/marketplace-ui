@@ -6,7 +6,7 @@ import {useMedia} from '../../../../hooks'
 type ProductCatalogHeaderPropsType = {title: string} & MetaResponseType
 export const ProductCatalogHeader: React.FC<ProductCatalogHeaderPropsType> = ({title, pagination}) => {
   const media = useMedia()
-  const start = (pagination.page - 1) * pagination.pageSize + 1
+  const start = (pagination.page - 1) * pagination.pageSize
   const end = pagination.page * pagination.pageSize
   return (
     <Stack direction={'row'} flexWrap={'wrap'} alignItems={'center'} spacing={2}>
@@ -14,8 +14,8 @@ export const ProductCatalogHeader: React.FC<ProductCatalogHeaderPropsType> = ({t
         {title}
       </Typography>
       <Typography variant={media.sm ? 'body2' : 'body1'}>
-        (Showing {Math.min(start, pagination.total)} – {Math.min(end, pagination.total)} products of {pagination.total}{' '}
-        products)
+        (Showing {Math.min(start + 1, pagination.total)} – {Math.min(end, pagination.total)} products of{' '}
+        {pagination.total} products)
       </Typography>
     </Stack>
   )

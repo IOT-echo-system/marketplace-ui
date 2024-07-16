@@ -1,23 +1,18 @@
-import {useRouter} from 'next/router'
-import type React from 'react'
-import type {ChangeEvent} from 'react'
+import type {ChangeEvent, FormEvent} from 'react'
 import {useState} from 'react'
-import type {FormInputType} from '../../../atoms'
-import {useForm, useToast} from '../../../../hooks'
+import type {FormInputType} from '../../atoms'
+import {useForm} from '../../../hooks'
 
 type UseLoginReturnType = {
   inputFields: FormInputType[]
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void
+  handleSubmit: (event: FormEvent<HTMLFormElement>) => void
 }
 
-const useResetPassword = (withOldPassword: boolean, redirectTo: string): UseLoginReturnType => {
-  const router = useRouter()
-  const initValues = withOldPassword ? {currentPassword: '', password: ''} : {password: ''}
+const useResetPassword = (withOldPassword: boolean): UseLoginReturnType => {
   const [confirmPassword, setConfirmPassword] = useState('')
-  const {values, onChange, handleSubmit} = useForm(initValues)
+  const {values, onChange, handleSubmit} = useForm({currentPassword: '', password: ''})
   const [errorOnPassword, setErrorOnPassword] = useState(false)
   const [passwordHelperText, setPasswordHelperText] = useState('')
-  const toast = useToast()
 
   const handleChange = <K extends keyof typeof values>(keyName: K) => {
     return (event: ChangeEvent<HTMLInputElement>) => {
@@ -25,11 +20,7 @@ const useResetPassword = (withOldPassword: boolean, redirectTo: string): UseLogi
     }
   }
 
-  const onSubmit = () => {
-    // UserService.resetPassword(values)
-    //   .then(() => router.push(redirectTo))
-    //   .catch(toast.error)
-  }
+  const onSubmit = () => {}
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const password = event.target.value
