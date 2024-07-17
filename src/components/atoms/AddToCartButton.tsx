@@ -1,10 +1,10 @@
 import React from 'react'
-import {Button} from '@mui/material'
 import {ShoppingCart} from '@mui/icons-material'
-import {addProductToCart} from '../../store/actions/cart'
+import {addProductToCart} from '../../store/actions'
 import {useDispatch, useSelector} from '../../hooks'
 import {useRouter} from 'next/router'
 import {Config} from '../../config'
+import {Button} from './StyledComponents'
 
 type AddToCartButtonPropsType = {productId: string}
 export const AddToCartButton: React.FC<AddToCartButtonPropsType> = ({productId}) => {
@@ -27,7 +27,6 @@ export const AddToCartButton: React.FC<AddToCartButtonPropsType> = ({productId})
 
   return (
     <Button
-      sx={{textTransform: 'inherit'}}
       startIcon={<ShoppingCart />}
       variant={'contained'}
       color={isAlreadyInCart ? 'warning' : 'primary'}

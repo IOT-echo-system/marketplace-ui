@@ -5,10 +5,6 @@ import type {
   FooterResponse,
   MainMenuResponse,
   OfficeLocationResponse,
-  PageDetails,
-  PageDetailsResponse,
-  PageListResponse,
-  PageSummaryResponse,
   ProductResponse,
   SiteInfoResponse
 } from './typing/CMSService'
@@ -16,8 +12,9 @@ import type {CategoryResponse, LocationPropsType} from '../components/molecules'
 import type {TRootState} from '../typing/store'
 import {rootState} from '../store'
 import type {ProductDetails} from '../components/templates/products/Product'
-import {HeaderComponentNameMap} from '../components/widgets/widgets'
+import {CarouselComponentNameMap} from '../components/widgets/widgets'
 import '../utils/extenstions'
+import type {PageDetails, PageDetailsResponse} from './typing/pageDetails'
 
 class CMSService_ {
   private readonly config = apiConfig.cms
@@ -53,13 +50,13 @@ class CMSService_ {
     return response.data.attributes
   }
 
-  async getPageList(): Promise<PageSummaryResponse[]> {
-    const response = await WebClient.get<PageListResponse>({
-      baseUrl: this.baseUrl,
-      path: this.config.pageList
-    })
-    return response.data.map(data => data.attributes)
-  }
+  // async getPageList(): Promise<PageSummaryResponse[]> {
+  //   const response = await WebClient.get<PageListResponse>({
+  //     baseUrl: this.baseUrl,
+  //     path: this.config.pageList
+  //   })
+  //   return response.data.map(data => data.attributes)
+  // }
 
   async getOfficeLocation(): Promise<LocationPropsType> {
     const response = await WebClient.get<OfficeLocationResponse>({
@@ -75,6 +72,9 @@ class CMSService_ {
       path: this.config.pageDetails,
       uriVariables: {slug}
     })
+    if (response.data.isEmpty()) {
+      throw new Error('Data not found')
+    }
     // response.data[0]?.attributes?.ctaBanner.forEach(content => {
     //   content.widget = CTABannerComponentNameMap[content.__component]
     //   content.data = {...content}
@@ -83,14 +83,15 @@ class CMSService_ {
     //   content.widget = ComponentNameMap[content.__component]
     //   content.data = {...content}
     // })
-    response.data[0]?.attributes?.header.forEach(content => {
-      content.widget = HeaderComponentNameMap[content.__component]
-      content.data = {...content}
+    // response.data[0]?.attributes?.header.forEach(content => {
+    //   content.widget = HeaderComponentNameMap[content.__component]
+    //   content.data = {...content}
+    // })
+    const carousel = response.data[0].attributes.carousel.map(content => {
+      return {data: {...content}, widget: CarouselComponentNameMap[content.__component]}
     })
-    if (response.data.length === 0) {
-      throw new Error('Data not found')
-    }
-    return response.data[0].attributes
+
+    return {carousel}
   }
 
   async getInitialValue(): Promise<TRootState> {

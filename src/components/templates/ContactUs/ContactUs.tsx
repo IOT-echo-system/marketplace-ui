@@ -10,7 +10,7 @@ export const ContactUs: React.FC = () => {
           Contact us
         </Typography>
       </Stack>
-      <InProgressFeature/>
+      <InProgressFeature />
     </Stack>
   )
 }

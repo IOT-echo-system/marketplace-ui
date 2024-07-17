@@ -26,6 +26,8 @@
     "notistack": "^3.0.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-material-ui-carousel": "^3.4.2",
+    "react-swipeable-views-utils": "^0.14.0",
     "styled-components": "^6.1.0",
     "uuid": "^9.0.1",
     "web-client-starter": "^0.0.5"

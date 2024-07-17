@@ -42,14 +42,12 @@ export const MenuItemLink = styled(LinkComponent)<LinkProps>(() => ({
   }
 }))
 
-export const LoadingButton = styled(MuiLoadingButton)<LoadingButtonProps & ButtonProps>(({theme}) => ({
-  textTransform: 'initial',
-  padding: theme.spacing(0.5, 4)
+export const LoadingButton = styled(MuiLoadingButton)<LoadingButtonProps & ButtonProps>(() => ({
+  textTransform: 'initial'
 }))
 
-export const Button = styled(MuiButton)<ButtonProps>(({theme}) => ({
-  textTransform: 'initial',
-  padding: theme.spacing(0.5, 4)
+export const Button = styled(MuiButton)<ButtonProps>(() => ({
+  textTransform: 'initial'
 }))
 
 export const LinkAsText = styled(Link)<ButtonProps>(() => ({

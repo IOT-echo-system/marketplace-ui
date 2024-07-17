@@ -1,10 +1,9 @@
 import React from 'react'
-import type {WidgetPropType} from './widget'
 import {Stack, styled, Typography} from '@mui/material'
 import type {CTAPropsType, ImageType} from '../atoms'
 import {BoxedContainer, CTA} from '../atoms'
-import {apiConfig} from '../../config/apiConfig'
 import {useMedia} from '../../hooks'
+import type {WidgetPropType} from '../../services/typing/pageDetails'
 
 const Container = styled(Stack)<{src: string}>(({theme, src}) => ({
   background: src ? `url(${src})` : theme.palette.primary.light,
@@ -22,7 +21,7 @@ const Container = styled(Stack)<{src: string}>(({theme, src}) => ({
   }
 }))
 
-type HeroBannerPropsType = {
+export type HeroBannerPropsType = {
   cta?: CTAPropsType
   title: string
   subtitle: string
@@ -34,14 +33,20 @@ type HeroBannerPropsType = {
 export const HeroBanner: React.FC<WidgetPropType<HeroBannerPropsType>> = ({data}) => {
   const media = useMedia()
   return (
-    <Container src={apiConfig.assets + data.image.link}>
+    <Container src={(media.md ? data.mobileImage?.link : null) ?? data.image.link}>
       <BoxedContainer>
-        <Stack spacing={2} width={media.md ? '100%' : '60%'}>
-          <Typography variant={media.md ? 'h3' : 'h1'} component={'h1'} color={data.darkText ? 'black' : 'white'}>
+        <Stack spacing={2} width={{xs: '100%', md: '60%'}}>
+          <Typography
+            variant={media.md ? 'h3' : 'h2'}
+            component={'h1'}
+            color={data.darkText ? 'black' : 'white'}
+            style={{whiteSpace: 'pre-line'}}
+          >
             {data.title}
           </Typography>
           <Typography
-            variant={media.md ? 'subtitle1' : 'h4'}
+            style={{whiteSpace: 'pre-line'}}
+            variant={media.md ? 'subtitle1' : 'h5'}
             component={'h2'}
             color={data.darkText ? 'black' : 'white'}
           >

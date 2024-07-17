@@ -11,3 +11,10 @@ export const CTABannerComponentNameMap = {
 export const HeaderComponentNameMap = {
   'hero-banner.hero-banner': 'HeroBanner'
 }
+
+export const CarouselComponentNameMap = {
+  'hero-banner.hero-banner': 'HeroBanner',
+  'text-with-cta.text-with-cta': 'TextWithCTA'
+} as const
+
+export type CarouselComponentNames = (typeof CarouselComponentNameMap)[keyof typeof CarouselComponentNameMap]
