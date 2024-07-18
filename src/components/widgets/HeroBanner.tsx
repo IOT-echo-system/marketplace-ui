@@ -1,7 +1,7 @@
 import React from 'react'
 import {Stack, styled, Typography} from '@mui/material'
 import type {CTAPropsType, ImageType} from '../atoms'
-import {BoxedContainer, CTA} from '../atoms'
+import {BoxedContainer, CTAButton} from '../atoms'
 import {useMedia} from '../../hooks'
 import type {WidgetPropType} from '../../services/typing/pageDetails'
 
@@ -52,7 +52,7 @@ export const HeroBanner: React.FC<WidgetPropType<HeroBannerPropsType>> = ({data}
           >
             {data.subtitle}
           </Typography>
-          {data.cta && <CTA cta={data.cta} />}
+          {data.cta && <CTAButton cta={data.cta} />}
         </Stack>
       </BoxedContainer>
     </Container>

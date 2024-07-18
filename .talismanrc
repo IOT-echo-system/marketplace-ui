@@ -9,4 +9,8 @@ fileignoreconfig:
   checksum: d8a7b0c8a113585baea41e7e2a9d9f42645e217aa486363d9afbb49dfbf6890c
 - filename: package-lock.json
   checksum: 28bdea8b8d737f4ec1071a38150847ab01d0a9f09c1cdd5b2d857bf064d64578
+- filename: src/components/molecules/AccordionList.tsx
+  checksum: 1ed7f12253a0d6f03734c3bfbde40734459402780f9db1a3b57e5420dbb211fe
+- filename: src/components/organisms/Footer.tsx
+  checksum: fb196647f9635a8f778934c083369b7d1eec5349ff608bfb9efc70206e4ef55c
 version: ""

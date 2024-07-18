@@ -1,7 +1,7 @@
 import type {CarouselComponentNameMap, CarouselComponentNames} from '../../components/widgets/widgets'
 import type {HeroBannerPropsType} from '../../components/widgets'
 
-export type WidgetPropType<T = unknown> = { data: T, id: number }
+export type WidgetPropType<T = unknown> = { data: T }
 // export type PageSummaryResponse = { slug: string; updatedAt: Date }
 // export type PageListResponse = { data: Array<{ attributes: PageSummaryResponse }> }
 
@@ -17,6 +17,7 @@ export type AttributesResponseType = {
 export type CarouselType = {
   widget: CarouselComponentNames
   data: HeroBannerPropsType
+
 }
 
 export type PageDetailsResponse = { data: Array<{ attributes: AttributesResponseType }> }

@@ -1,7 +1,22 @@
 import type {LoadingButtonProps} from '@mui/lab'
 import {LoadingButton as MuiLoadingButton} from '@mui/lab'
-import type {ButtonBaseProps, ButtonProps, StackProps} from '@mui/material'
-import {Button as MuiButton, ButtonBase, Stack, styled} from '@mui/material'
+import type {
+  AccordionDetailsProps,
+  AccordionProps,
+  AccordionSummaryProps,
+  ButtonBaseProps,
+  ButtonProps,
+  StackProps
+} from '@mui/material'
+import {
+  Accordion as MuiAccordion,
+  AccordionDetails as MuiAccordionDetails,
+  AccordionSummary as MuiAccordionSummary,
+  Button as MuiButton,
+  ButtonBase,
+  Stack,
+  styled
+} from '@mui/material'
 import type {LinkProps} from 'next/link'
 import LinkComponent from 'next/link'
 
@@ -27,7 +42,7 @@ export const WiderBoxedContainer = styled(Stack)(({theme}) => ({
   }
 }))
 
-export const Link = styled(LinkComponent)<LinkProps & {underline?: 'true' | 'false'}>(({theme, underline}) => ({
+export const Link = styled(LinkComponent)<LinkProps & { underline?: 'true' | 'false' }>(({theme, underline}) => ({
   textDecoration: underline === 'true' ? 'underline' : 'none',
   color: theme.palette.primary.dark,
   ['&:hover']: {
@@ -74,18 +89,20 @@ export const CenteredContainer = styled(Stack)<StackProps>(({theme}) => ({
   }
 }))
 
-export const FormContainer = styled(Stack)<StackProps>(({theme}) => ({
-  background: theme.palette.background.paper,
-  boxShadow: theme.shadows[1],
-  borderRadius: theme.spacing(1),
-  margin: theme.spacing(1, 'auto'),
-  width: '100%',
-  padding: theme.spacing(2),
-  justifyContent: 'center',
-  '&>*': {
-    margin: theme.spacing(0.5)
+export const Accordion = styled(MuiAccordion)<AccordionProps>(({theme}) => ({
+  margin: 0,
+  '&.Mui-expanded': {
+    margin: 0,
   },
-  [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(1)
+  '&.Mui-disabled': {
+    background: theme.palette.grey[100],
   }
+}))
+
+export const AccordionDetails = styled(MuiAccordionDetails)<AccordionDetailsProps>(({theme}) => ({
+  padding: theme.spacing(0),
+}))
+
+export const AccordionSummary = styled(MuiAccordionSummary)<AccordionSummaryProps>(({theme}) => ({
+  padding: theme.spacing(1, 2)
 }))

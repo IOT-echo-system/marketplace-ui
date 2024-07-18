@@ -1,7 +1,8 @@
 import React from 'react'
 import {Link} from './StyledComponents'
+import type {CTAPropsType} from './CTAButton'
 
-export type MenuItemPropsType = {label: string; link: string; underline?: 'true' | 'false'}
+export type MenuItemPropsType = CTAPropsType & { underline?: 'true' | 'false' }
 
 export const MenuItem: React.FC<MenuItemPropsType> = ({label, link, underline}) => {
   return (

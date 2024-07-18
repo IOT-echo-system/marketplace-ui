@@ -1,7 +1,7 @@
 import React from 'react'
 import type {WidgetPropType} from './widget'
 import type {CTAPropsType} from '../atoms'
-import {BoxedContainer, CTA} from '../atoms'
+import {BoxedContainer, CTAButton} from '../atoms'
 import {Stack, styled, Typography} from '@mui/material'
 import {useMedia} from '../../hooks'
 
@@ -48,7 +48,7 @@ export const TextWithCTA: React.FC<WidgetPropType<TextWithCTADataType>> = ({data
           <Typography variant={'h2'} textAlign={'center'}>
             {data.text}
           </Typography>
-          <CTA cta={data.cta} />
+          <CTAButton cta={data.cta} />
         </Stack>
       </BoxedContainer>
     </Container>

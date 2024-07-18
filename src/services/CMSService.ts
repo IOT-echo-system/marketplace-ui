@@ -23,8 +23,8 @@ class CMSService_ {
   async getSiteInfoWithHeaderAndFooter(): Promise<SiteStateType> {
     const siteInfo = await this.getSiteInfo()
     const mainMenu = await this.getMainMenu()
-    // const footer = await this.getFooter()
-    return {siteInfo, header: {menus: mainMenu}, footer: rootState.site.footer}
+    const footer = await this.getFooter()
+    return {siteInfo, header: {menus: mainMenu}, footer}
   }
 
   async getSiteInfo(): Promise<SiteInfo> {

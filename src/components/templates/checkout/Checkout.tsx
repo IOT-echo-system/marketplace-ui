@@ -7,7 +7,7 @@ import {CheckCircleOutlined, HighlightOff} from '@mui/icons-material'
 import {Config} from '../../../config'
 import {useCheckout} from './useCheckout'
 
-export type CheckoutStatePropsType = {onSuccess: () => void}
+export type CheckoutStatePropsType = { onSuccess: () => void }
 
 export const Checkout: React.FC = () => {
   const {state, accordionList, handleChange, handleClose, orderStatus} = useCheckout()
@@ -18,7 +18,7 @@ export const Checkout: React.FC = () => {
         <Typography variant={'h5'} component={'h1'}>
           Checkout
         </Typography>
-        <DynamicAccordionList accordions={accordionList} expandAccordion={state} onChange={handleChange} />
+        <DynamicAccordionList accordions={accordionList} expandAccordion={state} onChange={handleChange}/>
       </Stack>
       <Modal open={orderStatus === 'SUCCESS' || orderStatus === 'FAIL'} handleClose={handleClose}>
         <Stack>
@@ -28,13 +28,13 @@ export const Checkout: React.FC = () => {
             </Typography>
             {orderStatus === 'SUCCESS' && (
               <Stack alignItems={'center'}>
-                <CheckCircleOutlined color={'success'} sx={{fontSize: '12rem'}} />
+                <CheckCircleOutlined color={'success'} sx={{fontSize: '12rem'}}/>
                 <Typography>Your order placed successfully!!</Typography>
               </Stack>
             )}
             {orderStatus === 'FAIL' && (
               <Stack alignItems={'center'}>
-                <HighlightOff color={'error'} sx={{fontSize: '12rem'}} />
+                <HighlightOff color={'error'} sx={{fontSize: '12rem'}}/>
                 <Typography>Oops! Your order is not placed!!</Typography>
               </Stack>
             )}

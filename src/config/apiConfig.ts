@@ -6,12 +6,12 @@ export const apiConfig = {
   cms: {
     siteInfo: '/site-info?populate=*',
     mainMenu: '/main-menu?populate=*',
-    footer: '/footer?populate=sections.navLinks,social.socials',
+    footer: '/footer?populate[sections][populate]=*&populate[socials][populate]=*',
     pageList: '/pages',
     officeLocation: '/office-location',
     productDetails: '/products?filters[slug][$eq]={productSlug}&populate=*',
     productsSummary:
-      // eslint-disable-next-line max-len
+    // eslint-disable-next-line max-len
       '/products?sort[0]=productId:asc&filters[categories][link][$eq]={category}&populate=*&pagination[pageSize]={pageSize}&pagination[page]={page}',
     pageDetails: '/pages?filters[slug][$eq]={slug}',
     contact: '/contacts',
