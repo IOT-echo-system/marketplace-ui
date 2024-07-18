@@ -42,7 +42,7 @@ export const WiderBoxedContainer = styled(Stack)(({theme}) => ({
   }
 }))
 
-export const Link = styled(LinkComponent)<LinkProps & { underline?: 'true' | 'false' }>(({theme, underline}) => ({
+export const Link = styled(LinkComponent)<LinkProps & {underline?: 'true' | 'false'}>(({theme, underline}) => ({
   textDecoration: underline === 'true' ? 'underline' : 'none',
   color: theme.palette.primary.dark,
   ['&:hover']: {
@@ -92,15 +92,15 @@ export const CenteredContainer = styled(Stack)<StackProps>(({theme}) => ({
 export const Accordion = styled(MuiAccordion)<AccordionProps>(({theme}) => ({
   margin: 0,
   '&.Mui-expanded': {
-    margin: 0,
+    margin: 0
   },
   '&.Mui-disabled': {
-    background: theme.palette.grey[100],
+    background: theme.palette.grey[100]
   }
 }))
 
 export const AccordionDetails = styled(MuiAccordionDetails)<AccordionDetailsProps>(({theme}) => ({
-  padding: theme.spacing(0),
+  padding: theme.spacing(0)
 }))
 
 export const AccordionSummary = styled(MuiAccordionSummary)<AccordionSummaryProps>(({theme}) => ({

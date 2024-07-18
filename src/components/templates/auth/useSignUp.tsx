@@ -6,7 +6,7 @@ import {useDispatch, useForm, useToast} from '../../../hooks'
 import {UserService} from '../../../services'
 import type {ServerError} from '../../../services/typing/authService'
 import {storage, StorageKeys} from '../../../utils/storage'
-import {setUser} from '../../../store/actions/user'
+import {setUser} from '../../../store/actions'
 import type {AuthFormType} from './AuthForms'
 
 export const useSignUp: AuthFormType = ({redirectTo, onSuccess}) => {

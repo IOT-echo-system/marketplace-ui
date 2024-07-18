@@ -11,7 +11,7 @@ export const apiConfig = {
     officeLocation: '/office-location',
     productDetails: '/products?filters[slug][$eq]={productSlug}&populate=*',
     productsSummary:
-    // eslint-disable-next-line max-len
+      // eslint-disable-next-line max-len
       '/products?sort[0]=productId:asc&filters[categories][link][$eq]={category}&populate=*&pagination[pageSize]={pageSize}&pagination[page]={page}',
     pageDetails: '/pages?filters[slug][$eq]={slug}',
     contact: '/contacts',

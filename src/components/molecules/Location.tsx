@@ -15,10 +15,10 @@ export type LocationPropsType = {
 export const Location: React.FC<LocationPropsType> = location => {
   return (
     <Stack spacing={2} justifyContent={'start'}>
-      <Typography variant={'h4'} component={'div'}>
-        Office location
-      </Typography>
       <Typography variant={'h5'} component={'div'}>
+        Store location
+      </Typography>
+      <Typography variant={'h6'} component={'div'}>
         {location.companyName}
       </Typography>
       <Stack>
@@ -27,20 +27,15 @@ export const Location: React.FC<LocationPropsType> = location => {
         <Typography>{location.address3}</Typography>
         <Typography>{location.address4}</Typography>
       </Stack>
-
       <Stack direction={'row'} spacing={2} alignItems={'center'}>
-        <Typography>
-          <strong>Phone</strong>
-        </Typography>
+        <Typography fontWeight={'bold'}>Phone</Typography>
         <Link href={`tel:${location.phone}`}>{location.phone}</Link>
       </Stack>
       <Stack direction={'row'} spacing={2} alignItems={'center'}>
-        <Typography>
-          <strong>Email</strong>
-        </Typography>
+        <Typography fontWeight={'bold'}> Email</Typography>
         <Link href={`mailto:${location.email}`}>{location.email}</Link>
       </Stack>
-      <Typography variant={'h5'} component={Link} href={location.mapLink} target={'_blank'}>
+      <Typography variant={'h6'} component={Link} href={location.mapLink} target={'_blank'}>
         View map
       </Typography>
     </Stack>

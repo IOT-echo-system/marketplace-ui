@@ -51,27 +51,27 @@ export const useCheckout = (): UseCheckoutReturnType => {
     {
       header: <Typography>Account details {user.username ? `(${user.name})` : ''}</Typography>,
       disabled: !!user.username,
-      content: <AccountDetails onSuccess={handleStateChange(1)}/>
+      content: <AccountDetails onSuccess={handleStateChange(1)} />
     },
     {
       header: <Typography>Shipping address</Typography>,
       disabled: state < 1,
-      content: <AddressDetails type={'shipping'} onSuccess={handleStateChange(2)}/>
+      content: <AddressDetails type={'shipping'} onSuccess={handleStateChange(2)} />
     },
     {
       header: <Typography>Billing address</Typography>,
       disabled: state < 2,
-      content: <AddressDetails type={'billing'} onSuccess={handleStateChange(3)}/>
+      content: <AddressDetails type={'billing'} onSuccess={handleStateChange(3)} />
     },
     {
       header: <Typography>Order summary</Typography>,
       disabled: state < 3,
-      content: <OrderDetails onSuccess={handleStateChange(4)} products={products}/>
+      content: <OrderDetails onSuccess={handleStateChange(4)} products={products} />
     },
     {
       header: <Typography>Payment options</Typography>,
       disabled: state < 4,
-      content: <PaymentOptions products={products} onSuccess={handleOrderStatus}/>
+      content: <PaymentOptions products={products} onSuccess={handleOrderStatus} />
     }
   ]
 

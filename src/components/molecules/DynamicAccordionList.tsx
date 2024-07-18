@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import type {AccordionType} from './AccordionList'
-import {Accordion, AccordionDetails, AccordionSummary,} from './AccordionList'
+import {Accordion, AccordionDetails, AccordionSummary} from './AccordionList'
 
 export type DynamicAccordionType = Omit<AccordionType, 'expanded'>
 

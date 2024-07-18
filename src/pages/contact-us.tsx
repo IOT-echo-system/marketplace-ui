@@ -11,32 +11,32 @@ type ContactUsPagePropsType = {location: LocationPropsType}
 
 const ContactUsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({location}) => {
   return (
-    <BoxedContainer
-      justifyContent={'center'}
-      alignItems={{xs: 'center', lg: 'start'}}
-      pt={4}
-      pb={4}
-      spacing={{xs: 4, sm: 8, lg: 12}}
-      direction={{xs: 'column', lg: 'row'}}
-    >
-      <Stack sx={{width: {xs: '100%', sm: '80%', md: '60%', lg: '50%'}}} spacing={2}>
-        <ContactUs />
-      </Stack>
-      <Stack direction={'row'} sx={{width: {xs: '100%', sm: '80%', md: '60%', lg: 'auto'}}} spacing={2}>
-        <Location {...location} />
-      </Stack>
-    </BoxedContainer>
+    <Stack p={4}>
+      <BoxedContainer
+        justifyContent={'center'}
+        alignItems={{xs: 'center', lg: 'flex-start'}}
+        direction={{xs: 'column', lg: 'row'}}
+        spacing={4}
+      >
+        <Stack sx={{width: {xs: '100%', sm: '80%', md: '60%', lg: '50%'}}}>
+          <ContactUs />
+        </Stack>
+        <Stack sx={{width: {xs: '100%', sm: '80%', md: '60%', lg: 'auto'}}}>
+          <Location {...location} />
+        </Stack>
+      </BoxedContainer>
+    </Stack>
   )
 }
 
 export const getStaticProps: GetStaticProps<ContactUsPagePropsType> = async () => {
+  const initialValue = await CMSService.getInitialValue()
   try {
     const location = await CMSService.getOfficeLocation()
-    const initialValue = await CMSService.getInitialValue()
     return {props: {location, initialValue}, revalidate: 84600}
   } catch (error) {
     const location: LocationPropsType = {address1: '', address2: '', companyName: '', email: '', mapLink: '', phone: ''}
-    return {props: {location}, revalidate: 30}
+    return {props: {location, initialValue}, revalidate: 30}
   }
 }
 

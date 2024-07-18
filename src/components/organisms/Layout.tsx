@@ -5,10 +5,9 @@ import {Header} from './Header'
 import {Footer} from './Footer'
 import {useMedia} from '../../hooks'
 
-const Container = styled(Stack)(({theme}) => ({
+const Container = styled(Stack)(() => ({
   minHeight: '100vh',
-  minWidth: '100vw',
-  background: theme.palette.background.default
+  minWidth: '100vw'
 }))
 
 export const Layout: React.FC<PropsWithChildren> = ({children}) => {

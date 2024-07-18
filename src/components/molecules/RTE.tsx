@@ -28,12 +28,12 @@ const TextContainer = styled('div')(({theme}) => ({
   }
 }))
 
-export type RTEPropsType = {rte: string}
+export type RTEPropsType = {text: string}
 
-export const RTE: React.FC<RTEPropsType> = ({rte}) => {
+export const RTE: React.FC<RTEPropsType> = ({text}) => {
   return (
     <TextContainer>
-      <div dangerouslySetInnerHTML={{__html: rte}} />
+      <div dangerouslySetInnerHTML={{__html: text}} />
     </TextContainer>
   )
 }

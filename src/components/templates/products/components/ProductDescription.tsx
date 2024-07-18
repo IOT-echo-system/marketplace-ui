@@ -6,7 +6,7 @@ import {RTE} from '../../../molecules'
 export const ProductDescription: React.FC<{product: ProductDetailsType}> = ({product}) => {
   return (
     <Stack spacing={4}>
-      <RTE rte={product.description} />
+      <RTE text={product.description} />
     </Stack>
   )
 }

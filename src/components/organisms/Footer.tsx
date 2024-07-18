@@ -11,13 +11,13 @@ import {AccordionList} from '../molecules'
 
 const Container = styled(Stack)(({theme}) => ({
   borderTop: `1px solid ${theme.palette.background.default}`,
-  background: theme.palette.background.paper,
+  background: theme.palette.background.paper
 }))
 
 const MenuContainer = styled(Stack)(({theme}) => ({
   padding: theme.spacing(2),
   [theme.breakpoints.down('md')]: {
-    borderTop: `1px solid ${theme.palette.divider}`,
+    borderTop: `1px solid ${theme.palette.divider}`
   }
 }))
 
@@ -54,18 +54,24 @@ export const Footer: React.FC = () => {
     return {
       expanded: index === 0,
       header: <Typography fontWeight={'bold'}>{title}</Typography>,
-      content: <Stack spacing={2} pb={2} pl={4}>
-        {ctas.map(({link, label}, index) => {
-          return <Link sx={{color: 'inherit'}} key={`${link}-${index}`} href={link}>{label}</Link>
-        })}
-      </Stack>,
+      content: (
+        <Stack spacing={2} pb={2} pl={4}>
+          {ctas.map(({link, label}, index) => {
+            return (
+              <Link sx={{color: 'inherit'}} key={`${link}-${index}`} href={link}>
+                {label}
+              </Link>
+            )
+          })}
+        </Stack>
+      )
     }
   })
 
   return (
     <Container alignItems={'center'} spacing={{xs: 2, md: 4}} p={{xs: 0, md: 2}}>
       <Stack sx={{display: {xs: 'flex', md: 'none'}}} m={0} width={'100%'}>
-        <AccordionList disableBorder accordions={accordionList}/>
+        <AccordionList disableBorder accordions={accordionList} />
       </Stack>
       <BoxedContainer sx={{display: {md: 'flex', xs: 'none'}}} direction={'row'} justifyContent={'space-evenly'}>
         {sections.map(({title, ctas}, index) => {
@@ -76,7 +82,9 @@ export const Footer: React.FC = () => {
               </Typography>
               <Stack spacing={2} pl={2}>
                 {ctas.map(({link, label}, index) => (
-                  <Link sx={{color: 'inherit'}} key={`${link}-${index}`} href={link}>{label}</Link>
+                  <Link sx={{color: 'inherit'}} key={`${link}-${index}`} href={link}>
+                    {label}
+                  </Link>
                 ))}
               </Stack>
             </MenuContainer>
@@ -96,9 +104,11 @@ export const Footer: React.FC = () => {
             if (!Icon) {
               return <></>
             }
-            return <Link href={cta.link} key={`cta-${index}`} sx={{color: 'inherit'}}>
-              <Icon fontSize={'medium'}/>
-            </Link>
+            return (
+              <Link href={cta.link} key={`cta-${index}`} sx={{color: 'inherit'}}>
+                <Icon fontSize={'medium'} />
+              </Link>
+            )
           })}
         </Stack>
       </Stack>
@@ -108,7 +118,7 @@ export const Footer: React.FC = () => {
       </Stack>
       <ScrollTop>
         <Fab color="primary" size="small" aria-label="scroll back to top">
-          <KeyboardArrowUp/>
+          <KeyboardArrowUp />
         </Fab>
       </ScrollTop>
     </Container>

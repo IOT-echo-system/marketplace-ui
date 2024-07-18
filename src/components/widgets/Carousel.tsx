@@ -1,8 +1,9 @@
 import React from 'react'
+import type {HeroBannerPropsType} from './HeroBanner'
 import {HeroBanner} from './HeroBanner'
 import MuiCarousel from 'react-material-ui-carousel'
 
-import type {CarouselType, WidgetPropType} from '../../services/typing/pageDetails'
+import type {WidgetPropType} from '../../services/typing/pageDetails'
 import theme from '../../theme/theme'
 
 const getIconContainerStyles = (icons: number): React.CSSProperties => ({
@@ -30,7 +31,7 @@ const activeIconStyles: React.CSSProperties = {
   margin: '8px 4px'
 }
 
-export const Carousel: React.FC<WidgetPropType<CarouselType[]>> = ({data}) => {
+export const Carousel: React.FC<WidgetPropType<Array<{data: HeroBannerPropsType}>>> = ({data}) => {
   return (
     <MuiCarousel
       autoPlay

@@ -12,9 +12,9 @@ import type {CategoryResponse, LocationPropsType} from '../components/molecules'
 import type {TRootState} from '../typing/store'
 import {rootState} from '../store'
 import type {ProductDetails} from '../components/templates/products/Product'
-import {CarouselComponentNameMap} from '../components/widgets/widgets'
+import {ComponentNameMap} from '../components/widgets/widgets'
 import '../utils/extenstions'
-import type {PageDetails, PageDetailsResponse} from './typing/pageDetails'
+import type {PageDetails, PageDetailsResponse, WidgetDataType, WidgetType} from './typing/pageDetails'
 
 class CMSService_ {
   private readonly config = apiConfig.cms
@@ -75,23 +75,19 @@ class CMSService_ {
     if (response.data.isEmpty()) {
       throw new Error('Data not found')
     }
-    // response.data[0]?.attributes?.ctaBanner.forEach(content => {
-    //   content.widget = CTABannerComponentNameMap[content.__component]
-    //   content.data = {...content}
-    // })
-    // response.data[0]?.attributes?.mainContent.forEach(content => {
-    //   content.widget = ComponentNameMap[content.__component]
-    //   content.data = {...content}
-    // })
-    // response.data[0]?.attributes?.header.forEach(content => {
-    //   content.widget = HeaderComponentNameMap[content.__component]
-    //   content.data = {...content}
-    // })
-    const carousel = response.data[0].attributes.carousel.map(content => {
-      return {data: {...content}, widget: CarouselComponentNameMap[content.__component]}
+    const header = response.data[0].attributes.header.map(({__component, ...content}) => {
+      return {widget: ComponentNameMap[__component], data: {...content}} as WidgetDataType<'HeroBanner'>
     })
-
-    return {carousel}
+    const carousel = response.data[0].attributes.carousel.map(({__component, ...content}) => {
+      return {data: {...content}, widget: ComponentNameMap[__component]} as WidgetDataType<'HeroBanner'>
+    })
+    const content = response.data[0].attributes.content.map(({__component, ...content}) => {
+      return {widget: ComponentNameMap[__component], data: {...content}} as WidgetDataType<WidgetType>
+    })
+    const ctaBanner = response.data[0].attributes.ctaBanner.map(({__component, ...content}) => {
+      return {data: {...content}, widget: ComponentNameMap[__component]} as WidgetDataType<'TextWithCTA'>
+    })
+    return {carousel, content, header, ctaBanner}
   }
 
   async getInitialValue(): Promise<TRootState> {
@@ -136,6 +132,14 @@ class CMSService_ {
       path: this.config.productsByIds + query
     })
     return response.data.map(({attributes}) => attributes)
+  }
+
+  contact(data: Record<string, unknown>) {
+    return WebClient.post<ProductResponse>({
+      baseUrl: this.baseUrl,
+      path: this.config.contact,
+      body: {data}
+    })
   }
 }
 

@@ -37,13 +37,13 @@ export const ProductDetails: React.FC<{product: ProductDetailsType}> = ({product
         <Typography variant={'h5'} component={'h2'}>
           Description
         </Typography>
-        <RTE rte={product.description} />
+        <RTE text={product.description} />
       </Stack>
       <Stack>
         <Typography variant={'h5'} component={'h2'}>
           Additional details
         </Typography>
-        <RTE rte={product.additionalDetails} />
+        <RTE text={product.additionalDetails} />
       </Stack>
     </Stack>
   )
