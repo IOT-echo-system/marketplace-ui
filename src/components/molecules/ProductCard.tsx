@@ -34,7 +34,7 @@ const CardContainer = styled(Card)<CardProps>(({theme}) => ({
     width: 'calc(50% - 8px)'
   },
   [theme.breakpoints.down('sm')]: {
-    width: 'calc(100% - 8px)',
+    width: '100%',
     boxShadow: theme.shadows[2]
   },
   '&:hover': {

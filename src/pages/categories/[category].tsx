@@ -3,9 +3,14 @@ import React from 'react'
 import type {ProductCatalogPropsType} from '../../components/templates/products/ProductCatalog'
 import {ProductCatalog} from '../../components/templates/products/ProductCatalog'
 import {CMSService} from '../../services'
+import {Stack} from '@mui/material'
 
 const CategoryPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({products, category}) => {
-  return <ProductCatalog products={products} category={category} />
+  return (
+    <Stack bgcolor={'background.default'}>
+      <ProductCatalog products={products} category={category} />
+    </Stack>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<ProductCatalogPropsType> = async ({query}) => {

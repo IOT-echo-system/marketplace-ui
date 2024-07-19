@@ -7,7 +7,7 @@ import {useMedia} from '../../../hooks'
 export const AccountDetails: React.FC<CheckoutStatePropsType> = ({onSuccess}) => {
   const media = useMedia()
   return (
-    <Stack direction={media.md ? 'column' : 'row'} justifyContent={'space-around'} spacing={media.md ? 2 : 4}>
+    <Stack direction={media.md ? 'column-reverse' : 'row'} justifyContent={'space-around'} spacing={media.md ? 2 : 4}>
       <Stack width={'100%'} p={media.sm ? 0 : 2}>
         <AuthForms getFormDetails={useSignUp} onSuccess={onSuccess} title={'New customer'} />
       </Stack>

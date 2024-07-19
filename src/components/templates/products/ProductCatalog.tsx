@@ -2,10 +2,11 @@ import React from 'react'
 import {Pagination, WiderBoxedContainer} from '../../atoms'
 import {Stack} from '@mui/material'
 import type {ProductResponse} from '../../../services/typing/CMSService'
-import type {CategoryDetails, CategoryDetailsWithChildren, CategoryResponse} from '../../molecules'
-import {Breadcrumb, CategoryFilter, isActive, ProductCard} from '../../molecules'
 import {ProductCatalogHeader} from './components/ProductCatalogHeader'
 import {useMedia} from '../../../hooks'
+import type {CategoryDetails, CategoryDetailsWithChildren, CategoryResponse} from './components'
+import {CategoryFilter, isActive} from './components'
+import {Breadcrumb, ProductCard} from '../../molecules'
 
 const getBreadcrumbs = ({tree, category}: CategoryResponse): CategoryDetails[] => {
   const breadcrumbs: CategoryDetailsWithChildren[] = []
@@ -29,8 +30,8 @@ export const ProductCatalog: React.FC<ProductCatalogPropsType> = ({products, cat
       <Stack bgcolor={'background.paper'} spacing={2} width={media.md ? '100%' : '25%'}>
         <CategoryFilter category={category.category} tree={category.tree} />
       </Stack>
-      <Stack spacing={2} alignItems={'center'} width={'100%'} pt={media.md ? 5 : 0}>
-        <Stack p={media.sm ? 1 : 2} bgcolor={'background.paper'} width={'100%'} spacing={2}>
+      <Stack spacing={2} alignItems={'center'} width={'100%'} pt={media.md ? 3 : 0}>
+        <Stack p={media.sm ? 1 : 2} bgcolor={'background.paper'} width={'100%'} spacing={1}>
           <Breadcrumb links={breadcrumbs.map(breadcrumb => ({link: breadcrumb.link, label: breadcrumb.name}))} />
           <ProductCatalogHeader title={category.category.name} pagination={products.meta.pagination} />
           <Stack

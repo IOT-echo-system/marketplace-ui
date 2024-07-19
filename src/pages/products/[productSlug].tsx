@@ -3,9 +3,14 @@ import {CMSService} from '../../services'
 import type {ProductDetails} from '../../components/templates/products/Product'
 import {Product} from '../../components/templates/products/Product'
 import React from 'react'
+import {Stack} from '@mui/material'
 
 const ProductPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({productDetails}) => {
-  return <Product product={productDetails} />
+  return (
+    <Stack bgcolor={'background.default'}>
+      <Product product={productDetails} />
+    </Stack>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<{productDetails: ProductDetails}> = async ctx => {

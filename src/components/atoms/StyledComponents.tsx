@@ -85,7 +85,7 @@ export const CenteredContainer = styled(Stack)<StackProps>(({theme}) => ({
   justifyContent: 'center',
   width: theme.spacing(72),
   [theme.breakpoints.down('sm')]: {
-    width: '100vw'
+    width: '100%'
   }
 }))
 

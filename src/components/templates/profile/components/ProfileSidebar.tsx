@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react'
-import {MenuItem, Stack, Typography} from '@mui/material'
-import {MenuItemLink} from '../atoms'
-import {useDispatch, useSelector} from '../../hooks'
+import {MenuItem, Stack, Typography, useTheme} from '@mui/material'
 import {useRouter} from 'next/router'
-import {storage, StorageKeys} from '../../utils/storage'
-import {Config} from '../../config'
-import {setUser} from '../../store/actions/user'
-import {initUserState} from '../../store/reducers/user'
-import theme from '../../theme/theme'
+import {Config} from '../../../../config'
+import {useDispatch, useSelector} from '../../../../hooks'
+import {storage, StorageKeys} from '../../../../utils/storage'
+import {setUser} from '../../../../store/actions'
+import {initUserState} from '../../../../store/reducers'
+import {MenuItemLink} from '../../../atoms'
 
 const profileOptions = [
   {name: 'Signup', link: Config.SIGN_UP_PAGE_PATH, loggedIn: false},
@@ -25,6 +24,7 @@ const loggedInPathList: string[] = profileOptions.filter(option => option.logged
 export const ProfileSidebar: React.FC<{requiredLoggedIn: boolean}> = ({requiredLoggedIn}) => {
   const router = useRouter()
   const dispatch = useDispatch()
+  const theme = useTheme()
   const {user} = useSelector(state => state)
 
   useEffect(() => {

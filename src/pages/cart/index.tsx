@@ -2,9 +2,15 @@ import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'ne
 import React from 'react'
 import {ShoppingCart} from '../../components/templates/shoppingCart/ShoppingCart'
 import {CMSService} from '../../services'
+import {Stack} from '@mui/material'
 
 const CartPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
-  return <ShoppingCart />
+  return (
+    <Stack bgcolor={'background.default'}>
+      {' '}
+      <ShoppingCart />
+    </Stack>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
