@@ -15,7 +15,7 @@ const MyApp: React.FC<AppProps<{initialValue?: TRootState}>> = ({Component, page
       <ThemeProvider theme={theme}>
         <ToastWrapper>
           <ValidatedProfile>
-            <Layout>
+            <Layout bgcolor={pageProps.initialValue?.site.bgcolor}>
               <Component {...pageProps} key={router.asPath} />
             </Layout>
           </ValidatedProfile>

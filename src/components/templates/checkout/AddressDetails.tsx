@@ -6,7 +6,7 @@ import {Button} from '../../atoms'
 import {ModalForms} from '../../organisms'
 import {AddAddress} from '../../organisms/ModalForms/formFunctions'
 import {getStateName} from '../../../data/stateList'
-import {addBillingAddress, addShippingAddress} from '../../../store/actions/cart'
+import {addBillingAddress, addShippingAddress} from '../../../store/actions'
 
 type AddressDetailsPropsType = CheckoutStatePropsType & {type: 'shipping' | 'billing'}
 export const AddressDetails: React.FC<AddressDetailsPropsType> = ({onSuccess, type}) => {

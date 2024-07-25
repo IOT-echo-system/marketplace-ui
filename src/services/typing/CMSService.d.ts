@@ -8,3 +8,6 @@ export type SiteInfoResponse = {data: {attributes: SiteInfo}}
 export type MainMenuResponse = MenuLink & {children?: MainMenuResponse[]}
 export type FooterResponse = {data: {attributes: FooterInfo}}
 export type OfficeLocationResponse = {data: {attributes: LocationPropsType}}
+
+export type PageSummary = {title: string; slug: string}
+export type PageListResponse = {data: Array<{attributes: PageSummary}>; meta: MetaResponseType}

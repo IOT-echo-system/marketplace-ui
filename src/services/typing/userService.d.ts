@@ -9,6 +9,8 @@ export type Order = {
   shippingAddress: AddressType
   products: OrderProduct[]
   createdAt: string
+  discountCoupon: Coupon
+  shippingCharge: number
 }
 
 export type UserResponse = {jwt: string; user: User}
@@ -26,3 +28,5 @@ export type PaymentResponse = {
   receipt: string
   status: 'created' | 'success'
 }
+
+export type Coupon = {code: string; discount: number}

@@ -3,7 +3,7 @@ import type {RTEPropsType} from '../molecules'
 import {RTE} from '../molecules'
 import {BoxedContainer} from '../atoms'
 import {Stack} from '@mui/material'
-import type {WidgetPropType} from '../../services/typing/pageDetails'
+import type {WidgetPropType} from './index'
 
 export const TextContent: React.FC<WidgetPropType<RTEPropsType>> = ({data}) => {
   return (

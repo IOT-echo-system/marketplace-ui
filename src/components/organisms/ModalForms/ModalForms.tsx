@@ -4,12 +4,15 @@ import {ModalForm} from '../../atoms'
 import {Stack} from '@mui/material'
 import type {GetFormPropsTypeFunction} from './model'
 
-export type ModalFormsPropsType<T extends Record<string, unknown>> = {getFormDetails: GetFormPropsTypeFunction<T>} & T
+export type ModalFormsPropsType<T extends Record<string, unknown>> = {
+  getFormDetails: GetFormPropsTypeFunction<T>
+  disabled?: boolean
+} & T
 
 export const ModalForms = <T extends Record<string, unknown>>(
   props: PropsWithChildren<ModalFormsPropsType<T>>
 ): React.JSX.Element => {
-  const {children, getFormDetails} = props
+  const {children, getFormDetails, disabled} = props
 
   const [open, setOpen] = useState(false)
   const handleClose = () => {
@@ -21,7 +24,7 @@ export const ModalForms = <T extends Record<string, unknown>>(
     <Stack>
       <Stack
         onClick={() => {
-          setOpen(true)
+          setOpen(!disabled && true)
         }}
       >
         {children}

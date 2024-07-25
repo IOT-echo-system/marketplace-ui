@@ -16,7 +16,7 @@ const AddressPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProp
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const initialValue = await CMSService.getInitialValue()
+    const initialValue = await CMSService.getInitialValue('background.default')
     return {props: {initialValue}}
   } catch (error) {
     return {props: {}}

@@ -15,7 +15,9 @@ import {
   Button as MuiButton,
   ButtonBase,
   Stack,
-  styled
+  styled,
+  TextField,
+  type TextFieldProps
 } from '@mui/material'
 import type {LinkProps} from 'next/link'
 import LinkComponent from 'next/link'
@@ -105,4 +107,13 @@ export const AccordionDetails = styled(MuiAccordionDetails)<AccordionDetailsProp
 
 export const AccordionSummary = styled(MuiAccordionSummary)<AccordionSummaryProps>(({theme}) => ({
   padding: theme.spacing(1, 2)
+}))
+
+export const SmallTextField = styled(TextField)<TextFieldProps>(({theme}) => ({
+  width: theme.spacing(8),
+  padding: 0,
+  '& *': {
+    padding: 0,
+    textAlign: 'center'
+  }
 }))

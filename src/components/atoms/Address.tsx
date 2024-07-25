@@ -1,13 +1,15 @@
 import React from 'react'
 import {Stack, Typography} from '@mui/material'
-import type {AddressType} from '../../store/reducers/address'
+import type {AddressType} from '../../store/reducers'
 
 type AddressPropsType = {address: AddressType; title: string}
 
 export const Address: React.FC<AddressPropsType> = ({address, title}) => {
   return (
     <Stack flexWrap={'wrap'}>
-      <Typography variant={'subtitle1'}>{title}</Typography>
+      <Typography variant={'subtitle1'} fontWeight={'bold'}>
+        {title}
+      </Typography>
       <Typography flexWrap={'wrap'}>
         {address.name} ({address.mobileNo})
       </Typography>

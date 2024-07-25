@@ -1,11 +1,14 @@
 import type {ProductDetails} from '../templates/products/Product'
 import {Stack, Typography} from '@mui/material'
-import React from 'react'
-import {calculateTotalQtyAndPrice, formatPrice} from '../../utils/utils'
-import {useMedia, useSelector} from '../../hooks'
+import React, {useEffect} from 'react'
+import {calculateTotalQtyAndPrice} from '../../utils/utils'
+import {useDispatch, useSelector} from '../../hooks'
 import '../../utils/extenstions'
 import {Config} from '../../config'
-import {Button, Link} from '../atoms'
+import {Button, ButtonAsLink, Link, PriceSummary} from '../atoms'
+import {updateShippingPrice} from '../../store/actions'
+import {ModalForms} from '../organisms'
+import {ApplyCoupon} from '../organisms/ModalForms/formFunctions'
 
 type CartProductPropsType = {
   products: ProductDetails[]
@@ -14,9 +17,13 @@ type CartProductPropsType = {
 }
 
 export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSuccess}) => {
-  const media = useMedia()
+  const dispatch = useDispatch()
   const {cart} = useSelector(state => state)
   const {qty, price} = calculateTotalQtyAndPrice(cart, products)
+
+  useEffect(() => {
+    dispatch(updateShippingPrice(price <= 0 || price >= 2000 ? 0 : 99))
+  }, [price])
 
   if (products.isEmpty()) {
     return (
@@ -29,23 +36,27 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
   }
 
   return (
-    <>
-      <Stack direction={'row'} flexWrap={'wrap'} justifyContent={'flex-end'}>
-        <Typography variant={media.sm ? 'subtitle1' : 'h6'}>
-          Subtotal ({qty} items): {formatPrice(price)}
-        </Typography>
-      </Stack>
-      <Stack direction={'row'} justifyContent={'flex-end'}>
-        {type === 'checkout' ? (
-          <Button color={'warning'} variant={'contained'} onClick={onSuccess}>
-            Place order
-          </Button>
-        ) : (
+    <Stack spacing={2}>
+      <PriceSummary
+        qty={qty}
+        discountCoupon={cart.discountCoupon}
+        amount={price}
+        shippingCharge={cart.shippingCharge}
+      />
+      <Stack direction={'row'} justifyContent={'flex-end'} spacing={2} alignItems={'center'}>
+        <ModalForms getFormDetails={ApplyCoupon}>
+          <ButtonAsLink>Apply coupon</ButtonAsLink>
+        </ModalForms>
+        {type === 'cart' ? (
           <Button variant={'contained'} component={Link} href={Config.CHECKOUT_PAGE_PATH}>
             Proceed to checkout
           </Button>
+        ) : (
+          <Button variant={'contained'} onClick={onSuccess} color={'warning'}>
+            Place order
+          </Button>
         )}
       </Stack>
-    </>
+    </Stack>
   )
 }

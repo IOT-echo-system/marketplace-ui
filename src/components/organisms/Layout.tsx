@@ -10,23 +10,23 @@ const Container = styled(Stack)(() => ({
   minWidth: '100vw'
 }))
 
-export const Layout: React.FC<PropsWithChildren> = ({children}) => {
+export const Layout: React.FC<PropsWithChildren<{bgcolor?: string}>> = ({children, bgcolor}) => {
   const media = useMedia()
   const getMt = () => {
     if (media.sm || (media.md && media.tablet)) {
       return 11.5
     }
     if (media.md) {
-      return 8
+      return 8.5
     }
     if (media.laptop) {
       return 8
     }
-    return 12
+    return 13.5
   }
 
   return (
-    <Container justifyContent={'space-between'}>
+    <Container justifyContent={'space-between'} bgcolor={bgcolor ?? 'background.paper'}>
       <Stack>
         <header>
           <Header />

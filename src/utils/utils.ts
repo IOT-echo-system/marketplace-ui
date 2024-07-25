@@ -9,7 +9,7 @@ export const formatDate = (date: Date | string, format?: string): string => {
 }
 
 export const formatPrice = (number: number, decimalPoints = 2): string => {
-  const numberStr = number.toFixed(decimalPoints).toString()
+  const numberStr = Math.abs(number).toFixed(decimalPoints).toString()
   const [integerPart, fractionalPart] = numberStr.split('.')
   let lastThreeDigits = integerPart.slice(-3)
   const otherDigits = integerPart.slice(0, -3)
@@ -18,9 +18,9 @@ export const formatPrice = (number: number, decimalPoints = 2): string => {
   }
   const indianFormattedNumber = otherDigits.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + lastThreeDigits
   if (fractionalPart) {
-    return `₹${indianFormattedNumber}.${fractionalPart}`
+    return `₹${number < 0 ? '-' : ''}${indianFormattedNumber}.${fractionalPart}`
   }
-  return `₹${indianFormattedNumber}`
+  return `₹${number < 0 ? '-' : ''}${indianFormattedNumber}`
 }
 
 export const calculateTotalQtyAndPrice = (

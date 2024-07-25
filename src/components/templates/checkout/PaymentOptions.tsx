@@ -5,7 +5,7 @@ import {formatPrice} from '../../../utils/utils'
 import {Button} from '../../atoms'
 import type {ProductDetails} from '../products/Product'
 import {UserService} from '../../../services'
-import type {PaymentResponse, ServerError} from '../../../services/typing/authService'
+import type {PaymentResponse, ServerError} from '../../../services/typing/userService'
 import {clearCart} from '../../../store/actions'
 import {Config} from '../../../config'
 import theme from '../../../theme/theme'
@@ -71,11 +71,18 @@ export const PaymentOptions: React.FC<PaymentOptionsPropsType> = ({products, onS
     return count + price
   }, 0)
 
+  const discount = (price * cart.discountCoupon.discount) / 100
+  const priceWithGST = (price - discount) * 1.18
+  const totalPrice = priceWithGST + cart.shippingCharge
+
   const handleCreateOrder = () => {
     UserService.placeOrder(cart)
       .then(payment => {
         dispatch(clearCart())
-        const options = createOptions(payment, site, paymentHandler, user)
+        const options = createOptions(payment, site, paymentHandler, {
+          ...user,
+          phone: user.phone ?? cart.billingAddress!.mobileNo
+        })
         const rzp = new window.Razorpay(options)
         rzp.open()
       })
@@ -86,7 +93,7 @@ export const PaymentOptions: React.FC<PaymentOptionsPropsType> = ({products, onS
 
   return (
     <Stack justifyContent={'space-around'} spacing={media.md ? 2 : 4}>
-      <Stack>Amount {formatPrice(price)}</Stack>
+      <Stack>Amount {formatPrice(totalPrice)}</Stack>
       <Stack direction={'row'}>
         <Button variant={'contained'} color={'warning'} onClick={handleCreateOrder}>
           Pay now

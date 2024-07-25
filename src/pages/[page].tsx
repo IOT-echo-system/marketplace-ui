@@ -1,12 +1,12 @@
 import type {GetStaticPaths, GetStaticProps, InferGetStaticPropsType, NextPage} from 'next'
 import {PageTemplate} from '../components/templates'
 import {CMSService} from '../services'
-import type {PageDetails} from '../services/typing/CMSService'
 import {Loader} from '../components/atoms'
 import React from 'react'
 import {useRouter} from 'next/router'
+import type {PageDetailsType} from '../components/widgets'
 
-export type PagePropsType = {pageDetails: PageDetails}
+export type PagePropsType = {pageDetails: PageDetailsType}
 
 const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({pageDetails}) => {
   const router = useRouter()
@@ -14,12 +14,7 @@ const Page: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({pageDet
     return <Loader />
   }
 
-  return (
-    <>
-      {/*<SEODetails seo={pageDetails.seo} />*/}
-      <PageTemplate pageDetails={pageDetails} />
-    </>
-  )
+  return <PageTemplate pageDetails={pageDetails} />
 }
 
 export const getStaticProps: GetStaticProps<PagePropsType> = async ({params}) => {

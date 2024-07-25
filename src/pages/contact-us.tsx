@@ -11,17 +11,17 @@ type ContactUsPagePropsType = {location: LocationPropsType}
 
 const ContactUsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({location}) => {
   return (
-    <Stack p={4}>
+    <Stack p={{xs: 1, md: 2}}>
       <BoxedContainer
         justifyContent={'center'}
-        alignItems={{xs: 'center', lg: 'flex-start'}}
-        direction={{xs: 'column', lg: 'row'}}
-        spacing={4}
+        alignItems={{xs: 'center', md: 'flex-start'}}
+        direction={{xs: 'column', md: 'row'}}
+        spacing={{xs: 2, md: 4}}
       >
-        <Stack sx={{width: {xs: '100%', sm: '80%', md: '60%', lg: '50%'}}}>
+        <Stack sx={{width: {xs: '100%', md: 'auto'}}}>
           <ContactUs />
         </Stack>
-        <Stack sx={{width: {xs: '100%', sm: '80%', md: '60%', lg: 'auto'}}}>
+        <Stack sx={{width: {xs: '100%', md: 'auto'}}}>
           <Location {...location} />
         </Stack>
       </BoxedContainer>

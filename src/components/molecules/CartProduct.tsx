@@ -1,11 +1,11 @@
 import type {ProductDetails} from '../templates/products/Product'
-import type {StackProps, TextFieldProps} from '@mui/material'
-import {CardMedia, Stack, styled, TextField, Typography} from '@mui/material'
+import type {StackProps} from '@mui/material'
+import {CardMedia, Stack, styled, Typography} from '@mui/material'
 import {apiConfig} from '../../config/apiConfig'
 import React from 'react'
 import {useDispatch, useMedia, useSelector} from '../../hooks'
-import {removeProductFromCart, updateProductQtyToCart} from '../../store/actions/cart'
-import {ButtonAsLink} from '../atoms'
+import {removeProductFromCart, updateProductQtyToCart} from '../../store/actions'
+import {ButtonAsLink, SmallTextField} from '../atoms'
 import {formatPrice} from '../../utils/utils'
 
 const CardContainer = styled(Stack)<StackProps>(({theme}) => ({
@@ -14,15 +14,6 @@ const CardContainer = styled(Stack)<StackProps>(({theme}) => ({
   justifyContent: 'space-between',
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(1)
-  }
-}))
-
-const StyledTextField = styled(TextField)<TextFieldProps>(({theme}) => ({
-  width: theme.spacing(6),
-  padding: 0,
-  '& *': {
-    padding: 0,
-    textAlign: 'center'
   }
 }))
 
@@ -72,13 +63,7 @@ export const CartProduct: React.FC<CartProductPropsType> = ({product}) => {
           <Stack direction={'row'} spacing={media.sm ? 2 : 8} flexWrap={'wrap'} alignItems={'baseline'}>
             <Stack direction={'row'} spacing={1} alignItems={'baseline'} flexWrap={'wrap'}>
               <Typography variant={media.sm ? 'subtitle2' : 'subtitle1'}>Qty.</Typography>
-              <StyledTextField
-                size={'small'}
-                value={qty}
-                type={'number'}
-                variant={'standard'}
-                onChange={handleChange}
-              />
+              <SmallTextField size={'small'} value={qty} type={'number'} variant={'standard'} onChange={handleChange} />
             </Stack>
             <ButtonAsLink onClick={handleRemove}>Remove</ButtonAsLink>
           </Stack>

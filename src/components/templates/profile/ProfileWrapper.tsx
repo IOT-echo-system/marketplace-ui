@@ -10,24 +10,22 @@ export const ProfileWrapper: React.FC<ProfileWrapperPropsType> = ({children, req
   const {user} = useSelector(state => state)
 
   return (
-    <Stack bgcolor={'background.default'}>
-      <BoxedContainer pt={{xs: 1, md: 2}} pb={{xs: 1, md: 2}} direction={{md: 'row'}} spacing={2}>
-        <Stack bgcolor={'background.paper'} width={{xs: '100%', md: '25%'}} pt={2} pb={2}>
-          <Sidebar title={''} mobileTitle={title}>
-            <ProfileSidebar requiredLoggedIn={requiredLoggedIn} />
-          </Sidebar>
-        </Stack>
-        <Stack bgcolor={'background.paper'} spacing={2} width={'100%'} mt={{md: 0, xs: 2}} p={{xs: 1, md: 2}}>
-          <Stack spacing={2}>
-            <Typography variant={'h5'} component={'h1'}>
-              {title}
-            </Typography>
-            <Stack width={'100%'} height={'100%'}>
-              {user.loading ? <Loader /> : <>{children}</>}
-            </Stack>
+    <BoxedContainer pt={{xs: 1, md: 2}} pb={{xs: 1, md: 2}} direction={{md: 'row'}} spacing={2}>
+      <Stack bgcolor={'background.paper'} width={{xs: '100%', md: '25%'}} pt={2} pb={2}>
+        <Sidebar title={''} mobileTitle={title}>
+          <ProfileSidebar requiredLoggedIn={requiredLoggedIn} />
+        </Sidebar>
+      </Stack>
+      <Stack bgcolor={'background.paper'} spacing={2} width={'100%'} mt={{md: 0, xs: 2}} p={{xs: 1, md: 2}}>
+        <Stack spacing={2}>
+          <Typography variant={'h5'} component={'h1'}>
+            {title}
+          </Typography>
+          <Stack width={'100%'} height={'100%'}>
+            {user.loading ? <Loader /> : <>{children}</>}
           </Stack>
         </Stack>
-      </BoxedContainer>
-    </Stack>
+      </Stack>
+    </BoxedContainer>
   )
 }

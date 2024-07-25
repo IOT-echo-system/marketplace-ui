@@ -34,7 +34,7 @@ const SubmenuContainer = styled(Stack)<
   return {
     zIndex: 5,
     position: 'absolute',
-    top: theme.spacing(isRow ? -0.125 : 4.5),
+    top: theme.spacing(isRow ? -0.125 : 5),
     left: theme.spacing(isRow ? 30 : 0),
     [theme.breakpoints.down('xl')]: {
       left: isNotLast ? theme.spacing(isRow ? 30 : 0) : 'auto',
@@ -61,7 +61,7 @@ const NavMenuItemContainer = styled(Stack)<StackProps & {row?: 'true' | 'false'}
   const isRow = row === 'true'
   return {
     borderTop: isRow ? `1px solid ${theme.palette.grey[200]}` : 0,
-    padding: isRow ? theme.spacing(0.5, 2) : 0,
+    padding: isRow ? theme.spacing(0.5, 2) : theme.spacing(0.5, 0),
     [`@media (max-width:${ScreenWidth.LAPTOP - 0.05}px)`]: {
       borderTop: 0,
       borderLeft: isRow ? `1px solid ${theme.palette.grey[300]}` : 0

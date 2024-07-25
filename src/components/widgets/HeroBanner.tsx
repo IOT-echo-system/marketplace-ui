@@ -3,7 +3,7 @@ import {Stack, styled, Typography} from '@mui/material'
 import type {CTAPropsType, ImageType} from '../atoms'
 import {BoxedContainer, CTAButton} from '../atoms'
 import {useMedia} from '../../hooks'
-import type {WidgetPropType} from '../../services/typing/pageDetails'
+import type {WidgetPropType} from './index'
 
 const Container = styled(Stack)<{src: string}>(({theme, src}) => ({
   background: src ? `url(${src})` : theme.palette.primary.light,

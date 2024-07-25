@@ -1,8 +1,8 @@
 import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
 import React from 'react'
-import {CMSService} from '../../services'
-import {Orders} from '../../components/templates/profile/Orders'
-import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
+import {ProfileWrapper} from '../../../components/templates/profile/ProfileWrapper'
+import {Orders} from '../../../components/templates/profile/Orders'
+import {CMSService} from '../../../services'
 
 const OrdersPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
   return (
@@ -14,7 +14,7 @@ const OrdersPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const initialValue = await CMSService.getInitialValue()
+    const initialValue = await CMSService.getInitialValue('background.default')
     return {props: {initialValue}}
   } catch (error) {
     return {props: {}}

@@ -1,23 +1,27 @@
 import WebClient from 'web-client-starter'
 import {apiConfig} from '../config/apiConfig'
-import type {FooterInfo, SiteInfo, SiteStateType} from '../store/reducers'
+import type {FooterInfo, OrderProduct, SiteInfo, SiteStateType} from '../store/reducers'
 import type {
   FooterResponse,
   MainMenuResponse,
   OfficeLocationResponse,
+  PageListResponse,
+  PageSummary,
   ProductResponse,
   SiteInfoResponse
 } from './typing/CMSService'
-import type {CategoryResponse, LocationPropsType} from '../components/molecules'
+import type {LocationPropsType} from '../components/molecules'
 import type {TRootState} from '../typing/store'
 import {rootState} from '../store'
 import type {ProductDetails} from '../components/templates/products/Product'
-import {ComponentNameMap} from '../components/widgets/widgets'
 import '../utils/extenstions'
-import type {PageDetails, PageDetailsResponse, WidgetDataType, WidgetType} from './typing/pageDetails'
+import type {CategoryResponse} from '../components/templates/products/components'
+import type {PostalAddress} from './typing/postalService'
+import type {PageDetailsResponse, PageDetailsType} from '../components/widgets'
 
 class CMSService_ {
   private readonly config = apiConfig.cms
+  private readonly postal = apiConfig.postal
   private readonly baseUrl = apiConfig.baseUrl
 
   async getSiteInfoWithHeaderAndFooter(): Promise<SiteStateType> {
@@ -50,13 +54,13 @@ class CMSService_ {
     return response.data.attributes
   }
 
-  // async getPageList(): Promise<PageSummaryResponse[]> {
-  //   const response = await WebClient.get<PageListResponse>({
-  //     baseUrl: this.baseUrl,
-  //     path: this.config.pageList
-  //   })
-  //   return response.data.map(data => data.attributes)
-  // }
+  async getPageList(): Promise<PageSummary[]> {
+    const response = await WebClient.get<PageListResponse>({
+      baseUrl: this.baseUrl,
+      path: this.config.pageList
+    })
+    return response.data.map(data => data.attributes)
+  }
 
   async getOfficeLocation(): Promise<LocationPropsType> {
     const response = await WebClient.get<OfficeLocationResponse>({
@@ -66,7 +70,7 @@ class CMSService_ {
     return response.data.attributes
   }
 
-  async getPageContent(slug: string): Promise<PageDetails> {
+  async getPageContent(slug: string): Promise<PageDetailsType> {
     const response = await WebClient.get<PageDetailsResponse>({
       baseUrl: this.baseUrl,
       path: this.config.pageDetails,
@@ -75,23 +79,13 @@ class CMSService_ {
     if (response.data.isEmpty()) {
       throw new Error('Data not found')
     }
-    const header = response.data[0].attributes.header.map(({__component, ...content}) => {
-      return {widget: ComponentNameMap[__component], data: {...content}} as WidgetDataType<'HeroBanner'>
-    })
-    const carousel = response.data[0].attributes.carousel.map(({__component, ...content}) => {
-      return {data: {...content}, widget: ComponentNameMap[__component]} as WidgetDataType<'HeroBanner'>
-    })
-    const content = response.data[0].attributes.content.map(({__component, ...content}) => {
-      return {widget: ComponentNameMap[__component], data: {...content}} as WidgetDataType<WidgetType>
-    })
-    const ctaBanner = response.data[0].attributes.ctaBanner.map(({__component, ...content}) => {
-      return {data: {...content}, widget: ComponentNameMap[__component]} as WidgetDataType<'TextWithCTA'>
-    })
-    return {carousel, content, header, ctaBanner}
+
+    return response.data[0].attributes
   }
 
-  async getInitialValue(): Promise<TRootState> {
-    return {...rootState, site: await this.getSiteInfoWithHeaderAndFooter()}
+  async getInitialValue(bgcolor?: string): Promise<TRootState> {
+    const site = await this.getSiteInfoWithHeaderAndFooter()
+    return {...rootState, site: {...site, bgcolor: bgcolor ?? 'background.paper'}}
   }
 
   async getProductDetails(productSlug: string): Promise<ProductDetails> {
@@ -139,6 +133,22 @@ class CMSService_ {
       baseUrl: this.baseUrl,
       path: this.config.contact,
       body: {data}
+    })
+  }
+
+  findProductsByNameOrId(nameOrId: string): Promise<OrderProduct[]> {
+    return WebClient.get<OrderProduct[]>({
+      baseUrl: this.baseUrl,
+      path: this.config.search,
+      queryParams: {query: nameOrId}
+    })
+  }
+
+  getAddressByPinCode(pinCode: number): Promise<PostalAddress> {
+    return WebClient.get<PostalAddress>({
+      baseUrl: '/api',
+      path: this.postal.address,
+      queryParams: {pinCode}
     })
   }
 }

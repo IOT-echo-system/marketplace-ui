@@ -19,7 +19,11 @@ const profileOptions = [
   {name: 'Orders', link: Config.ORDERS_PAGE_PATH, loggedIn: true},
   {name: 'Reward points', link: Config.REWARDS_PAGE_PATH, loggedIn: true}
 ]
-const loggedInPathList: string[] = profileOptions.filter(option => option.loggedIn).map(option => option.link)
+
+const loggedInPathList = profileOptions
+  .filter(option => option.loggedIn)
+  .map(option => option.link as string)
+  .concat(`${Config.ORDERS_PAGE_PATH}/[orderId]`)
 
 export const ProfileSidebar: React.FC<{requiredLoggedIn: boolean}> = ({requiredLoggedIn}) => {
   const router = useRouter()
@@ -41,8 +45,8 @@ export const ProfileSidebar: React.FC<{requiredLoggedIn: boolean}> = ({requiredL
 
   const handleLogout = () => {
     storage.remove(StorageKeys.AUTH)
-    router.push(Config.LOGIN_PAGE_PATH).catch()
     dispatch(setUser({...initUserState, loading: false}))
+    router.push(Config.LOGIN_PAGE_PATH).catch()
   }
 
   return (

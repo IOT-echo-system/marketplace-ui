@@ -1,9 +1,9 @@
 import React from 'react'
-import type {WidgetPropType} from './widget'
 import type {CTAPropsType} from '../atoms'
 import {BoxedContainer, CTAButton} from '../atoms'
 import {Stack, styled, Typography} from '@mui/material'
 import {useMedia} from '../../hooks'
+import type {WidgetPropType} from './index'
 
 const Container = styled(Stack)(({theme}) => ({
   minHeight: theme.spacing(32),
@@ -32,7 +32,7 @@ const Container = styled(Stack)(({theme}) => ({
   }
 }))
 
-type TextWithCTADataType = {text: string; cta: CTAPropsType}
+export type TextWithCTADataType = {text: string; cta: CTAPropsType}
 
 export const TextWithCTA: React.FC<WidgetPropType<TextWithCTADataType>> = ({data}) => {
   const media = useMedia()

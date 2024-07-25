@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {AppBar, Badge, Box, IconButton, Stack, Toolbar, Typography} from '@mui/material'
-import {AccountCircle, FavoriteBorder, Menu as MenuIcon, ShoppingCart} from '@mui/icons-material'
+import {AccountCircle, Dashboard, FavoriteBorder, Menu as MenuIcon, ShoppingCart} from '@mui/icons-material'
 import {Link, LinkAsText, SearchBox, WiderBoxedContainer} from '../atoms'
 import {useMedia, useSelector} from '../../hooks'
 import {Config} from '../../config'
@@ -10,6 +10,7 @@ type SiteHeaderPropsType = {toggleDrawer: () => void}
 const WishlistAndCartIcons: React.FC<{size?: 'small' | 'large'}> = ({size}) => {
   const {productIds} = useSelector(state => state.cart)
   const totalItems = productIds.reduce((count, {qty}) => count + qty, 0)
+  const {user} = useSelector(state => state)
 
   return (
     <Stack direction={'row'}>
@@ -23,6 +24,11 @@ const WishlistAndCartIcons: React.FC<{size?: 'small' | 'large'}> = ({size}) => {
           <ShoppingCart fontSize={size ?? 'medium'} />
         </Badge>
       </IconButton>
+      {user.customRole && (
+        <IconButton color="inherit" component={Link} href={Config.SELLER_DASHBOARD_PAGE_PATH}>
+          <Dashboard fontSize={size ?? 'medium'} />
+        </IconButton>
+      )}
     </Stack>
   )
 }

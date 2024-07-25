@@ -5,7 +5,7 @@ import {UserService} from '../../../services'
 import {storage, StorageKeys} from '../../../utils/storage'
 import {setUser} from '../../../store/actions/user'
 import {useRouter} from 'next/router'
-import type {ServerError} from '../../../services/typing/authService'
+import type {ServerError} from '../../../services/typing/userService'
 import type {AuthFormType} from './AuthForms'
 
 const useLogin: AuthFormType = ({redirectTo, onSuccess}) => {

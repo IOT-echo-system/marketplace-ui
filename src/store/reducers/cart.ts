@@ -1,7 +1,6 @@
 import type {TRootActions} from '../../typing/store'
 import type {AddressType} from './address'
 import type {ImageType} from '../../components/atoms'
-import type {ProductDetails} from '../../components/templates/products/Product'
 
 export const CartAction = {
   ADD_ITEM_INTO_CART: 'ADD_ITEM_INTO_CART',
@@ -10,7 +9,9 @@ export const CartAction = {
   REMOVE_ALL_PRODUCT_FROM_CART: 'REMOVE_ALL_PRODUCT_FROM_CART',
   ADD_BILLING_ADDRESS: 'ADD_BILLING_ADDRESS',
   ADD_SHIPPING_ADDRESS: 'ADD_SHIPPING_ADDRESS',
-  CLEAR_CART: 'CLEAR_CART'
+  CLEAR_CART: 'CLEAR_CART',
+  UPDATE_SHIPPING_CHARGE: 'UPDATE_SHIPPING_CHARGE',
+  UPDATE_DISCOUNT: 'UPDATE_DISCOUNT'
 } as const
 
 export type OrderProduct = {
@@ -27,21 +28,17 @@ export type CartStateType = {
   productIds: Array<{productId: string; qty: number}>
   billingAddress: AddressType | null
   shippingAddress: AddressType | null
+  shippingCharge: number
+  discountCoupon: {discount: number; code: string}
 }
 
-export const createOrderProduct = (product: ProductDetails, qty: number): OrderProduct => {
-  return {
-    featuredImage: product.featuredImage,
-    mrp: product.mrp,
-    price: product.price,
-    productId: product.productId,
-    slug: product.slug,
-    title: product.title,
-    qty
-  }
+export const initCartState: CartStateType = {
+  productIds: [],
+  billingAddress: null,
+  shippingAddress: null,
+  shippingCharge: 99,
+  discountCoupon: {discount: 0, code: ''}
 }
-
-export const initCartState: CartStateType = {productIds: [], billingAddress: null, shippingAddress: null}
 const getQty = (qty: number) => (qty >= 0 ? qty : 0)
 
 const cartReducer = (state: CartStateType, action: TRootActions): CartStateType => {
@@ -52,14 +49,9 @@ const cartReducer = (state: CartStateType, action: TRootActions): CartStateType 
       if (!cartItem) {
         return {...state, productIds: [...state.productIds, {productId, qty}]}
       }
-      const cart = state.productIds.map(item =>
-        item.productId === productId
-          ? {
-            ...item,
-            qty: getQty(item.qty + qty)
-          }
-          : item
-      )
+      const cart = state.productIds.map(item => {
+        return item.productId === productId ? {...item, qty: getQty(item.qty + qty)} : item
+      })
       return {...state, productIds: cart}
     }
     case CartAction.UPDATE_QTY_INTO_CART: {
@@ -82,6 +74,12 @@ const cartReducer = (state: CartStateType, action: TRootActions): CartStateType 
     }
     case CartAction.CLEAR_CART: {
       return {...initCartState}
+    }
+    case CartAction.UPDATE_SHIPPING_CHARGE: {
+      return {...state, shippingCharge: action.payload.shippingCharge}
+    }
+    case CartAction.UPDATE_DISCOUNT: {
+      return {...state, discountCoupon: action.payload.coupon}
     }
     default:
       return state

@@ -1,7 +1,7 @@
 import {apiConfig} from '../config/apiConfig'
 import '../utils/extenstions'
 import WebClient from './webClient'
-import type {AddressResponse, Order, OrderResponse, PaymentResponse, UserResponse} from './typing/authService'
+import type {AddressResponse, Coupon, Order, OrderResponse, PaymentResponse, UserResponse} from './typing/userService'
 import type {AddressType, CartStateType, User} from '../store/reducers'
 
 class AuthService_ {
@@ -50,8 +50,8 @@ class AuthService_ {
   placeOrder(data: CartStateType): Promise<PaymentResponse> {
     return WebClient.post<PaymentResponse>({
       baseUrl: this.baseUrl,
-      path: this.config.order,
-      body: {data}
+      path: this.config.orders,
+      body: {data: {...data, user: 'userid'}}
     })
   }
 
@@ -75,9 +75,33 @@ class AuthService_ {
   async getOrders(): Promise<Order[]> {
     return WebClient.get<Order[]>({
       baseUrl: this.baseUrl,
-      path: this.config.order,
-      queryParams: {populate: '*'}
+      path: this.config.orders
     })
+  }
+
+  async applyCoupon({code}: {code: string}): Promise<Coupon> {
+    const response = await WebClient.get<Coupon[]>({
+      baseUrl: this.baseUrl,
+      path: this.config.coupon,
+      uriVariables: {code}
+    })
+    if (response.isEmpty()) {
+      throw new Error('Coupon not found!!')
+    } else {
+      return response[0]
+    }
+  }
+
+  async getOrder(orderId: string): Promise<Order> {
+    const response = await WebClient.get<Order[]>({
+      baseUrl: this.baseUrl,
+      path: this.config.order,
+      uriVariables: {orderId}
+    })
+    if (response.isEmpty()) {
+      throw new Error('Data not found!!')
+    }
+    return response[0]
   }
 }
 

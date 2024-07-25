@@ -12,7 +12,12 @@ export type Section = {title: string; ctas: CTAPropsType[]}
 export type Social = {icon: string; cta: CTAPropsType}
 export type FooterInfo = {sections: Section[]; copyright: string; socials: Social[]}
 
-export type SiteStateType = {siteInfo: SiteInfo; header: {menus: MainMenuResponse[]}; footer: FooterInfo}
+export type SiteStateType = {
+  siteInfo: SiteInfo
+  header: {menus: MainMenuResponse[]}
+  footer: FooterInfo
+  bgcolor?: string
+}
 
 export const initSiteState: SiteStateType = {
   footer: {

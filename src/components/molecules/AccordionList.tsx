@@ -22,10 +22,10 @@ export const Accordion = styled((props: AccordionProps) => (
   }
 }))
 
-export const AccordionSummary = styled((props: AccordionSummaryProps & {disableBorder?: boolean}) => (
+export const AccordionSummary = styled((props: AccordionSummaryProps & {disableborder?: 'true' | 'false'}) => (
   <MuiAccordionSummary {...props} expandIcon={<ExpandMoreSharp />} />
-))(({theme, disableBorder}) => ({
-  borderBottom: disableBorder ? 0 : `1px solid ${theme.palette.divider}`,
+))(({theme, disableborder}) => ({
+  borderBottom: disableborder === 'true' ? 0 : `1px solid ${theme.palette.divider}`,
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(180deg)'
   },
@@ -46,7 +46,7 @@ export const AccordionList: React.FC<AccordionListPropsType> = ({accordions}) =>
       {accordions.map((accordion, index) => {
         return (
           <Accordion key={`accordion-${index}`} defaultExpanded={accordion.expanded} disabled={accordion.disabled}>
-            <AccordionSummary disableBorder>{accordion.header}</AccordionSummary>
+            <AccordionSummary disableborder={'true'}>{accordion.header}</AccordionSummary>
             <AccordionDetails>{accordion.content}</AccordionDetails>
           </Accordion>
         )

@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.API_BASE_URL ?? 'http://127.0.0.1:1337'
+const API_BASE_URL = process.env.API_BASE_URL ?? 'http://localhost:1337'
 
 export const apiConfig = {
   baseUrl: `${API_BASE_URL}/api`,
@@ -15,6 +15,7 @@ export const apiConfig = {
       '/products?sort[0]=productId:asc&filters[categories][link][$eq]={category}&populate=*&pagination[pageSize]={pageSize}&pagination[page]={page}',
     pageDetails: '/pages?filters[slug][$eq]={slug}',
     contact: '/contacts',
+    search: '/search',
     category: '/categories?filters[link][$eq]={category}',
     productsByIds: '/products?populate=featuredImage'
   },
@@ -23,9 +24,21 @@ export const apiConfig = {
     register: '/auth/local/register',
     login: '/auth/local',
     me: '/users/me',
+    userDetails: '/users/{id}?populate=*',
     address: '/addresses',
-    order: '/orders',
+    orders: '/orders',
+    order: '/orders?filters[id][$eq]={orderId}',
     orderDetails: '/orders/{orderId}?populate=*',
-    verifyPayment: '/payments/verify'
+    verifyPayment: '/payments/verify',
+    coupon: '/discount-coupons?filters[code][$eq]={code}'
+  },
+  postal: {
+    baseUrl: 'https://api.postalpincode.in',
+    pinCode: '/pincode/{pinCode}',
+    address: '/address'
+  },
+  seller: {
+    findAddress: '/address-by-sellers?filters[mobileNo][$eq]={mobileNo}',
+    address: '/address-by-sellers'
   }
 } as const

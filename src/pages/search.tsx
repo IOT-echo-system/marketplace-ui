@@ -1,10 +1,10 @@
 import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
-import React from 'react'
-import {ShoppingCart} from '../../components/templates/shoppingCart/ShoppingCart'
-import {CMSService} from '../../services'
+import {CMSService} from '../services'
+import {Stack} from '@mui/material'
+import * as React from 'react'
 
-const CartPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
-  return <ShoppingCart />
+const SearchPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
+  return <Stack>Search page</Stack>
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -16,4 +16,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
-export default CartPage
+export default SearchPage

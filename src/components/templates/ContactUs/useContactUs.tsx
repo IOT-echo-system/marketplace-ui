@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 import type {FormInputType} from '../../atoms'
 import {useForm, useToast} from '../../../hooks'
 import {CMSService} from '../../../services'
-import type {ServerError} from '../../../services/typing/authService'
+import type {ServerError} from '../../../services/typing/userService'
 
 type UseContactUsReturnType = {
   submitBtnText: string

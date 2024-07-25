@@ -5,7 +5,7 @@ import {useDispatch, useMedia, useSelector} from '../../../hooks'
 import {CMSService} from '../../../services'
 import type {ProductDetails} from '../products/Product'
 import {CartFooter, CartProduct} from '../../molecules'
-import {removeAllProductsFromCart} from '../../../store/actions/cart'
+import {removeAllProductsFromCart} from '../../../store/actions'
 import '../../../utils/extenstions'
 
 export const ShoppingCart: React.FC = () => {

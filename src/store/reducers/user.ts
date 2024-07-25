@@ -16,6 +16,7 @@ export type User = {
   updatedAt: string
   phone: number | null
   loading: boolean
+  customRole: 'SELLER' | null
 }
 
 export const initUserState: User = {
@@ -28,7 +29,8 @@ export const initUserState: User = {
   provider: '',
   updatedAt: '',
   username: '',
-  loading: true
+  loading: true,
+  customRole: null
 }
 
 const userReducer = (state: User, action: TRootActions): User => {
