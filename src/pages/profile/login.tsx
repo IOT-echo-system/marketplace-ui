@@ -6,7 +6,7 @@ import {useMedia} from '../../hooks'
 import {CenteredContainer, Link} from '../../components/atoms'
 import {Stack, Typography} from '@mui/material'
 import {AuthForms, useLogin} from '../../components/templates/auth'
-import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
+import {ProfileWrapper} from '../../components/templates/profile'
 
 const LoginPage: NextPage = () => {
   const media = useMedia()

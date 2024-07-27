@@ -23,6 +23,7 @@ export const apiConfig = {
     users: '/users',
     register: '/auth/local/register',
     login: '/auth/local',
+    changePassword: '/auth/change-password',
     me: '/users/me',
     userDetails: '/users/{id}?populate=*',
     address: '/addresses',

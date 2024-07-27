@@ -1,10 +1,6 @@
 import {Search as SearchIcon} from '@mui/icons-material'
-import type {ChangeEvent} from 'react'
 import * as React from 'react'
-import {useEffect, useState} from 'react'
 import {alpha, InputBase, styled} from '@mui/material'
-import {CMSService} from '../../services'
-import type {OrderProduct} from '../../store/reducers'
 
 const Search = styled('div')(({theme}) => ({
   position: 'relative',
@@ -54,24 +50,13 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
   }
 }))
 
-export const SearchBox: React.FC<{size?: 'small' | 'large'}> = ({size}) => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [querySuggestions, setQuerySuggestions] = useState<OrderProduct[]>([])
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value)
-  }
-
-  useEffect(() => {
-    CMSService.findProductsByNameOrId(searchTerm).then(setQuerySuggestions)
-  }, [searchTerm])
-
+export const SearchBox: React.FC<{ size?: 'small' | 'large' }> = ({size}) => {
   return (
     <Search>
       <SearchIconWrapper>
-        <SearchIcon fontSize={size ?? 'medium'} />
+        <SearchIcon fontSize={size ?? 'medium'}/>
       </SearchIconWrapper>
-      <StyledInputBase placeholder="Search…" inputProps={{'aria-label': 'search'}} onChange={handleChange} />
-      {JSON.stringify(querySuggestions, null, 2)}
+      <StyledInputBase placeholder="Search…" inputProps={{'aria-label': 'search'}}/>
     </Search>
   )
 }

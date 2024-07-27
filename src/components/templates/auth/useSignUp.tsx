@@ -1,10 +1,10 @@
 import type {ChangeEvent} from 'react'
+import {useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
 import type {FormInputType} from '../../atoms'
 import {useResetPassword} from './useResetPassword'
 import {useDispatch, useForm, useToast} from '../../../hooks'
 import {UserService} from '../../../services'
-import type {ServerError} from '../../../services/typing/userService'
 import {storage, StorageKeys} from '../../../utils/storage'
 import {setUser} from '../../../store/actions'
 import type {AuthFormType} from './AuthForms'
@@ -12,15 +12,15 @@ import type {AuthFormType} from './AuthForms'
 export const useSignUp: AuthFormType = ({redirectTo, onSuccess}) => {
   const router = useRouter()
   const dispatch = useDispatch()
-  const {values, onChange, handleSubmit} = useForm({name: '', username: '', email: ''})
-  const {inputFields: passwordInputFields} = useResetPassword(false)
+  const {values, onChange, handleSubmit} = useForm({name: '', username: '', email: '', phone: 0})
+  const [isValidMobile, setIsValidMobile] = useState(true)
+  const {inputFields: passwordInputFields} = useResetPassword({withOldPassword: false})
   const toast = useToast()
 
-  const handleChange = <K extends keyof typeof values>(keyName: K) => {
-    return (event: ChangeEvent<HTMLInputElement>) => {
-      onChange(keyName, event.target.value)
-    }
-  }
+  useEffect(() => {
+    const isValidMobile = values.phone === 0 || (values.phone >= 1000000000 && values.phone <= 9999999999)
+    setIsValidMobile(isValidMobile)
+  }, [values.phone])
 
   const onSubmit = () => {
     const password = passwordInputFields[0]?.value as string
@@ -33,9 +33,7 @@ export const useSignUp: AuthFormType = ({redirectTo, onSuccess}) => {
           return router.push(redirectTo)
         }
       })
-      .catch((error: ServerError) => {
-        toast.error(error.error.message)
-      })
+      .catch(toast.error)
   }
 
   const inputFields: FormInputType[] = [
@@ -43,7 +41,9 @@ export const useSignUp: AuthFormType = ({redirectTo, onSuccess}) => {
       inputType: 'textField',
       size: 'small',
       value: values.name,
-      onChange: handleChange('name'),
+      onChange: (event: ChangeEvent<HTMLInputElement>) => {
+        onChange('name', event.target.value)
+      },
       label: 'Name',
       required: true
     },
@@ -51,7 +51,9 @@ export const useSignUp: AuthFormType = ({redirectTo, onSuccess}) => {
       inputType: 'textField',
       size: 'small',
       value: values.username,
-      onChange: handleChange('username'),
+      onChange: (event: ChangeEvent<HTMLInputElement>) => {
+        onChange('username', event.target.value)
+      },
       label: 'Username',
       required: true
     },
@@ -60,9 +62,24 @@ export const useSignUp: AuthFormType = ({redirectTo, onSuccess}) => {
       size: 'small',
       type: 'email',
       value: values.email,
-      onChange: handleChange('email'),
+      onChange: (event: ChangeEvent<HTMLInputElement>) => {
+        onChange('email', event.target.value)
+      },
       label: 'Email',
       required: true
+    },
+    {
+      inputType: 'textField',
+      type: 'number',
+      label: 'Phone',
+      value: values.phone === 0 ? '' : values.phone,
+      required: true,
+      size: 'small',
+      onChange: event => {
+        onChange('phone', +event.target.value)
+      },
+      error: !isValidMobile,
+      helperText: !isValidMobile ? 'Enter a valid phone no.' : ''
     },
     ...passwordInputFields.map(input => ({...input, size: 'small'}) as FormInputType)
   ]

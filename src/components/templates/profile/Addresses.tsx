@@ -8,7 +8,7 @@ import {ModalForms} from '../../organisms'
 export const Addresses: React.FC = () => {
   const {addresses} = useSelector(state => state.address)
   return (
-    <Stack>
+    <Stack spacing={2}>
       <Stack spacing={4}>
         {addresses.map(address => (
           <Address key={address.id} address={address} title={''} />

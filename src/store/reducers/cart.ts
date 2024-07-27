@@ -29,7 +29,7 @@ export type CartStateType = {
   billingAddress: AddressType | null
   shippingAddress: AddressType | null
   shippingCharge: number
-  discountCoupon: {discount: number; code: string}
+  discountCoupon: {discount: number; code: string} | null
 }
 
 export const initCartState: CartStateType = {
@@ -37,7 +37,7 @@ export const initCartState: CartStateType = {
   billingAddress: null,
   shippingAddress: null,
   shippingCharge: 99,
-  discountCoupon: {discount: 0, code: ''}
+  discountCoupon: null
 }
 const getQty = (qty: number) => (qty >= 0 ? qty : 0)
 

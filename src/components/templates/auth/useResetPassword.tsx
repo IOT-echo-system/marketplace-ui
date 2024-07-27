@@ -1,18 +1,16 @@
-import type {ChangeEvent, FormEvent} from 'react'
+import type {ChangeEvent} from 'react'
 import {useState} from 'react'
 import type {FormInputType} from '../../atoms'
-import {useForm} from '../../../hooks'
+import {useForm, useToast} from '../../../hooks'
+import type {AuthFormType} from './AuthForms'
+import {UserService} from '../../../services'
 
-type UseLoginReturnType = {
-  inputFields: FormInputType[]
-  handleSubmit: (event: FormEvent<HTMLFormElement>) => void
-}
-
-const useResetPassword = (withOldPassword: boolean): UseLoginReturnType => {
+const useResetPassword: AuthFormType<{ withOldPassword: boolean }> = ({withOldPassword}) => {
   const [confirmPassword, setConfirmPassword] = useState('')
-  const {values, onChange, handleSubmit} = useForm({currentPassword: '', password: ''})
+  const {values, onClear, onChange, handleSubmit} = useForm({currentPassword: '', password: ''})
   const [errorOnPassword, setErrorOnPassword] = useState(false)
   const [passwordHelperText, setPasswordHelperText] = useState('')
+  const toast = useToast()
 
   const handleChange = <K extends keyof typeof values>(keyName: K) => {
     return (event: ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +18,15 @@ const useResetPassword = (withOldPassword: boolean): UseLoginReturnType => {
     }
   }
 
-  const onSubmit = () => {}
+  const onSubmit = () => {
+    UserService.changePassword(values)
+      .then(() => {
+        toast.success('Your password updated successfully!!')
+        onClear()
+        setConfirmPassword('')
+      })
+      .catch(toast.error)
+  }
 
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const password = event.target.value
@@ -115,7 +121,9 @@ const useResetPassword = (withOldPassword: boolean): UseLoginReturnType => {
 
   return {
     handleSubmit: handleSubmit(onSubmit),
-    inputFields: withOldPassword ? inputFieldsWithOldPassword : inputFields
+    inputFields: withOldPassword ? inputFieldsWithOldPassword : inputFields,
+    title: 'Reset password',
+    submitBtnText: 'Reset password'
   }
 }
 

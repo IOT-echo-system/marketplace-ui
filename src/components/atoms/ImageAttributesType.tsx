@@ -1,10 +1,9 @@
 import React from 'react'
-import {apiConfig} from '../../config/apiConfig'
 
-export type ImageType = {link: string; altText: string}
-type ImagePropsType = {image: ImageType; width?: number | string}
+export type ImageType = { link: string; altText: string }
+type ImagePropsType = { image: ImageType; width?: number | string; height?: number | string }
 
-export const Image: React.FC<ImagePropsType> = ({image, width}) => {
+export const Image: React.FC<ImagePropsType> = ({image, width, height}) => {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img width={width} height={width} src={apiConfig.assets + image.link} alt={image.altText} />
+  return <img width={width} height={height} src={image.link} alt={image.altText}/>
 }

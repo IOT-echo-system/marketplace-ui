@@ -1,13 +1,17 @@
 import type {GetServerSideProps, NextPage} from 'next'
 import React from 'react'
-import {InProgressFeature} from '../../components/atoms'
 import {CMSService} from '../../services'
-import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
+import {ProfileWrapper} from '../../components/templates/profile'
+import {AuthForms} from '../../components/templates/auth'
+import {CenteredContainer} from '../../components/atoms'
+import {useResetPassword} from '../../components/templates/auth/useResetPassword'
 
 const ResetPasswordPage: NextPage = () => {
   return (
-    <ProfileWrapper requiredLoggedIn title={'Reset password'}>
-      <InProgressFeature />
+    <ProfileWrapper requiredLoggedIn title={''}>
+      <CenteredContainer p={2} spacing={2}>
+        <AuthForms getFormDetails={useResetPassword} withOldPassword/>
+      </CenteredContainer>
     </ProfileWrapper>
   )
 }

@@ -23,7 +23,7 @@ class AuthService_ {
     })
   }
 
-  login(data: {identifier: string; password: string}): Promise<UserResponse> {
+  login(data: { identifier: string; password: string }): Promise<UserResponse> {
     return WebClient.post<UserResponse>({
       baseUrl: this.baseUrl,
       path: this.config.login,
@@ -79,7 +79,7 @@ class AuthService_ {
     })
   }
 
-  async applyCoupon({code}: {code: string}): Promise<Coupon> {
+  async applyCoupon({code}: { code: string }): Promise<Coupon> {
     const response = await WebClient.get<Coupon[]>({
       baseUrl: this.baseUrl,
       path: this.config.coupon,
@@ -102,6 +102,14 @@ class AuthService_ {
       throw new Error('Data not found!!')
     }
     return response[0]
+  }
+
+  changePassword(values: { password: string; currentPassword: string }) {
+    return WebClient.post({
+      baseUrl: this.baseUrl,
+      path: this.config.changePassword,
+      body: {currentPassword: values.currentPassword, password: values.password, passwordConfirmation: values.password}
+    })
   }
 }
 

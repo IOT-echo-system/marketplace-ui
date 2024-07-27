@@ -2,8 +2,12 @@ import React, {type FormEvent} from 'react'
 import {Form} from '../../molecules'
 import type {FormInputType} from '../../atoms'
 
-type AuthFormPropsType = {redirectTo?: string; onSuccess?: () => void}
-export type AuthFormType = (props: AuthFormPropsType) => {
+type Document = Record<string, unknown>
+type AuthFormPropsType<T extends Document = Document> =
+  { redirectTo?: string; onSuccess?: () => void }
+  & T
+
+export type AuthFormType<T extends Document = Document> = (props: AuthFormPropsType<T>) => {
   inputFields: FormInputType[]
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void
   submitBtnDisabled?: boolean
@@ -11,15 +15,13 @@ export type AuthFormType = (props: AuthFormPropsType) => {
   submitBtnText: string
 }
 
-type AuthFormsPropsType = {getFormDetails: AuthFormType; title?: string; submitBtnText?: string} & AuthFormPropsType
-export const AuthForms: React.FC<AuthFormsPropsType> = ({
-  getFormDetails,
-  redirectTo,
-  onSuccess,
-  submitBtnText: btnText,
-  title: formTitle
-}) => {
-  const {handleSubmit, submitBtnDisabled, inputFields, title, submitBtnText} = getFormDetails({redirectTo, onSuccess})
+type AuthFormsPropsType<T extends Document> =
+  { getFormDetails: AuthFormType<T>; title?: string; submitBtnText?: string }
+  & AuthFormPropsType<T>
+
+export const AuthForms = <T extends Document>(props: AuthFormsPropsType<T>): React.JSX.Element => {
+  const {getFormDetails, submitBtnText: btnText, title: formTitle,} = props
+  const {handleSubmit, submitBtnDisabled, inputFields, title, submitBtnText} = getFormDetails(props)
   return (
     <Form
       title={formTitle ?? title}

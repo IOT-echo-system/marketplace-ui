@@ -5,7 +5,7 @@ import {formatPrice} from '../../utils/utils'
 
 type PriceSummaryPropsType = {
   qty: number
-  discountCoupon: Coupon
+  discountCoupon: Coupon | null
   amount: number
   shippingCharge: number
   shippingRequired?: boolean
@@ -18,14 +18,14 @@ export const PriceSummary: React.FC<PriceSummaryPropsType> = ({
   shippingCharge,
   shippingRequired
 }) => {
-  const discount = (amount * discountCoupon.discount) / 100
+  const discount = (amount * (discountCoupon?.discount ?? 0)) / 100
   const amountWithGST = (amount - discount) * 1.18
   return (
     <Stack justifyContent={'flex-end'} alignItems={'flex-end'} spacing={1}>
       <Typography variant={'subtitle1'}>
         Subtotal ({qty} items): {formatPrice(amount)}
       </Typography>
-      {discountCoupon.discount.isGreaterThanZero() && (
+      {discountCoupon?.discount.isGreaterThanZero() && (
         <Typography>
           Discount ({discountCoupon.discount}%): {formatPrice(-discount)}
         </Typography>
