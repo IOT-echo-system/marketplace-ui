@@ -5,7 +5,10 @@ export const UserAction = {
   SET_USER_LOADING: 'SET_USER_LOADING'
 } as const
 
+export type UserRole = {name: string; type: string}
+
 export type User = {
+  role?: UserRole
   name: string
   username: string
   email: string
@@ -16,10 +19,10 @@ export type User = {
   updatedAt: string
   phone: number | null
   loading: boolean
-  customRole: 'SELLER' | null
 }
 
 export const initUserState: User = {
+  role: {name: 'Public', type: 'public'},
   blocked: false,
   confirmed: false,
   name: '',
@@ -29,8 +32,7 @@ export const initUserState: User = {
   provider: '',
   updatedAt: '',
   username: '',
-  loading: true,
-  customRole: null
+  loading: true
 }
 
 const userReducer = (state: User, action: TRootActions): User => {

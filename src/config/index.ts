@@ -7,6 +7,7 @@ export const Config = {
   SIGN_UP_PAGE_PATH: '/profile/signup',
   FORGOT_PASSWORD_PAGE_PATH: '/profile/forgot-password',
   MY_ACCOUNT_PAGE_PATH: '/profile',
+  CHANGE_PASSWORD_PAGE_PATH: '/profile/change-password',
   RESET_PASSWORD_PAGE_PATH: '/profile/reset-password',
   ADDRESS_BOOK_PAGE_PATH: '/profile/address',
   WISHLIST_PAGE_PATH: '/profile/wishlist',
@@ -16,5 +17,6 @@ export const Config = {
   REWARDS_PAGE_PATH: '/profile/rewards',
   SELLER_DASHBOARD_PAGE_PATH: '/seller',
   SELLER_INVOICES_PAGE_PATH: '/seller/invoices',
+  SELLER_ONLINE_ORDERS_PAGE_PATH: '/seller/online-orders',
   SELLER_INVOICES_CREATE_PAGE_PATH: '/seller/invoices/create'
 } as const

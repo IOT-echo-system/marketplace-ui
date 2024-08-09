@@ -22,8 +22,8 @@ export const ComponentMap = {
 } as const
 
 export type ComponentKeyName = keyof typeof ComponentMap
-export type WidgetPropType<T> = { data: T }
-export type WidgetType<T extends ComponentKeyName> = { __component: T } & (typeof ComponentMap)[T]['propType']
+export type WidgetPropType<T> = {data: T}
+export type WidgetType<T extends ComponentKeyName> = {__component: T} & (typeof ComponentMap)[T]['propType']
 export type PageDetailsType = {
   name: string
   slug: string
@@ -33,7 +33,7 @@ export type PageDetailsType = {
   ctaBanner: Array<WidgetType<'text-with-cta.text-with-cta'>>
 }
 export type PageDetailsResponse = {
-  data: Array<{ attributes: PageDetailsType }>
+  data: Array<{attributes: PageDetailsType}>
 }
 
 export const Widget = <K extends ComponentKeyName>({
@@ -46,5 +46,5 @@ export const Widget = <K extends ComponentKeyName>({
   const Component = ComponentMap[componentKey].component as React.FC<
     WidgetPropType<(typeof ComponentMap)[K]['propType']>
   >
-  return <Component data={data}/>
+  return <Component data={data} />
 }

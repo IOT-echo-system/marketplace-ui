@@ -18,7 +18,7 @@ export const ModalForms = <T extends Record<string, unknown>>(
   const handleClose = () => {
     setOpen(false)
   }
-  const {loading, formInputs, handleSubmit, formTitle, submitLabel} = getFormDetails(handleClose, props)
+  const formProps = getFormDetails(handleClose, props)
 
   return (
     <Stack>
@@ -29,15 +29,7 @@ export const ModalForms = <T extends Record<string, unknown>>(
       >
         {children}
       </Stack>
-      <ModalForm
-        open={open}
-        handleClose={handleClose}
-        formInputs={formInputs}
-        formTitle={formTitle}
-        loading={loading}
-        handleSubmit={handleSubmit}
-        submitLabel={submitLabel}
-      />
+      <ModalForm open={open} handleClose={handleClose} {...formProps} />
     </Stack>
   )
 }

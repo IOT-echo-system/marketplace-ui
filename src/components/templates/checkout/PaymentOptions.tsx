@@ -5,7 +5,7 @@ import {formatPrice} from '../../../utils/utils'
 import {Button} from '../../atoms'
 import type {ProductDetails} from '../products/Product'
 import {UserService} from '../../../services'
-import type {PaymentResponse, ServerError} from '../../../services/typing/userService'
+import type {PaymentResponse} from '../../../services/typing/userService'
 import {clearCart} from '../../../store/actions'
 import {Config} from '../../../config'
 import theme from '../../../theme/theme'
@@ -71,7 +71,7 @@ export const PaymentOptions: React.FC<PaymentOptionsPropsType> = ({products, onS
     return count + price
   }, 0)
 
-  const discount = (price * cart.discountCoupon.discount) / 100
+  const discount = (price * (cart.discountCoupon?.discount ?? 0)) / 100
   const priceWithGST = (price - discount) * 1.18
   const totalPrice = priceWithGST + cart.shippingCharge
 
@@ -81,14 +81,12 @@ export const PaymentOptions: React.FC<PaymentOptionsPropsType> = ({products, onS
         dispatch(clearCart())
         const options = createOptions(payment, site, paymentHandler, {
           ...user,
-          phone: user.phone ?? cart.billingAddress!.mobileNo
+          phone: user.phone ?? cart.billingAddress?.mobileNo ?? NaN
         })
         const rzp = new window.Razorpay(options)
         rzp.open()
       })
-      .catch((error: ServerError) => {
-        toast.error(error.error.message)
-      })
+      .catch(toast.error)
   }
 
   return (

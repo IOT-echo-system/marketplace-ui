@@ -2,7 +2,7 @@ import type {ChangeEvent} from 'react'
 import {useEffect, useState} from 'react'
 import {useRouter} from 'next/router'
 import type {FormInputType} from '../../atoms'
-import {useResetPassword} from './useResetPassword'
+import {useChangePassword} from './useChangePassword'
 import {useDispatch, useForm, useToast} from '../../../hooks'
 import {UserService} from '../../../services'
 import {storage, StorageKeys} from '../../../utils/storage'
@@ -14,7 +14,7 @@ export const useSignUp: AuthFormType = ({redirectTo, onSuccess}) => {
   const dispatch = useDispatch()
   const {values, onChange, handleSubmit} = useForm({name: '', username: '', email: '', phone: 0})
   const [isValidMobile, setIsValidMobile] = useState(true)
-  const {inputFields: passwordInputFields} = useResetPassword({withOldPassword: false})
+  const {inputFields: passwordInputFields} = useChangePassword({withOldPassword: false})
   const toast = useToast()
 
   useEffect(() => {

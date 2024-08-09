@@ -2,20 +2,14 @@ import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'ne
 import React from 'react'
 import {Checkout} from '../../components/templates/checkout/Checkout'
 import {CMSService} from '../../services'
-import {Stack} from '@mui/material'
 
 const CheckoutPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
-  return (
-    <Stack bgcolor={'background.default'}>
-      {' '}
-      <Checkout />
-    </Stack>
-  )
+  return <Checkout />
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const initialValue = await CMSService.getInitialValue()
+    const initialValue = await CMSService.getInitialValue('background.default')
     return {props: {initialValue}}
   } catch (error) {
     return {props: {}}

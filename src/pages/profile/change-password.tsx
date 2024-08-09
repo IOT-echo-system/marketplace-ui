@@ -2,14 +2,15 @@ import type {GetServerSideProps, NextPage} from 'next'
 import React from 'react'
 import {CMSService} from '../../services'
 import {ProfileWrapper} from '../../components/templates/profile'
-import {AuthForms, useForgetPassword} from '../../components/templates/auth'
+import {AuthForms} from '../../components/templates/auth'
 import {CenteredContainer} from '../../components/atoms'
+import {useChangePassword} from '../../components/templates/auth/useChangePassword'
 
-const ForgotPasswordPage: NextPage = () => {
+const ResetPasswordPage: NextPage = () => {
   return (
-    <ProfileWrapper requiredLoggedIn={false}>
-      <CenteredContainer spacing={2}>
-        <AuthForms getFormDetails={useForgetPassword} />
+    <ProfileWrapper requiredLoggedIn title={''}>
+      <CenteredContainer p={2} spacing={2}>
+        <AuthForms getFormDetails={useChangePassword} withOldPassword />
       </CenteredContainer>
     </ProfileWrapper>
   )
@@ -24,4 +25,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
-export default ForgotPasswordPage
+export default ResetPasswordPage

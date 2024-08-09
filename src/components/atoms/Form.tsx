@@ -1,23 +1,24 @@
+import type {StackProps} from '@mui/material'
 import {Stack, Typography} from '@mui/material'
 import type {FormEvent} from 'react'
 import React from 'react'
 import type {FormInputType} from '../atoms'
 import {FormInput, LoadingButton} from '../atoms'
 
-export type FormProps = {
+export type FormPropsType = {
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void
-  title: string
+  title?: string
   inputFields: FormInputType[]
   submitBtnText: string
   submitBtnDisabled?: boolean
   loading?: boolean
-}
+} & StackProps
 
-export const Form: React.FC<FormProps> = props => {
+export const Form: React.FC<FormPropsType> = props => {
   return (
     <form onSubmit={props.handleSubmit}>
-      <Stack spacing={2}>
-        <Typography variant={'h5'}>{props.title}</Typography>
+      <Stack spacing={2} {...props}>
+        {props.title && <Typography variant={'h5'}>{props.title}</Typography>}
         {props.inputFields.map((inputField, index) => (
           <FormInput key={`input-${index}`} {...inputField} />
         ))}
@@ -25,8 +26,9 @@ export const Form: React.FC<FormProps> = props => {
           type={'submit'}
           variant={'contained'}
           size={'large'}
-          disabled={props.submitBtnDisabled}
+          disabled={props.submitBtnDisabled ?? false}
           loading={props.loading}
+          fullWidth
         >
           {props.submitBtnText}
         </LoadingButton>

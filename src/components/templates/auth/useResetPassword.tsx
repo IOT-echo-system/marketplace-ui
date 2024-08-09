@@ -1,25 +1,21 @@
-import type {ChangeEvent} from 'react'
+import type {ChangeEvent, FormEvent} from 'react'
 import {useState} from 'react'
 import type {FormInputType} from '../../atoms'
-import {useForm, useToast} from '../../../hooks'
+import {usePassword, useToast} from '../../../hooks'
 import type {AuthFormType} from './AuthForms'
 import {UserService} from '../../../services'
+import {useRouter} from 'next/router'
 
-const useResetPassword: AuthFormType<{ withOldPassword: boolean }> = ({withOldPassword}) => {
+const useResetPassword: AuthFormType = () => {
+  const {value, onClear, onChange, helperText} = usePassword('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const {values, onClear, onChange, handleSubmit} = useForm({currentPassword: '', password: ''})
-  const [errorOnPassword, setErrorOnPassword] = useState(false)
-  const [passwordHelperText, setPasswordHelperText] = useState('')
   const toast = useToast()
+  const router = useRouter()
+  const token = router.query.token as string
 
-  const handleChange = <K extends keyof typeof values>(keyName: K) => {
-    return (event: ChangeEvent<HTMLInputElement>) => {
-      onChange(keyName, event.target.value)
-    }
-  }
-
-  const onSubmit = () => {
-    UserService.changePassword(values)
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    UserService.resetPassword(value, token)
       .then(() => {
         toast.success('Your password updated successfully!!')
         onClear()
@@ -28,49 +24,19 @@ const useResetPassword: AuthFormType<{ withOldPassword: boolean }> = ({withOldPa
       .catch(toast.error)
   }
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const password = event.target.value
-    onChange('password', password)
-    if (password.length < 8) {
-      setPasswordHelperText('Password must be at least 8 characters long')
-      setErrorOnPassword(true)
-      return
-    }
-
-    if (!/[A-Z]/.test(password)) {
-      setPasswordHelperText('Password must contain at least one uppercase letter')
-      setErrorOnPassword(true)
-      return
-    }
-
-    if (!/[a-z]/.test(password)) {
-      setPasswordHelperText('Password must contain at least one lowercase letter')
-      setErrorOnPassword(true)
-      return
-    }
-
-    if (!/\d/.test(password)) {
-      setPasswordHelperText('Password must contain at least one digit')
-      setErrorOnPassword(true)
-      return
-    }
-
-    setPasswordHelperText('')
-    setErrorOnPassword(false)
-  }
-
-  const errorOnConfirmPassword = confirmPassword.length !== 0 && values.password !== confirmPassword
+  const errorOnConfirmPassword = confirmPassword.length !== 0 && value !== confirmPassword
 
   const inputFields: FormInputType[] = [
     {
       inputType: 'textField',
       type: 'password',
-      value: values.password,
-      onChange: handlePasswordChange,
+      value: value,
+      onChange,
       label: 'Password',
       required: true,
-      error: errorOnPassword,
-      helperText: passwordHelperText
+      error: Boolean(helperText),
+      helperText: helperText,
+      size: 'small'
     },
     {
       inputType: 'textField',
@@ -82,46 +48,14 @@ const useResetPassword: AuthFormType<{ withOldPassword: boolean }> = ({withOldPa
       label: 'Confirm password',
       required: true,
       error: errorOnConfirmPassword,
-      helperText: errorOnConfirmPassword ? 'password and confirm password should match.' : ''
-    }
-  ]
-
-  const inputFieldsWithOldPassword: FormInputType[] = [
-    {
-      inputType: 'textField',
-      type: 'password',
-      value: values.currentPassword,
-      onChange: handleChange('currentPassword'),
-      label: 'Current password',
-      required: true
-    },
-    {
-      inputType: 'textField',
-      type: 'password',
-      value: values.password,
-      onChange: handlePasswordChange,
-      label: 'New password',
-      required: true,
-      error: errorOnPassword,
-      helperText: passwordHelperText
-    },
-    {
-      inputType: 'textField',
-      type: 'password',
-      value: confirmPassword,
-      onChange: (event: ChangeEvent<HTMLInputElement>): void => {
-        setConfirmPassword(event.target.value)
-      },
-      label: 'Confirm new password',
-      required: true,
-      error: errorOnConfirmPassword,
-      helperText: errorOnConfirmPassword ? 'password and confirm password should match.' : ''
+      helperText: errorOnConfirmPassword ? 'password and confirm password should match.' : '',
+      size: 'small'
     }
   ]
 
   return {
-    handleSubmit: handleSubmit(onSubmit),
-    inputFields: withOldPassword ? inputFieldsWithOldPassword : inputFields,
+    handleSubmit,
+    inputFields,
     title: 'Reset password',
     submitBtnText: 'Reset password'
   }

@@ -23,8 +23,10 @@ export const apiConfig = {
     users: '/users',
     register: '/auth/local/register',
     login: '/auth/local',
-    changePassword: '/auth/change-password',
-    me: '/users/me',
+    changePassword: '/auth/reset-password',
+    resetPassword: '/auth/update-password',
+    forgetPassword: '/auth/forget-password',
+    me: '/users/me?populate=*',
     userDetails: '/users/{id}?populate=*',
     address: '/addresses',
     orders: '/orders',
@@ -33,13 +35,20 @@ export const apiConfig = {
     verifyPayment: '/payments/verify',
     coupon: '/discount-coupons?filters[code][$eq]={code}'
   },
+  shipping: {
+    estimateDelivery: '/estimate-delivery',
+    baseUrl: '/shipping'
+  },
   postal: {
     baseUrl: 'https://api.postalpincode.in',
     pinCode: '/pincode/{pinCode}',
     address: '/address'
   },
   seller: {
+    baseUrl: '/seller',
     findAddress: '/address-by-sellers?filters[mobileNo][$eq]={mobileNo}',
-    address: '/address-by-sellers'
+    address: '/address-by-sellers',
+    orders: '/orders',
+    order: '/orders/{orderId}'
   }
 } as const

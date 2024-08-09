@@ -1,8 +1,7 @@
 import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
 import React from 'react'
 import {CMSService} from '../../services'
-import {ProfileWrapper} from '../../components/templates/profile/ProfileWrapper'
-import {Addresses} from '../../components/templates/profile/Addresses'
+import {Addresses, ProfileWrapper} from '../../components/templates/profile'
 import {useSelector} from '../../hooks'
 
 const AddressPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {

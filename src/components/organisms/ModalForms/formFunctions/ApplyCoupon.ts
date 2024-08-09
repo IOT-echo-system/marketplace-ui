@@ -44,8 +44,9 @@ export const ApplyCoupon: GetFormPropsTypeFunction = handleClose => {
   return {
     handleSubmit: handleSubmit(onSubmit),
     loading,
-    formInputs,
-    formTitle: 'Apply coupon',
-    submitLabel: 'Apply'
+    inputFields: formInputs,
+    title: 'Apply coupon',
+    submitBtnText: 'Apply',
+    submitBtnDisabled: values.code === ''
   }
 }

@@ -1,8 +1,8 @@
 import {apiConfig} from '../config/apiConfig'
 import '../utils/extenstions'
 import WebClient from './webClient'
-import type {AddressResponse, Coupon, Order, OrderResponse, PaymentResponse, UserResponse} from './typing/userService'
-import type {AddressType, CartStateType, User} from '../store/reducers'
+import type {Coupon, MeResponse, Order, OrderResponse, PaymentResponse, UserResponse} from './typing/userService'
+import type {AddressType, CartStateType} from '../store/reducers'
 
 class AuthService_ {
   private readonly config = apiConfig.user
@@ -16,14 +16,14 @@ class AuthService_ {
     })
   }
 
-  getUserData(): Promise<User> {
-    return WebClient.get<User>({
+  getUserData(): Promise<MeResponse> {
+    return WebClient.get<MeResponse>({
       baseUrl: this.baseUrl,
       path: this.config.me
     })
   }
 
-  login(data: { identifier: string; password: string }): Promise<UserResponse> {
+  login(data: {identifier: string; password: string}): Promise<UserResponse> {
     return WebClient.post<UserResponse>({
       baseUrl: this.baseUrl,
       path: this.config.login,
@@ -32,18 +32,10 @@ class AuthService_ {
   }
 
   async addAddress(data: unknown): Promise<AddressType> {
-    const response = await WebClient.post<AddressResponse>({
+    return WebClient.post<AddressType>({
       baseUrl: this.baseUrl,
       path: this.config.address,
       body: {data}
-    })
-    return {...response.data.attributes, id: response.data.id}
-  }
-
-  async getAddresses(): Promise<AddressType[]> {
-    return WebClient.get<AddressType[]>({
-      baseUrl: this.baseUrl,
-      path: this.config.address
     })
   }
 
@@ -79,7 +71,7 @@ class AuthService_ {
     })
   }
 
-  async applyCoupon({code}: { code: string }): Promise<Coupon> {
+  async applyCoupon({code}: {code: string}): Promise<Coupon> {
     const response = await WebClient.get<Coupon[]>({
       baseUrl: this.baseUrl,
       path: this.config.coupon,
@@ -104,11 +96,27 @@ class AuthService_ {
     return response[0]
   }
 
-  changePassword(values: { password: string; currentPassword: string }) {
+  changePassword(values: {password: string; currentPassword: string}) {
     return WebClient.post({
       baseUrl: this.baseUrl,
       path: this.config.changePassword,
       body: {currentPassword: values.currentPassword, password: values.password, passwordConfirmation: values.password}
+    })
+  }
+
+  forgetPassword(values: {email: string}) {
+    return WebClient.post({
+      baseUrl: this.baseUrl,
+      path: this.config.forgetPassword,
+      body: values
+    })
+  }
+
+  resetPassword(value: string, token: string) {
+    return WebClient.post({
+      baseUrl: this.baseUrl,
+      path: this.config.resetPassword,
+      body: {password: value, token}
     })
   }
 }

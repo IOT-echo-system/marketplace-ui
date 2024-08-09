@@ -50,13 +50,13 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
   }
 }))
 
-export const SearchBox: React.FC<{ size?: 'small' | 'large' }> = ({size}) => {
+export const SearchBox: React.FC<{size?: 'small' | 'large'}> = ({size}) => {
   return (
     <Search>
       <SearchIconWrapper>
-        <SearchIcon fontSize={size ?? 'medium'}/>
+        <SearchIcon fontSize={size ?? 'medium'} />
       </SearchIconWrapper>
-      <StyledInputBase placeholder="Search…" inputProps={{'aria-label': 'search'}}/>
+      <StyledInputBase placeholder="Search…" inputProps={{'aria-label': 'search'}} />
     </Search>
   )
 }

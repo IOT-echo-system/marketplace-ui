@@ -1,7 +1,7 @@
 import {useSnackbar} from 'notistack'
 import type {ServerError} from '../services/typing/userService'
 
-export type Toast = { [P in 'success' | 'warning' | 'info']: (message: string) => void } & {
+export type Toast = {[P in 'success' | 'warning' | 'info']: (message: string) => void} & {
   error: (error: ServerError | Error | string) => void
 }
 export const useToast = (): Toast => {
@@ -15,8 +15,8 @@ export const useToast = (): Toast => {
   }
 
   const error = (errorMessage: ServerError | Error | string) => {
-    const errorText = ((errorMessage as ServerError).error?.message ?? (errorMessage as Error).message)
-      || errorMessage as string
+    const errorText =
+      ((errorMessage as ServerError).error?.message ?? (errorMessage as Error).message) || (errorMessage as string)
     enqueueSnackbar(errorText, {variant: 'error'})
   }
 

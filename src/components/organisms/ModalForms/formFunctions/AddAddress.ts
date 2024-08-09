@@ -157,8 +157,8 @@ export const AddAddress: GetFormPropsTypeFunction = handleClose => {
   return {
     handleSubmit: handleSubmit(onSubmit),
     loading,
-    formInputs,
-    formTitle: 'Add new address',
-    submitLabel: 'Add address'
+    inputFields: formInputs,
+    title: 'Add new address',
+    submitBtnText: 'Add address'
   }
 }

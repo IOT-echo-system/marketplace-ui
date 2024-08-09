@@ -13,7 +13,7 @@ const profileOptions = [
   {name: 'Login', link: Config.LOGIN_PAGE_PATH, loggedIn: false},
   {name: 'Forget password', link: Config.FORGOT_PASSWORD_PAGE_PATH, loggedIn: false},
   {name: 'My account', link: Config.MY_ACCOUNT_PAGE_PATH, loggedIn: true},
-  {name: 'Reset password', link: Config.RESET_PASSWORD_PAGE_PATH, loggedIn: true},
+  {name: 'Change password', link: Config.CHANGE_PASSWORD_PAGE_PATH, loggedIn: true},
   {name: 'Address book', link: Config.ADDRESS_BOOK_PAGE_PATH, loggedIn: true},
   {name: 'Wishlist', link: Config.WISHLIST_PAGE_PATH, loggedIn: true},
   {name: 'Orders', link: Config.ORDERS_PAGE_PATH, loggedIn: true},

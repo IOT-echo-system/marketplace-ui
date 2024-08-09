@@ -2,10 +2,11 @@ import WebClient from 'web-client-starter'
 import {apiConfig} from '../config/apiConfig'
 import type {AddressType} from '../store/reducers'
 import type {AddressResponse} from './typing/sellerService'
+import type {OnlineOrderResponse, Order} from './typing/userService'
 
 class SellerService_ {
   config = apiConfig.seller
-  baseUrl = apiConfig.baseUrl
+  baseUrl = apiConfig.baseUrl + this.config.baseUrl
 
   async getAddress(mobileNo: number): Promise<AddressType[]> {
     const response = await WebClient.get<AddressResponse>({
@@ -21,6 +22,22 @@ class SellerService_ {
       baseUrl: this.baseUrl,
       path: this.config.address,
       body: {data}
+    })
+  }
+
+  getOrders(data: Record<string, unknown>) {
+    return WebClient.post<OnlineOrderResponse>({
+      baseUrl: this.baseUrl,
+      path: this.config.orders,
+      body: {data}
+    })
+  }
+
+  getOrder(orderId: string) {
+    return WebClient.get<Order>({
+      baseUrl: this.baseUrl,
+      path: this.config.order,
+      uriVariables: {orderId}
     })
   }
 }

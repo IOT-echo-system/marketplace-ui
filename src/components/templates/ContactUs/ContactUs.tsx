@@ -1,8 +1,7 @@
 import React from 'react'
 import {Stack} from '@mui/material'
-import {Form} from '../../molecules'
 import {useContactUs} from './useContactUs'
-import {CenteredContainer} from '../../atoms'
+import {CenteredContainer, Form} from '../../atoms'
 
 export const ContactUs: React.FC = () => {
   const {inputFields, handleSubmit, submitBtnText, submitBtnDisabled, loading} = useContactUs()

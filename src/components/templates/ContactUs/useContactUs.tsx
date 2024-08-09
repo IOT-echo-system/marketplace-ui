@@ -3,7 +3,6 @@ import {useEffect, useState} from 'react'
 import type {FormInputType} from '../../atoms'
 import {useForm, useToast} from '../../../hooks'
 import {CMSService} from '../../../services'
-import type {ServerError} from '../../../services/typing/userService'
 
 type UseContactUsReturnType = {
   submitBtnText: string
@@ -36,9 +35,7 @@ export const useContactUs = (): UseContactUsReturnType => {
         onClear()
         toast.success('We got your query, We will reach out to you soon!!')
       })
-      .catch((error: ServerError) => {
-        toast.error(error.error.message || 'Something went wrong, please try again')
-      })
+      .catch(toast.error)
       .finally(() => {
         setLoading(false)
       })

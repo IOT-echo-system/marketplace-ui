@@ -10,10 +10,9 @@ import {useDispatch} from '../hooks'
 const ErrorPage: NextPage = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    CMSService.getSiteInfoWithHeaderAndFooter()
-      .then((siteInfo) => {
-        dispatch(updateSite(siteInfo))
-      })
+    CMSService.getSiteInfoWithHeaderAndFooter().then(siteInfo => {
+      dispatch(updateSite(siteInfo))
+    })
   }, [])
 
   return (
@@ -26,9 +25,7 @@ const ErrorPage: NextPage = () => {
           Oops! It seems like the page you were trying to find isn't around anymore (or at least isn't here).
         </Typography>
         <Stack>
-          <Typography variant={'subtitle1'}>
-            Go to
-          </Typography>
+          <Typography variant={'subtitle1'}>Go to</Typography>
           <ButtonGroup>
             <Button variant={'outlined'} component={Link} href={Config.HOME_PAGE_PATH}>
               Home

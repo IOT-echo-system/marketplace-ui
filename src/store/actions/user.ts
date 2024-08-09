@@ -1,5 +1,5 @@
-import type {User} from '../reducers/user'
-import {UserAction} from '../reducers/user'
+import type {User} from '../reducers'
+import {UserAction} from '../reducers'
 
 export const setUser = (user: User) => {
   return {type: UserAction.SET_USER, payload: {user}}

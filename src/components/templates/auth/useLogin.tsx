@@ -5,7 +5,6 @@ import {UserService} from '../../../services'
 import {storage, StorageKeys} from '../../../utils/storage'
 import {setUser} from '../../../store/actions'
 import {useRouter} from 'next/router'
-import type {ServerError} from '../../../services/typing/userService'
 import type {AuthFormType} from './AuthForms'
 
 const useLogin: AuthFormType = ({redirectTo, onSuccess}) => {
@@ -30,9 +29,7 @@ const useLogin: AuthFormType = ({redirectTo, onSuccess}) => {
           return router.push(redirectTo)
         }
       })
-      .catch((error: ServerError) => {
-        toast.error(error.error.message)
-      })
+      .catch(toast.error)
   }
 
   const inputFields: FormInputType[] = [

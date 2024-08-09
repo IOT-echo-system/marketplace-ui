@@ -1,3 +1,6 @@
 export * from './AuthForms'
 export * from './useSignUp'
 export * from './useLogin'
+export * from './useChangePassword'
+export * from './useForgetPassword'
+export * from './useResetPassword'

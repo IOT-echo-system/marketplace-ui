@@ -4,14 +4,21 @@ import type {MetaResponseType} from '../../services/typing/CMSService'
 import {useRouter} from 'next/router'
 import {useMedia, useScroll} from '../../hooks'
 
-export const Pagination: React.FC<MetaResponseType> = ({pagination}) => {
+export const Pagination: React.FC<MetaResponseType & {handlePageChange?: (page: number) => void}> = ({
+  pagination,
+  handlePageChange
+}) => {
   const router = useRouter()
   const media = useMedia()
   const {scroll} = useScroll()
 
   const updatePage = (page: number) => {
     scroll()
-    router.push({pathname: router.pathname, query: {...router.query, page: page}}).catch()
+    if (handlePageChange) {
+      handlePageChange(page)
+    } else {
+      router.push({pathname: router.pathname, query: {...router.query, page: page}}).catch()
+    }
   }
 
   useEffect(() => {
