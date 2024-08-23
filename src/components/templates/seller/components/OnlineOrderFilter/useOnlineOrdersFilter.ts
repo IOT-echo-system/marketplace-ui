@@ -60,6 +60,28 @@ export const useOnlineOrdersFilterAndSort = (): ReturnType => {
     {label: 'Order not placed', value: 'ORDER_NOT_PLACED'}
   ]
 
+  const filterByState: FormInputType = {
+    inputType: 'selectField',
+    size: 'small',
+    options: OrderStatusOptions,
+    label: 'Order status',
+    value: values.value,
+    handleChange: option => {
+      onChange('value', option as string)
+    }
+  }
+
+  const filterById: FormInputType = {
+    size: 'small',
+    inputType: 'textField',
+    label: 'Filter value',
+    value: values.value,
+    onChange: event => {
+      onChange('value', event.target.value)
+    },
+    fullWidth: true
+  }
+
   const inputFields: FormInputType[] = [
     {
       inputType: 'selectField',
@@ -74,27 +96,7 @@ export const useOnlineOrdersFilterAndSort = (): ReturnType => {
         onChange('filterBy', option as string)
       }
     },
-    values.filterBy === 'state'
-      ? {
-        inputType: 'selectField',
-        size: 'small',
-        options: OrderStatusOptions,
-        label: 'Order status',
-        value: values.value,
-        handleChange: option => {
-          onChange('value', option as string)
-        }
-      }
-      : {
-        size: 'small',
-        inputType: 'textField',
-        label: 'Filter value',
-        value: values.value,
-        onChange: event => {
-          onChange('value', event.target.value)
-        },
-        fullWidth: true
-      }
+    values.filterBy === 'state' ? filterByState : filterById
   ]
 
   return {
