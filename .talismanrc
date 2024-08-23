@@ -13,4 +13,10 @@ fileignoreconfig:
   checksum: 1ed7f12253a0d6f03734c3bfbde40734459402780f9db1a3b57e5420dbb211fe
 - filename: src/components/organisms/Footer.tsx
   checksum: fb196647f9635a8f778934c083369b7d1eec5349ff608bfb9efc70206e4ef55c
+- filename: src/pages/profile/change-password.tsx
+  checksum: a17800b7d8d33a8049701c8b0fda4d321c3eb65e1148143cd9ed516cc2f2c577
+- filename: src/components/templates/auth/useSignUp.tsx
+  checksum: c73845d808b3f31838db74f7771922ce6e47f05822134c904f44aa58997cf2e5
+- filename: src/components/templates/auth/useChangePassword.tsx
+  checksum: e3b29ef1ef37646986a27a8d07d0e5e43273381f5bb52431a7b5096544a7f475
 version: ""

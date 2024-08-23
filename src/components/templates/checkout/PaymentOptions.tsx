@@ -41,7 +41,7 @@ const createOptions: CreateOptionsType = (payment, site, paymentHandler, user) =
   currency: payment.currency,
   name: site.siteInfo.title,
   description: `Transaction for order no ${payment.receipt.replace('payment-', '')}`,
-  image: 'https://example.com/your_logo',
+  image: '/favicon.ico',
   // eslint-disable-next-line camelcase
   order_id: payment.id,
   handler: paymentHandler,

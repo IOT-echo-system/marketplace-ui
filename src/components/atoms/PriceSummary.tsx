@@ -2,6 +2,7 @@ import React from 'react'
 import {Stack, Typography} from '@mui/material'
 import type {Coupon} from '../../services/typing/userService'
 import {formatPrice} from '../../utils/utils'
+import '../../utils/extenstions'
 
 type PriceSummaryPropsType = {
   qty: number

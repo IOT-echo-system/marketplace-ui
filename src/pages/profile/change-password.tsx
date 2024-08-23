@@ -2,15 +2,14 @@ import type {GetServerSideProps, NextPage} from 'next'
 import React from 'react'
 import {CMSService} from '../../services'
 import {ProfileWrapper} from '../../components/templates/profile'
-import {AuthForms} from '../../components/templates/auth'
+import {AuthForms, useChangePassword} from '../../components/templates/auth'
 import {CenteredContainer} from '../../components/atoms'
-import {useChangePassword} from '../../components/templates/auth/useChangePassword'
 
 const ResetPasswordPage: NextPage = () => {
   return (
     <ProfileWrapper requiredLoggedIn title={''}>
       <CenteredContainer p={2} spacing={2}>
-        <AuthForms getFormDetails={useChangePassword} withOldPassword />
+        <AuthForms getFormDetails={useChangePassword} />
       </CenteredContainer>
     </ProfileWrapper>
   )

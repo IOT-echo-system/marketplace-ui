@@ -15,22 +15,23 @@ export type FormPropsType = {
 } & StackProps
 
 export const Form: React.FC<FormPropsType> = props => {
+  const {title, handleSubmit, inputFields, submitBtnDisabled, loading, submitBtnText, ...stackProps} = props
   return (
-    <form onSubmit={props.handleSubmit}>
-      <Stack spacing={2} {...props}>
-        {props.title && <Typography variant={'h5'}>{props.title}</Typography>}
-        {props.inputFields.map((inputField, index) => (
+    <form onSubmit={handleSubmit}>
+      <Stack spacing={2} {...stackProps}>
+        {title && <Typography variant={'h5'}>{title}</Typography>}
+        {inputFields.map((inputField, index) => (
           <FormInput key={`input-${index}`} {...inputField} />
         ))}
         <LoadingButton
           type={'submit'}
           variant={'contained'}
           size={'large'}
-          disabled={props.submitBtnDisabled ?? false}
-          loading={props.loading}
+          disabled={submitBtnDisabled ?? false}
+          loading={loading}
           fullWidth
         >
-          {props.submitBtnText}
+          {submitBtnText}
         </LoadingButton>
       </Stack>
     </form>

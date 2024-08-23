@@ -17,6 +17,7 @@ export const Config = {
   REWARDS_PAGE_PATH: '/profile/rewards',
   SELLER_DASHBOARD_PAGE_PATH: '/seller',
   SELLER_INVOICES_PAGE_PATH: '/seller/invoices',
+  SELLER_GST_INVOICES_PAGE_PATH: '/seller/invoices/gst',
   SELLER_ONLINE_ORDERS_PAGE_PATH: '/seller/online-orders',
   SELLER_INVOICES_CREATE_PAGE_PATH: '/seller/invoices/create'
 } as const

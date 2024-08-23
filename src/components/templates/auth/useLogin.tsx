@@ -1,4 +1,5 @@
 import type {ChangeEvent} from 'react'
+import {useState} from 'react'
 import type {FormInputType} from '../../atoms'
 import {useDispatch, useForm, useToast} from '../../../hooks'
 import {UserService} from '../../../services'
@@ -12,6 +13,7 @@ const useLogin: AuthFormType = ({redirectTo, onSuccess}) => {
   const toast = useToast()
   const router = useRouter()
   const {values, onChange, handleSubmit} = useForm({identifier: '', password: ''})
+  const [loading, setLoading] = useState(false)
 
   const handleChange = <K extends keyof typeof values>(keyName: K) => {
     return (event: ChangeEvent<HTMLInputElement>) => {
@@ -20,6 +22,7 @@ const useLogin: AuthFormType = ({redirectTo, onSuccess}) => {
   }
 
   const onSubmit = () => {
+    setLoading(true)
     UserService.login(values)
       .then(({user, jwt}) => {
         storage.setItem(StorageKeys.AUTH, {token: jwt})
@@ -30,6 +33,9 @@ const useLogin: AuthFormType = ({redirectTo, onSuccess}) => {
         }
       })
       .catch(toast.error)
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   const inputFields: FormInputType[] = [
@@ -57,7 +63,8 @@ const useLogin: AuthFormType = ({redirectTo, onSuccess}) => {
     inputFields,
     title: 'Login',
     submitBtnText: 'Login',
-    submitBtnDisabled: false
+    submitBtnDisabled: false,
+    loading
   }
 }
 

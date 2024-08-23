@@ -8,10 +8,8 @@ import {MenuItemLink} from '../../../atoms'
 const sellerSidebarOptions = [
   {name: 'Dashboard', link: Config.SELLER_DASHBOARD_PAGE_PATH},
   {name: 'Online orders', link: Config.SELLER_ONLINE_ORDERS_PAGE_PATH},
-  {name: 'Address book', link: Config.ADDRESS_BOOK_PAGE_PATH},
-  {name: 'Wishlist', link: Config.WISHLIST_PAGE_PATH},
-  {name: 'Orders', link: Config.ORDERS_PAGE_PATH},
-  {name: 'Reward points', link: Config.REWARDS_PAGE_PATH}
+  {name: 'Invoices', link: Config.SELLER_INVOICES_PAGE_PATH},
+  {name: 'GST Invoices', link: Config.SELLER_GST_INVOICES_PAGE_PATH}
 ]
 
 export const SellerSidebar: React.FC = () => {

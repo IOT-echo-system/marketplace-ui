@@ -1,7 +1,5 @@
-const API_BASE_URL = process.env.API_BASE_URL ?? 'http://localhost:1337'
-
 export const apiConfig = {
-  baseUrl: `${API_BASE_URL}/api`,
+  baseUrl: '/api',
   assets: 'https://iot-echo-system.github.io/marketplace-assets/images/',
   cms: {
     siteInfo: '/site-info?populate=*',

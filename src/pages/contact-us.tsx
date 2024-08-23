@@ -7,7 +7,7 @@ import {BoxedContainer} from '../components/atoms'
 import {Stack} from '@mui/material'
 import {CMSService} from '../services'
 
-type ContactUsPagePropsType = { location: LocationPropsType }
+type ContactUsPagePropsType = {location: LocationPropsType}
 
 const ContactUsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({location}) => {
   return (
@@ -19,7 +19,7 @@ const ContactUsPage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = 
         spacing={{xs: 2, md: 4}}
       >
         <Stack sx={{width: {xs: '100%', md: 'auto'}}}>
-          <ContactUs/>
+          <ContactUs />
         </Stack>
         <Stack sx={{width: {xs: '100%', md: 'auto'}}}>
           <Location {...location} />
