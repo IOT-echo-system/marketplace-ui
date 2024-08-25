@@ -1,5 +1,7 @@
+const API_BACKEND_URL = process.env.API_BACKEND_URL ?? ''
+
 export const apiConfig = {
-  baseUrl: '/api',
+  baseUrl: `${API_BACKEND_URL}/api`,
   assets: 'https://iot-echo-system.github.io/marketplace-assets/images/',
   cms: {
     siteInfo: '/site-info?populate=*',
