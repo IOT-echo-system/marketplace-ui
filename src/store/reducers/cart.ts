@@ -1,6 +1,6 @@
 import type {TRootActions} from '../../typing/store'
 import type {AddressType} from './address'
-import type {ImageType} from '../../components/atoms'
+import type {Order} from '../../services/typing/userService'
 
 export const CartAction = {
   ADD_ITEM_INTO_CART: 'ADD_ITEM_INTO_CART',
@@ -11,18 +11,9 @@ export const CartAction = {
   ADD_SHIPPING_ADDRESS: 'ADD_SHIPPING_ADDRESS',
   CLEAR_CART: 'CLEAR_CART',
   UPDATE_SHIPPING_CHARGE: 'UPDATE_SHIPPING_CHARGE',
+  UPDATE_ORDER_TYPE: 'UPDATE_ORDER_TYPE',
   UPDATE_DISCOUNT: 'UPDATE_DISCOUNT'
 } as const
-
-export type OrderProduct = {
-  title: string
-  slug: string
-  qty: number
-  price: number
-  mrp: number
-  productId: string
-  featuredImage?: ImageType
-}
 
 export type CartStateType = {
   productIds: Array<{productId: string; qty: number}>
@@ -30,14 +21,16 @@ export type CartStateType = {
   shippingAddress: AddressType | null
   shippingCharge: number
   discountCoupon: {discount: number; code: string} | null
+  type: Order['type']
 }
 
 export const initCartState: CartStateType = {
   productIds: [],
   billingAddress: null,
   shippingAddress: null,
-  shippingCharge: 99,
-  discountCoupon: null
+  shippingCharge: 0,
+  discountCoupon: null,
+  type: 'ONLINE'
 }
 const getQty = (qty: number) => (qty >= 0 ? qty : 0)
 
@@ -70,13 +63,17 @@ const cartReducer = (state: CartStateType, action: TRootActions): CartStateType 
       return {...state, billingAddress: action.payload.address}
     }
     case CartAction.ADD_SHIPPING_ADDRESS: {
-      return {...state, shippingAddress: action.payload.address}
+      return {...state, shippingAddress: action.payload.address, type: 'ONLINE'}
+    }
+    case CartAction.UPDATE_SHIPPING_CHARGE: {
+      return {...state, shippingCharge: action.payload.shippingCharge}
     }
     case CartAction.CLEAR_CART: {
       return {...initCartState}
     }
-    case CartAction.UPDATE_SHIPPING_CHARGE: {
-      return {...state, shippingCharge: action.payload.shippingCharge}
+    case CartAction.UPDATE_ORDER_TYPE: {
+      const type = action.payload.type
+      return {...state, type, shippingAddress: type === 'ONLINE' ? state.shippingAddress : null}
     }
     case CartAction.UPDATE_DISCOUNT: {
       return {...state, discountCoupon: action.payload.coupon}

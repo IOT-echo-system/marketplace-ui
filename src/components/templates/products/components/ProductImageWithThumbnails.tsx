@@ -5,6 +5,7 @@ import {Stack, styled} from '@mui/material'
 import {Image} from '../../../atoms'
 import theme from '../../../../theme/theme'
 import {useMedia} from '../../../../hooks'
+import {apiConfig} from '../../../../config/apiConfig'
 
 const ThumbnailContainer = styled(Stack)<StackProps & {active?: 'true' | 'false'}>(({theme, active}) => ({
   border: active === 'true' ? `2px solid ${theme.palette.primary.main}` : `1px solid ${theme.palette.grey[400]}`,
@@ -30,13 +31,16 @@ export const ProductImageWithThumbnails: React.FC<{product: ProductDetails}> = (
               active={currentImage === index ? 'true' : 'false'}
               onMouseOver={handleImageUpdate(index)}
             >
-              <Image image={image} width={'98%'} />
+              <Image image={{...image, link: apiConfig.assets + image.link}} width={'98%'} />
             </ThumbnailContainer>
           )
         })}
       </Stack>
       <Stack border={`1px solid ${theme.palette.grey[400]}`} sx={{maxWidth: media.lg ? 360 : 540}}>
-        <Image image={product.images[currentImage]} width={'100%'} />
+        <Image
+          image={{...product.images[currentImage], link: apiConfig.assets + product.images[currentImage].link}}
+          width={'100%'}
+        />
       </Stack>
     </Stack>
   )

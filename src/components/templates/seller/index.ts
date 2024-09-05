@@ -1,4 +1,4 @@
 export * from './SellerWrapper'
-export * from './OnlineOrders'
-export * from './OnlineOrder'
+export * from './Orders'
+export * from './Order'
 export * from './SellerDashboard'

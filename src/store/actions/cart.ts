@@ -1,6 +1,6 @@
-import {CartAction} from '../reducers/cart'
-import type {AddressType} from '../reducers/address'
-import type {Coupon} from '../../services/typing/userService'
+import type {AddressType} from '../reducers'
+import {CartAction} from '../reducers'
+import type {Coupon, Order} from '../../services/typing/userService'
 
 export const addProductToCart = (productId: string, qty: number) => ({
   type: CartAction.ADD_ITEM_INTO_CART,
@@ -32,6 +32,8 @@ export const updateShippingPrice = (shippingCharge: number) => ({
   type: CartAction.UPDATE_SHIPPING_CHARGE,
   payload: {shippingCharge}
 })
+
+export const updateOrderType = (type: Order['type']) => ({type: CartAction.UPDATE_ORDER_TYPE, payload: {type}})
 
 export const updateDiscount = (coupon: Coupon) => ({
   type: CartAction.UPDATE_DISCOUNT,

@@ -1,11 +1,11 @@
 import type {GetServerSideProps, NextPage} from 'next'
-import {OnlineOrders, SellerWrapper} from '../../../components/templates/seller'
+import {Orders, SellerWrapper} from '../../../components/templates/seller'
 import {CMSService} from '../../../services'
 
 const InvoicesPage: NextPage = () => {
   return (
     <SellerWrapper title={'Invoices'}>
-      <OnlineOrders />
+      <Orders />
     </SellerWrapper>
   )
 }

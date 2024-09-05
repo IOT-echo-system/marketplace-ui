@@ -1,23 +1,23 @@
-import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
-import React, {useEffect, useState} from 'react'
-import {Order, ProfileWrapper} from '../../../components/templates/profile'
-import {CMSService, UserService} from '../../../services'
+import type {GetServerSideProps, NextPage} from 'next'
+import {Order, SellerWrapper} from '../../../components/templates/seller'
+import {CMSService, SellerService} from '../../../services'
 import {useRouter} from 'next/router'
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector, useToast} from '../../../hooks'
 import {Loader} from '../../../components/atoms'
-import {Stack, Typography} from '@mui/material'
 import {createOthersItem} from '../../../store/actions'
 
-const OrderPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
+const OrderPage: NextPage = () => {
   const dispatch = useDispatch()
-  const router = useRouter()
   const [loading, setLoading] = useState(true)
   const toast = useToast()
+  const router = useRouter()
+  const orderId = router.query.orderId as string
   const order = useSelector(state => state.others.order)
 
   useEffect(() => {
     setLoading(true)
-    UserService.getOrder(router.query.orderId as string)
+    SellerService.getOrder(orderId)
       .then(order => {
         dispatch(createOthersItem('order', order))
       })
@@ -27,24 +27,17 @@ const OrderPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }, [orderId])
 
   if (loading) {
     return <Loader text={'Loading...'} height={200} />
   }
 
-  if (!order) {
-    return (
-      <Stack>
-        <Typography>Order not found</Typography>
-      </Stack>
-    )
-  }
-
+  const orderType = order?.type.replace('_', ' ').toLowerCase()
   return (
-    <ProfileWrapper title={`Order ${router.query.orderId as string}`} requiredLoggedIn={true}>
-      <Order order={order} />
-    </ProfileWrapper>
+    <SellerWrapper title={`${orderType?.charAt(0).toUpperCase()}${orderType?.slice(1)}: ${orderId}`}>
+      {order ? <Order order={order} /> : <></>}
+    </SellerWrapper>
   )
 }
 

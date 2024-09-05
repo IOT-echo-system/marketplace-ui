@@ -8,6 +8,7 @@ import {AccountDetails} from './AccountDetails'
 import {AddressDetails} from './AddressDetails'
 import {OrderDetails} from './OrderDetails'
 import {PaymentOptions} from './PaymentOptions'
+import {OrderTypeDetails} from './OrderTypeDetails'
 
 type OrderStatus = 'DRAFT' | 'SUCCESS' | 'FAIL' | 'ACKNOWLEDGE'
 type UseCheckoutReturnType = {
@@ -18,10 +19,10 @@ type UseCheckoutReturnType = {
   handleClose: () => void
 }
 export const useCheckout = (): UseCheckoutReturnType => {
-  const {user} = useSelector(state1 => state1)
+  const {user, cart} = useSelector(state => state)
   const [state, setState] = useState(user.username ? 1 : 0)
   const [orderStatus, setOrderStatus] = useState<OrderStatus>('DRAFT')
-  const {productIds} = useSelector(state => state.cart)
+  const {productIds} = cart
   const [products, setProducts] = useState<ProductDetails[]>([])
 
   useEffect(() => {
@@ -54,9 +55,9 @@ export const useCheckout = (): UseCheckoutReturnType => {
       content: <AccountDetails onSuccess={handleStateChange(1)} />
     },
     {
-      header: <Typography>Shipping address</Typography>,
+      header: <Typography>Order type</Typography>,
       disabled: state < 1,
-      content: <AddressDetails type={'shipping'} onSuccess={handleStateChange(2)} />
+      content: <OrderTypeDetails onSuccess={handleStateChange(2)} />
     },
     {
       header: <Typography>Billing address</Typography>,

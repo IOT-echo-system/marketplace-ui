@@ -1,6 +1,8 @@
 import type {PropsWithChildren} from 'react'
 import React from 'react'
-import {Backdrop, Box, Fade, Modal as MuiModal, styled} from '@mui/material'
+import type {IconButtonProps} from '@mui/material'
+import {Backdrop, Box, Fade, IconButton, Modal as MuiModal, styled} from '@mui/material'
+import {Close} from '@mui/icons-material'
 
 type ModalProps = {open: boolean; handleClose: () => void}
 
@@ -24,6 +26,18 @@ const ModalContainer = styled(Box)(({theme}) => ({
   }
 }))
 
+const CloseIcon = styled(IconButton)<IconButtonProps>(({theme}) => ({
+  position: 'absolute',
+  top: theme.spacing(1),
+  right: theme.spacing(1),
+  background: theme.palette.error.main,
+  padding: theme.spacing(0.5),
+  color: theme.palette.common.white,
+  '&:hover': {
+    background: theme.palette.error.dark
+  }
+}))
+
 export const Modal: React.FC<PropsWithChildren<ModalProps>> = ({open, handleClose, children}) => {
   return (
     <MuiModal
@@ -34,7 +48,12 @@ export const Modal: React.FC<PropsWithChildren<ModalProps>> = ({open, handleClos
       slotProps={{backdrop: {timeout: 500}}}
     >
       <Fade in={open}>
-        <ModalContainer>{children}</ModalContainer>
+        <ModalContainer>
+          {children}
+          <CloseIcon onClick={handleClose} size={'small'}>
+            <Close fontSize={'small'} />
+          </CloseIcon>
+        </ModalContainer>
       </Fade>
     </MuiModal>
   )

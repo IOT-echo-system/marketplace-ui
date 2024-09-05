@@ -3,32 +3,28 @@ import {apiConfig} from '../config/apiConfig'
 import type {AddressType} from '../store/reducers'
 import type {AddressResponse} from './typing/sellerService'
 import type {OnlineOrderResponse, Order} from './typing/userService'
+import type {Seller} from '../store/reducers/seller'
 
 class SellerService_ {
   config = apiConfig.seller
   baseUrl = apiConfig.baseUrl + this.config.baseUrl
 
-  async getAddress(mobileNo: number): Promise<AddressType[]> {
+  async getAddress(mobileNo: number): Promise<AddressType> {
     const response = await WebClient.get<AddressResponse>({
-      baseUrl: this.baseUrl,
+      baseUrl: apiConfig.baseUrl,
       path: this.config.findAddress,
       uriVariables: {mobileNo}
     })
-    return response.data.map(({id, attributes}) => ({id, ...attributes}))
-  }
-
-  addAddress(data: AddressType) {
-    return WebClient.post({
-      baseUrl: this.baseUrl,
-      path: this.config.address,
-      body: {data}
-    })
+    if (response.data.isEmpty()) {
+      throw new Error('Data not found!!')
+    }
+    return response.data.map(({id, attributes}) => ({id, ...attributes}))[0]
   }
 
   getOrders(data: Record<string, unknown>) {
     return WebClient.post<OnlineOrderResponse>({
       baseUrl: this.baseUrl,
-      path: this.config.orders,
+      path: this.config.ordersFilter,
       body: {data}
     })
   }
@@ -38,6 +34,23 @@ class SellerService_ {
       baseUrl: this.baseUrl,
       path: this.config.order,
       uriVariables: {orderId}
+    })
+  }
+
+  markAsDelivered(orderId: number) {
+    return WebClient.put<Order>({
+      baseUrl: this.baseUrl,
+      path: this.config.order,
+      uriVariables: {orderId},
+      body: {state: 'DELIVERED'}
+    })
+  }
+
+  addOrder(cartData: Seller['cart']) {
+    return WebClient.post({
+      baseUrl: this.baseUrl,
+      path: this.config.orders,
+      body: cartData
     })
   }
 }

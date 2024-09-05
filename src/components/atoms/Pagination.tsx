@@ -30,6 +30,11 @@ export const Pagination: React.FC<MetaResponseType & {handlePageChange?: (page: 
   const handleChange = (_event: React.ChangeEvent<unknown>, page: number) => {
     updatePage(page)
   }
+
+  if (!pagination.pageCount.isGreaterThan(1)) {
+    return <></>
+  }
+
   return (
     <MuiPagination
       count={pagination.pageCount}

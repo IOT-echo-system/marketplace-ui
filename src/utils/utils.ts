@@ -1,6 +1,7 @@
 import moment from 'moment'
-import type {CartStateType, OrderProduct} from '../store/reducers'
+import type {CartStateType} from '../store/reducers'
 import type {ProductDetails} from '../components/templates/products/Product'
+import type {OrderProduct} from '../store/reducers/seller'
 
 export const formatDate = (date: Date | string, format?: string): string => {
   return moment(date)

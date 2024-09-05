@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react'
 import {SellerService} from '../../../../../services'
 import type {MetaResponseType} from '../../../../../services/typing/CMSService'
 
-type SortBy = 'id' | 'state'
+type SortBy = 'id' | 'state' | 'type'
 type SortOrder = 'asc' | 'desc'
 type ReturnType = {
   form: FormPropsType
@@ -15,8 +15,8 @@ type ReturnType = {
   handlePageChange: (page: number) => void
 } & MetaResponseType
 
-export const useOnlineOrdersFilterAndSort = (): ReturnType => {
-  const {values, onChange, handleSubmit} = useForm({filterBy: '', value: ''})
+export const useOrdersFilterAndSort = (): ReturnType => {
+  const {values, onChange, onClear, handleSubmit} = useForm({filterBy: '', value: '', type: ''})
   const [orders, setOrders] = useState<Order[]>([])
   const [sortBy, setSortBy] = useState<SortBy>('id')
   const [order, setOrder] = useState<SortOrder>('desc')
@@ -36,8 +36,8 @@ export const useOnlineOrdersFilterAndSort = (): ReturnType => {
     }
   }
 
-  const getOrders = () => {
-    SellerService.getOrders({sort: {sortBy, order}, filter: values, page: currentPage})
+  const getOrders = (finalValues: typeof values) => {
+    SellerService.getOrders({sort: {sortBy, order}, filter: finalValues, page: currentPage})
       .then(({results, pagination}) => {
         setOrders(results)
         setPagination(pagination)
@@ -45,13 +45,13 @@ export const useOnlineOrdersFilterAndSort = (): ReturnType => {
       .catch()
   }
 
-  const onSubmit = () => {
+  const onSubmit = (finalValues: typeof values) => {
     setCurrentPage(1)
-    getOrders()
+    getOrders(finalValues)
   }
 
   useEffect(() => {
-    getOrders()
+    getOrders(values)
   }, [sortBy, order, currentPage])
 
   const OrderStatusOptions = [
@@ -83,6 +83,20 @@ export const useOnlineOrdersFilterAndSort = (): ReturnType => {
   }
 
   const inputFields: FormInputType[] = [
+    {
+      inputType: 'selectField',
+      size: 'small',
+      options: [
+        {label: 'Online', value: 'ONLINE'},
+        {label: 'Seller', value: 'SELLER'},
+        {label: 'Store pickup', value: 'STORE_PICKUP'}
+      ],
+      label: 'Order type',
+      value: values.type,
+      handleChange: option => {
+        onChange('type', option as string)
+      }
+    },
     {
       inputType: 'selectField',
       size: 'small',

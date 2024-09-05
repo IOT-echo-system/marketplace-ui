@@ -2,7 +2,7 @@ import React from 'react'
 import {Stack} from '@mui/material'
 import {useSelector} from '../../../hooks'
 import {Address, Button} from '../../atoms'
-import {AddAddress} from '../../organisms/ModalForms/formFunctions'
+import {AddAddress} from '../../organisms/ModalForms'
 import {ModalForms} from '../../organisms'
 
 export const Addresses: React.FC = () => {

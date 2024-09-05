@@ -1,4 +1,4 @@
-const API_BACKEND_URL = process.env.API_BACKEND_URL ?? ''
+const API_BACKEND_URL = process.env.API_BACKEND_URL ?? 'http://127.0.0.1:1337'
 
 export const apiConfig = {
   baseUrl: `${API_BACKEND_URL}/api`,
@@ -37,6 +37,7 @@ export const apiConfig = {
   },
   shipping: {
     estimateDelivery: '/estimate-delivery',
+    order: '/orders',
     baseUrl: '/shipping'
   },
   postal: {
@@ -49,6 +50,7 @@ export const apiConfig = {
     findAddress: '/address-by-sellers?filters[mobileNo][$eq]={mobileNo}',
     address: '/address-by-sellers',
     orders: '/orders',
+    ordersFilter: '/orders/filter',
     order: '/orders/{orderId}'
   }
 } as const

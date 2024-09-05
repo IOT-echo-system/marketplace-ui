@@ -16,7 +16,7 @@ export const useForm = <T extends Record<string, unknown>>(initialValues: T): Us
   }
 
   const onClear = () => {
-    setValues(initialValues)
+    setValues(() => initialValues)
   }
 
   const handleSubmit = (onSubmit: (values: T) => void) => (event: FormEvent) => {

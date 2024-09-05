@@ -6,10 +6,9 @@ import {useSelector} from '../../../../hooks'
 import {MenuItemLink} from '../../../atoms'
 
 const sellerSidebarOptions = [
-  {name: 'Dashboard', link: Config.SELLER_DASHBOARD_PAGE_PATH},
-  {name: 'Online orders', link: Config.SELLER_ONLINE_ORDERS_PAGE_PATH},
-  {name: 'Invoices', link: Config.SELLER_INVOICES_PAGE_PATH},
-  {name: 'GST Invoices', link: Config.SELLER_GST_INVOICES_PAGE_PATH}
+  {name: 'Dashboard', link: Config.SELLER_DASHBOARD_PAGE_PATH, exact: true},
+  {name: 'Orders', link: Config.SELLER_ORDERS_PAGE_PATH},
+  {name: 'Invoices', link: Config.SELLER_INVOICES_PAGE_PATH}
 ]
 
 export const SellerSidebar: React.FC = () => {
@@ -23,12 +22,16 @@ export const SellerSidebar: React.FC = () => {
     }
   }, [user])
 
+  const isMatchWithProfileLink = (profile: {name: string; link: string; exact?: boolean}) => {
+    return profile.exact ? router.pathname === profile.link : router.pathname.startsWith(profile.link)
+  }
+
   return (
     <Stack>
       {sellerSidebarOptions.map((profile, index) => {
         return (
           <MenuItem
-            sx={{textWrap: 'wrap', background: router.pathname === profile.link ? theme.palette.divider : 'inherit'}}
+            sx={{textWrap: 'wrap', background: isMatchWithProfileLink(profile) ? theme.palette.divider : 'inherit'}}
             key={`profile-${index}`}
           >
             <MenuItemLink href={profile.link} sx={{width: '100%'}}>

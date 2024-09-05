@@ -30,5 +30,3 @@ export const IndianStates = [
 ] as const
 
 export const getStateName = (state: string): string => IndianStates.find(({value}) => value === state)?.label ?? ''
-
-export type IndianStateValue = (typeof IndianStates)[number]['value'] | ''

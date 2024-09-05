@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import {Divider, Radio, RadioGroup, Stack, Typography} from '@mui/material'
+import {Divider, FormControlLabel, Radio, RadioGroup, Stack, Typography} from '@mui/material'
 import type {CheckoutStatePropsType} from './Checkout'
 import {useDispatch, useSelector} from '../../../hooks'
 import {Button, LoadingText} from '../../atoms'
 import {ModalForms} from '../../organisms'
-import {AddAddress} from '../../organisms/ModalForms/formFunctions'
+import {AddAddress} from '../../organisms/ModalForms'
 import {getStateName} from '../../../data/stateList'
 import {addBillingAddress, addShippingAddress} from '../../../store/actions'
 import {ShippingService} from '../../../services/ShippingService'
@@ -16,8 +16,8 @@ export const AddressDetails: React.FC<AddressDetailsPropsType> = ({onSuccess, ty
   const [selected, setSelected] = useState(-1)
   const [estimateDelivery, setEstimateDelivery] = useState('')
 
-  const handleSelect = (index: number) => () => {
-    setSelected(index)
+  const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelected(+event.target.value)
   }
 
   useEffect(() => {
@@ -38,45 +38,48 @@ export const AddressDetails: React.FC<AddressDetailsPropsType> = ({onSuccess, ty
 
   return (
     <Stack justifyContent={'space-around'}>
-      <RadioGroup>
+      <RadioGroup value={selected} onChange={handleSelect}>
         {addresses.map((address, index) => {
           return (
             <Stack key={address.id} spacing={2} mb={2}>
-              <Stack spacing={2} direction={'row'} alignItems={'start'}>
-                <Radio checked={index === selected} onClick={handleSelect(index)} />
-                <Stack spacing={2}>
-                  <Stack direction={'row'} spacing={2} flexWrap={'wrap'}>
-                    <Typography fontWeight={'bold'}>
-                      {address.name} ({address.mobileNo})
-                    </Typography>
-                  </Stack>
-                  <Stack>
-                    <Typography>
-                      {address.address1} {address.address2} {address.address3}
-                    </Typography>
-                    <Typography>
-                      {address.city} {address.district} {getStateName(address.state)} - {address.pinCode}
-                    </Typography>
-                  </Stack>
-                  {selected === index && (
-                    <Stack spacing={1}>
-                      <Stack direction={'row'}>
-                        <Button onClick={handleClick(index)} variant={'contained'} color={'warning'}>
-                          {type === 'shipping' ? 'Deliver here' : 'Select this'}
-                        </Button>
+              <Stack spacing={2} alignItems={'start'}>
+                <FormControlLabel
+                  value={index}
+                  control={<Radio style={{alignSelf: 'start'}} />}
+                  label={
+                    <Stack spacing={2}>
+                      <Stack direction={'row'} spacing={2} flexWrap={'wrap'}>
+                        <Typography fontWeight={'bold'}>
+                          {address.name} ({address.mobileNo})
+                        </Typography>
                       </Stack>
-                      {type === 'shipping' && (
-                        <>
-                          {estimateDelivery ? (
-                            <Typography>{estimateDelivery}</Typography>
-                          ) : (
-                            <LoadingText text={'Loading'} />
-                          )}
-                        </>
-                      )}
+                      <Stack>
+                        <Typography>
+                          {address.address1} {address.address2} {address.address3}
+                        </Typography>
+                        <Typography>
+                          {address.city} {address.district} {getStateName(address.state)} - {address.pinCode}
+                        </Typography>
+                      </Stack>
                     </Stack>
-                  )}
-                </Stack>
+                  }
+                />
+                {selected === index && (
+                  <Stack spacing={1} pl={6}>
+                    <Button onClick={handleClick(index)} variant={'contained'} color={'warning'}>
+                      {type === 'shipping' ? 'Deliver here' : 'Select this'}
+                    </Button>
+                    {type === 'shipping' && (
+                      <>
+                        {estimateDelivery ? (
+                          <Typography>{estimateDelivery}</Typography>
+                        ) : (
+                          <LoadingText text={'Loading'} />
+                        )}
+                      </>
+                    )}
+                  </Stack>
+                )}
               </Stack>
               <Divider />
             </Stack>

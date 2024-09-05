@@ -31,9 +31,7 @@ export const ApplyCoupon: GetFormPropsTypeFunction = handleClose => {
       .then(coupon => {
         dispatch(updateDiscount(coupon))
       })
-      .catch((error: Error) => {
-        toast.error(error.message)
-      })
+      .catch(toast.error)
       .finally(() => {
         setLoading(false)
         onClear()

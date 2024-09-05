@@ -1,50 +1,20 @@
-import React, {useEffect, useState} from 'react'
-import {Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material'
-import {UserService} from '../../../services'
+import React from 'react'
+import {Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material'
 import type {Order as OrderType} from '../../../services/typing/userService'
-import {Address, Button, Link, Loader, PriceSummary} from '../../atoms'
-import {useRouter} from 'next/router'
-import {useMedia, useToast} from '../../../hooks'
+import {Address, Button, Link, PriceSummary} from '../../atoms'
+import {useMedia} from '../../../hooks'
 import theme from '../../../theme/theme'
 import {calculateTotalQtyAndPriceFromOrder, formatPrice} from '../../../utils/utils'
 import {Config} from '../../../config'
 
-export const Order: React.FC = () => {
-  const router = useRouter()
+export const Order: React.FC<{order: OrderType}> = ({order}) => {
   const media = useMedia()
-  const [order, setOrder] = useState<OrderType | null>(null)
-  const [loading, setLoading] = useState(true)
-  const toast = useToast()
-
-  useEffect(() => {
-    setLoading(true)
-    UserService.getOrder(router.query.orderId as string)
-      .then(setOrder)
-      .catch((error: Error) => {
-        toast.error(error.message)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [])
-
-  if (loading) {
-    return <Loader text={'Loading...'} height={200} />
-  }
-
-  if (!order) {
-    return (
-      <Stack>
-        <Typography>Order not found</Typography>
-      </Stack>
-    )
-  }
   const {price, qty} = calculateTotalQtyAndPriceFromOrder(order.products)
 
   return (
     <Stack spacing={2}>
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2} justifyContent={{md: 'space-between'}}>
-        <Address address={order.shippingAddress} title={'Shipping address'} />
+        {order.shippingAddress && <Address address={order.shippingAddress} title={'Shipping address'} />}
         <Address address={order.billingAddress} title={'Billing address'} />
       </Stack>
       <TableContainer sx={{border: `1px solid ${theme.palette.divider}`}}>
@@ -89,6 +59,7 @@ export const Order: React.FC = () => {
           discountCoupon={order.discountCoupon}
           amount={price}
           shippingCharge={order.shippingCharge}
+          shippingRequired={Boolean(order.shippingAddress)}
         />
       </Stack>
     </Stack>

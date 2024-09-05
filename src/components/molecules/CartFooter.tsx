@@ -6,9 +6,9 @@ import {useDispatch, useSelector} from '../../hooks'
 import '../../utils/extenstions'
 import {Config} from '../../config'
 import {Button, ButtonAsLink, Link, PriceSummary} from '../atoms'
-import {updateShippingPrice} from '../../store/actions'
 import {ModalForms} from '../organisms'
-import {ApplyCoupon} from '../organisms/ModalForms/formFunctions'
+import {ApplyCoupon} from '../organisms/ModalForms'
+import {updateShippingPrice} from '../../store/actions'
 
 type CartProductPropsType = {
   products: ProductDetails[]
@@ -17,13 +17,18 @@ type CartProductPropsType = {
 }
 
 export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSuccess}) => {
-  const dispatch = useDispatch()
   const {cart} = useSelector(state => state)
+  const dispatch = useDispatch()
   const {qty, price} = calculateTotalQtyAndPrice(cart, products)
 
+  const isShippingChargeApplicable =
+    cart.type === 'ONLINE' &&
+    cart.shippingAddress !== null &&
+    price < +(process.env.NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD ?? 2000)
+
   useEffect(() => {
-    dispatch(updateShippingPrice(price <= 0 || price >= 2000 ? 0 : 99))
-  }, [price])
+    dispatch(updateShippingPrice(isShippingChargeApplicable ? 99 : 0))
+  }, [cart.type, cart.shippingAddress, price])
 
   if (products.isEmpty()) {
     return (
@@ -42,6 +47,7 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
         discountCoupon={cart.discountCoupon}
         amount={price}
         shippingCharge={cart.shippingCharge}
+        shippingRequired={cart.type === 'ONLINE' && cart.shippingAddress !== null}
       />
       <Stack direction={'row'} justifyContent={'flex-end'} spacing={2} alignItems={'center'}>
         <ModalForms getFormDetails={ApplyCoupon}>

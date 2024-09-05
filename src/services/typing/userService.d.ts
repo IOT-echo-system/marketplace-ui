@@ -4,13 +4,14 @@ import type {MetaResponseType} from './CMSService'
 export type ServerError = {error?: {status: number; name: string; message?: string}}
 export type Order = {
   id: number
-  state: string
+  state: 'ORDER_NOT_PLACED' | 'PLACED' | 'DELIVERED'
+  type: 'STORE_PICKUP' | 'ONLINE' | 'SELLER'
   amount: number
   billingAddress: AddressType
-  shippingAddress: AddressType
+  shippingAddress?: AddressType
   products: OrderProduct[]
   createdAt: string
-  discountCoupon: Coupon
+  discountCoupon?: Coupon
   shippingCharge: number
   qty: number
 }

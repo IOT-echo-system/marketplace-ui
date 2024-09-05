@@ -3,6 +3,7 @@ type StorageType = 'sessionStorage' | 'localStorage'
 
 export const StorageKeys = {
   CART: 'cart',
+  SELLER_CART: 'seller_cart',
   AUTH: 'auth'
 } as const
 

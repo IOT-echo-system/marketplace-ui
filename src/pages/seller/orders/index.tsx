@@ -1,11 +1,11 @@
 import type {GetServerSideProps, NextPage} from 'next'
-import {OnlineOrders, SellerWrapper} from '../../../components/templates/seller'
+import {Orders, SellerWrapper} from '../../../components/templates/seller'
 import {CMSService} from '../../../services'
 
-const OnlineOrdersPage: NextPage = () => {
+const OrdersPage: NextPage = () => {
   return (
-    <SellerWrapper title={'Online orders'}>
-      <OnlineOrders />
+    <SellerWrapper title={'Orders'}>
+      <Orders />
     </SellerWrapper>
   )
 }
@@ -19,4 +19,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
-export default OnlineOrdersPage
+export default OrdersPage

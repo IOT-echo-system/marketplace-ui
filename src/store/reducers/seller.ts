@@ -1,15 +1,30 @@
 import type {TRootActions} from '../../typing/store'
 import type {User} from './user'
-import type {OrderProduct} from './cart'
 import type {AddressType} from './address'
+import type {ImageType} from '../../components/atoms'
+import type {Coupon} from '../../services/typing/userService'
 
 export const SellerAction = {
-  SET_SELLER: 'SET_SELLER',
+  SET_USER_IN_SELLER: 'SET_USER_IN_SELLER',
+  SET_CART_IN_SELLER: 'SET_CART_IN_SELLER',
   ADD_ITEM_IN_SELLER_CART: 'ADD_ITEM_IN_SELLER_CART',
   SET_GST_BILL_IN_SELLER_CART: 'SET_GST_BILL_IN_SELLER_CART',
   SET_DISCOUNT_IN_SELLER_CART: 'SET_DISCOUNT_IN_SELLER_CART',
-  ADD_ADDRESS_IN_SELLER_CART: 'ADD_ADDRESS_IN_SELLER_CART'
+  ADD_ADDRESS_IN_SELLER_CART: 'ADD_ADDRESS_IN_SELLER_CART',
+  UPDATE_PAYMENT_MODE_IN_SELLER_CART: 'UPDATE_PAYMENT_MODE_IN_SELLER_CART'
 } as const
+
+export type OrderProduct = {
+  title: string
+  slug: string
+  qty: number
+  price: number
+  mrp: number
+  productId: string
+  featuredImage?: ImageType
+}
+
+export type PaymentMode = 'CASH' | 'RAZORPAY'
 
 export type Seller = {
   user: User | null
@@ -17,21 +32,25 @@ export type Seller = {
     products: OrderProduct[]
     billingAddress: AddressType | null
     gstBill: boolean
-    discount: number
+    discount: Coupon
+    paymentMode?: PaymentMode
   }
 }
 
 export const initSellerState: Seller = {
   user: null,
-  cart: {products: [], billingAddress: null, gstBill: false, discount: 5}
+  cart: {products: [], billingAddress: null, gstBill: false, discount: {code: 'SELLER', discount: 0}}
 }
 
 const getQty = (qty: number) => (qty >= 0 ? qty : 0)
 
 const sellerReducer = (state: Seller, action: TRootActions): Seller => {
   switch (action.type) {
-    case SellerAction.SET_SELLER: {
+    case SellerAction.SET_USER_IN_SELLER: {
       return {...state, user: action.payload.user}
+    }
+    case SellerAction.SET_CART_IN_SELLER: {
+      return {...state, cart: action.payload.cart}
     }
     case SellerAction.ADD_ITEM_IN_SELLER_CART: {
       const {productId, qty} = action.payload.orderProduct
@@ -48,10 +67,13 @@ const sellerReducer = (state: Seller, action: TRootActions): Seller => {
       return {...state, cart: {...state.cart, gstBill: action.payload.gstBill}}
     }
     case SellerAction.SET_DISCOUNT_IN_SELLER_CART: {
-      return {...state, cart: {...state.cart, discount: Math.max(0, Math.min(10, action.payload.discount))}}
+      return {...state, cart: {...state.cart, discount: action.payload.discount}}
     }
     case SellerAction.ADD_ADDRESS_IN_SELLER_CART: {
       return {...state, cart: {...state.cart, billingAddress: action.payload.address}}
+    }
+    case SellerAction.UPDATE_PAYMENT_MODE_IN_SELLER_CART: {
+      return {...state, cart: {...state.cart, paymentMode: action.payload.paymentMode}}
     }
     default:
       return state
