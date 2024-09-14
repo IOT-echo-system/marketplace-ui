@@ -1,19 +1,21 @@
 import type {GetConfirmationModalPropsTypeFunction} from '../ConfirmationModal'
-import {useToast} from '../../../../hooks'
+import {useDispatch, useToast} from '../../../../hooks'
 import {useState} from 'react'
 import {SellerService} from '../../../../services'
+import {updateOthersItem} from '../../../../store/actions'
 
 export const markAsDeliveredBySeller: GetConfirmationModalPropsTypeFunction<{
   orderId: number
 }> = (handleClose, {orderId}) => {
   const [loading, setLoading] = useState(false)
   const toast = useToast()
+  const dispatch = useDispatch()
 
   const onConfirm = () => {
     setLoading(true)
     SellerService.markAsDelivered(orderId)
-      .then(() => {
-        // dispatch(updateWidget(widget, widget.boardId))
+      .then((order) => {
+        dispatch(updateOthersItem('sellerOrder', order))
         handleClose()
       })
       .catch(toast.error)

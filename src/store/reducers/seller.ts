@@ -24,7 +24,7 @@ export type OrderProduct = {
   featuredImage?: ImageType
 }
 
-export type PaymentMode = 'CASH' | 'RAZORPAY'
+export type PaymentMode = 'CASH' | 'RAZORPAY' | 'COD'
 
 export type Seller = {
   user: User | null
@@ -67,6 +67,10 @@ const sellerReducer = (state: Seller, action: TRootActions): Seller => {
       return {...state, cart: {...state.cart, gstBill: action.payload.gstBill}}
     }
     case SellerAction.SET_DISCOUNT_IN_SELLER_CART: {
+      const discount = action.payload.discount
+      if (state.cart.gstBill) {
+        return {...state, cart: {...state.cart, discount: {discount: discount.discount / 1.18, code: discount.code}}}
+      }
       return {...state, cart: {...state.cart, discount: action.payload.discount}}
     }
     case SellerAction.ADD_ADDRESS_IN_SELLER_CART: {

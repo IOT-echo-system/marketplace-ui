@@ -1,21 +1,22 @@
 import React from 'react'
 import {Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material'
 import type {Order as OrderType} from '../../../services/typing/userService'
-import {Address, Button, Link, PriceSummary} from '../../atoms'
+import {Address, Link, PriceSummary} from '../../atoms'
 import {useMedia} from '../../../hooks'
 import theme from '../../../theme/theme'
 import {calculateTotalQtyAndPriceFromOrder, formatPrice} from '../../../utils/utils'
 import {Config} from '../../../config'
+import {OrderStatus} from './components/OrderStatus'
 
-export const Order: React.FC<{order: OrderType}> = ({order}) => {
+export const Order: React.FC<{ order: OrderType }> = ({order}) => {
   const media = useMedia()
   const {price, qty} = calculateTotalQtyAndPriceFromOrder(order.products)
 
   return (
     <Stack spacing={2}>
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2} justifyContent={{md: 'space-between'}}>
-        {order.shippingAddress && <Address address={order.shippingAddress} title={'Shipping address'} />}
-        <Address address={order.billingAddress} title={'Billing address'} />
+        {order.shipping && <Address address={order.shipping.address} title={'Shipping address'}/>}
+        <Address address={order.billingAddress} title={'Billing address'}/>
       </Stack>
       <TableContainer sx={{border: `1px solid ${theme.palette.divider}`}}>
         <Table>
@@ -51,15 +52,14 @@ export const Order: React.FC<{order: OrderType}> = ({order}) => {
         justifyContent={'space-between'}
         alignItems={'flex-end'}
       >
-        <Button variant={'outlined'} component={Link} href={`${Config.ORDERS_PAGE_PATH}/${order.id}/track`}>
-          Track order
-        </Button>
+        <OrderStatus order={order}/>
         <PriceSummary
           qty={qty}
           discountCoupon={order.discountCoupon}
           amount={price}
-          shippingCharge={order.shippingCharge}
-          shippingRequired={Boolean(order.shippingAddress)}
+          shippingCharge={order.shipping?.charge ?? 0}
+          shippingRequired={Boolean(order.shipping)}
+          amountPaid={order.payment.collectedAmount}
         />
       </Stack>
     </Stack>

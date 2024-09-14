@@ -1,12 +1,12 @@
 import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
 import React, {useEffect, useState} from 'react'
-import {Order, ProfileWrapper} from '../../../components/templates/profile'
-import {CMSService, UserService} from '../../../services'
+import {Order, ProfileWrapper} from '../../../../components/templates/profile'
+import {CMSService, UserService} from '../../../../services'
 import {useRouter} from 'next/router'
-import {useDispatch, useSelector, useToast} from '../../../hooks'
-import {Loader} from '../../../components/atoms'
+import {useDispatch, useSelector, useToast} from '../../../../hooks'
+import {Loader} from '../../../../components/atoms'
 import {Stack, Typography} from '@mui/material'
-import {createOthersItem} from '../../../store/actions'
+import {createOthersItem} from '../../../../store/actions'
 
 const OrderPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
   const dispatch = useDispatch()
@@ -30,7 +30,7 @@ const OrderPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>
   }, [])
 
   if (loading) {
-    return <Loader text={'Loading...'} height={200} />
+    return <Loader text={'Loading...'} height={200}/>
   }
 
   if (!order) {
@@ -42,8 +42,9 @@ const OrderPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>
   }
 
   return (
-    <ProfileWrapper title={`Order ${router.query.orderId as string}`} requiredLoggedIn={true}>
-      <Order order={order} />
+    <ProfileWrapper title={`${order.type.capitalize().replace('_', ' ')} ${router.query.orderId as string}`}
+                    requiredLoggedIn={true}>
+      <Order order={order}/>
     </ProfileWrapper>
   )
 }

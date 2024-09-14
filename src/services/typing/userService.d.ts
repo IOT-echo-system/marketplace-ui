@@ -1,25 +1,31 @@
-import type {AddressType, OrderProduct, User} from '../../store/reducers'
+import type {AddressType, User} from '../../store/reducers'
+import type {OrderProduct, PaymentMode,} from '../../store/reducers/seller'
 import type {MetaResponseType} from './CMSService'
 
-export type ServerError = {error?: {status: number; name: string; message?: string}}
+export type ServerError = { error?: { status: number; name: string; message?: string } }
 export type Order = {
   id: number
   state: 'ORDER_NOT_PLACED' | 'PLACED' | 'DELIVERED'
   type: 'STORE_PICKUP' | 'ONLINE' | 'SELLER'
   amount: number
   billingAddress: AddressType
-  shippingAddress?: AddressType
+  shipping?: { address: AddressType, charge: number }
   products: OrderProduct[]
   createdAt: string
   discountCoupon?: Coupon
   shippingCharge: number
-  qty: number
+  qty: number,
+  payment: { id: number, status: 'CREATED' | 'SUCCESS', mode: PaymentMode, collectedAmount?: number }
 }
 
-export type UserResponse = {jwt: string; user: User}
-export type MeResponse = {addresses: AddressType[]} & User
-export type OrderResponse = {data: {id: number; attributes: Order}}
-export type OnlineOrderResponse = {results: Order[]} & MetaResponseType
+export type SellerOrder = Order
+
+export type UserResponse = { jwt: string; user: User }
+export type MeResponse = { addresses: AddressType[] } & User
+export type OrderResponse = { data: { id: number; attributes: Order } }
+export type OrdersResponse = { results: Order[] } & MetaResponseType
+export type OrderWithPayment = { order: Order, payment: PaymentResponse }
+
 export type PaymentResponse = {
   amount: number
   amount_due: number
@@ -33,4 +39,4 @@ export type PaymentResponse = {
   status: 'created' | 'success'
 }
 
-export type Coupon = {code: string; discount: number}
+export type Coupon = { code: string; discount: number, amount?: number }

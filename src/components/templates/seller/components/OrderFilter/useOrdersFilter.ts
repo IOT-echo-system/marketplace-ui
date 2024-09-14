@@ -10,13 +10,13 @@ type SortOrder = 'asc' | 'desc'
 type ReturnType = {
   form: FormPropsType
   orders: Order[]
-  sort: {sortBy: SortBy; order: SortOrder}
+  sort: { sortBy: SortBy; order: SortOrder }
   handleChangeSort: (by: SortBy) => () => void
   handlePageChange: (page: number) => void
 } & MetaResponseType
 
 export const useOrdersFilterAndSort = (): ReturnType => {
-  const {values, onChange, onClear, handleSubmit} = useForm({filterBy: '', value: '', type: ''})
+  const {values, onChange, handleSubmit} = useForm({filterBy: '', value: '', type: ''})
   const [orders, setOrders] = useState<Order[]>([])
   const [sortBy, setSortBy] = useState<SortBy>('id')
   const [order, setOrder] = useState<SortOrder>('desc')

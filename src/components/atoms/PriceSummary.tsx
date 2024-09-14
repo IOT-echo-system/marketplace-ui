@@ -10,7 +10,8 @@ type PriceSummaryPropsType = {
   amount: number
   shippingCharge: number
   shippingRequired?: boolean
-  withoutGST?: boolean
+  withoutGST?: boolean,
+  amountPaid?: number
 }
 
 export const PriceSummary: React.FC<PriceSummaryPropsType> = props => {
@@ -34,6 +35,9 @@ export const PriceSummary: React.FC<PriceSummaryPropsType> = props => {
       <Typography fontWeight={'bold'} variant={'subtitle1'}>
         Grand total: {formatPrice(grandTotalAmount)}
       </Typography>
+      {props.amountPaid && <Typography fontWeight={'bold'} variant={'subtitle1'}>
+        Amount paid: {formatPrice(props.amountPaid)}
+      </Typography>}
     </Stack>
   )
 }

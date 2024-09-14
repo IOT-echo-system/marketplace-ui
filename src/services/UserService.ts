@@ -1,8 +1,17 @@
 import {apiConfig} from '../config/apiConfig'
 import '../utils/extenstions'
 import WebClient from './webClient'
-import type {Coupon, MeResponse, Order, OrderResponse, PaymentResponse, UserResponse} from './typing/userService'
+import type {
+  Coupon,
+  MeResponse,
+  Order,
+  OrderResponse,
+  OrderWithPayment,
+  PaymentResponse,
+  UserResponse
+} from './typing/userService'
 import type {AddressType, CartStateType} from '../store/reducers'
+import type {PaymentMode} from '../store/reducers/seller'
 
 class AuthService_ {
   private readonly config = apiConfig.user
@@ -23,7 +32,7 @@ class AuthService_ {
     })
   }
 
-  login(data: {identifier: string; password: string}): Promise<UserResponse> {
+  login(data: { identifier: string; password: string }): Promise<UserResponse> {
     return WebClient.post<UserResponse>({
       baseUrl: this.baseUrl,
       path: this.config.login,
@@ -39,11 +48,11 @@ class AuthService_ {
     })
   }
 
-  placeOrder(data: CartStateType): Promise<PaymentResponse> {
-    return WebClient.post<PaymentResponse>({
+  placeOrder(data: CartStateType, mode: PaymentMode): Promise<OrderWithPayment> {
+    return WebClient.post<OrderWithPayment>({
       baseUrl: this.baseUrl,
       path: this.config.orders,
-      body: {data: {...data, user: 'userid'}}
+      body: {...data, paymentMode: mode}
     })
   }
 
@@ -71,7 +80,7 @@ class AuthService_ {
     })
   }
 
-  async applyCoupon({code}: {code: string}): Promise<Coupon> {
+  async applyCoupon({code}: { code: string }): Promise<Coupon> {
     const response = await WebClient.get<Coupon[]>({
       baseUrl: this.baseUrl,
       path: this.config.coupon,
@@ -96,7 +105,7 @@ class AuthService_ {
     return response[0]
   }
 
-  changePassword(values: {password: string; currentPassword: string}) {
+  changePassword(values: { password: string; currentPassword: string }) {
     return WebClient.post({
       baseUrl: this.baseUrl,
       path: this.config.changePassword,
@@ -104,7 +113,7 @@ class AuthService_ {
     })
   }
 
-  forgetPassword(values: {email: string}) {
+  forgetPassword(values: { email: string }) {
     return WebClient.post({
       baseUrl: this.baseUrl,
       path: this.config.forgetPassword,

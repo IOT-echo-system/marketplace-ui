@@ -1,6 +1,6 @@
-import React from 'react'
-import {Stack} from '@mui/material'
-import {useDispatch, useMedia, useSelector, useToast} from '../../../hooks'
+import React, {useState} from 'react'
+import {FormControlLabel, Radio, RadioGroup, Stack} from '@mui/material'
+import {useDispatch, useSelector, useToast} from '../../../hooks'
 import {formatPrice} from '../../../utils/utils'
 import {Button} from '../../atoms'
 import type {ProductDetails} from '../products/Product'
@@ -10,20 +10,21 @@ import {clearCart} from '../../../store/actions'
 import {Config} from '../../../config'
 import theme from '../../../theme/theme'
 import type {SiteStateType, User} from '../../../store/reducers'
+import type {PaymentMode} from '../../../store/reducers/seller'
 
-declare let window: Window & {Razorpay: new (arg: OptionsType) => {open: () => void}}
+declare let window: Window & { Razorpay: new (arg: OptionsType) => { open: () => void } }
 
-type PaymentOptionsPropsType = {onSuccess: (status: boolean) => void; products: ProductDetails[]}
+type PaymentOptionsPropsType = { onSuccess: (status: boolean) => void; products: ProductDetails[] }
 
 type OptionsType = {
   image: string
   handler: (response: Record<string, unknown>) => Promise<void>
   amount: number
-  prefill: {contact: number | null; name: string; email: string}
+  prefill: { contact: number | null; name: string; email: string }
   name: string
   description: string
   currency: 'INR'
-  theme: {color: string}
+  theme: { color: string }
   order_id: string
   key: string
 }
@@ -56,8 +57,8 @@ const createOptions: CreateOptionsType = (payment, site, paymentHandler, user) =
 })
 
 export const PaymentOptions: React.FC<PaymentOptionsPropsType> = ({products, onSuccess}) => {
-  const media = useMedia()
   const {cart, user, site} = useSelector(state => state)
+  const [mode, setMode] = useState<PaymentMode>('RAZORPAY')
   const toast = useToast()
   const dispatch = useDispatch()
 
@@ -76,22 +77,42 @@ export const PaymentOptions: React.FC<PaymentOptionsPropsType> = ({products, onS
   const totalPrice = priceWithGST + cart.shippingCharge
 
   const handleCreateOrder = () => {
-    UserService.placeOrder(cart)
-      .then(payment => {
+    UserService.placeOrder(cart, mode)
+      .then(({payment}) => {
         dispatch(clearCart())
-        const options = createOptions(payment, site, paymentHandler, {
-          ...user,
-          phone: user.phone ?? cart.billingAddress?.mobileNo ?? NaN
-        })
-        const rzp = new window.Razorpay(options)
-        rzp.open()
+        if (mode === 'RAZORPAY') {
+          const options = createOptions(payment, site, paymentHandler, {
+            ...user,
+            phone: user.phone ?? cart.billingAddress?.mobileNo ?? NaN
+          })
+          const rzp = new window.Razorpay(options)
+          rzp.open()
+        } else {
+          onSuccess(true)
+        }
       })
       .catch(toast.error)
   }
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMode(event.target.value as PaymentMode)
+  }
+
   return (
-    <Stack justifyContent={'space-around'} spacing={media.md ? 2 : 4}>
+    <Stack justifyContent={'space-around'} spacing={2}>
       <Stack>Amount {formatPrice(totalPrice)}</Stack>
+      <RadioGroup value={mode} onChange={handleChange}>
+        <FormControlLabel
+          value={'RAZORPAY'}
+          control={<Radio style={{alignSelf: 'start'}}/>}
+          label={'Credit Card/Debit Card/UPI/Net banking (Razorpay)'}
+        />
+        {cart.type !== 'ONLINE' && <FormControlLabel
+          value={'CASH'}
+          control={<Radio style={{alignSelf: 'start'}}/>}
+          label={'Cash'}
+        />}
+      </RadioGroup>
       <Stack direction={'row'}>
         <Button variant={'contained'} color={'warning'} onClick={handleCreateOrder}>
           Pay now

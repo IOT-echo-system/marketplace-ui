@@ -9,6 +9,10 @@ declare global {
     isGreaterThanZero(): boolean
 
     isEqualTo(number: number): boolean
+
+    isValidMobile(): boolean
+
+    isValidPinCode(): boolean
   }
 }
 
@@ -26,4 +30,12 @@ Number.prototype.isZero = function (this: number): boolean {
 
 Number.prototype.isGreaterThanZero = function (this: number): boolean {
   return this.isGreaterThan(Integer.ZERO)
+}
+
+Number.prototype.isValidPinCode = function (this: number): boolean {
+  return this.isGreaterThan(100000) && !this.isGreaterThan(999999)
+}
+
+Number.prototype.isValidMobile = function (this: number): boolean {
+  return this.isGreaterThan(1000000000) && !this.isGreaterThan(9999999999)
 }

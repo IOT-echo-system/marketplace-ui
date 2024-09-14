@@ -51,6 +51,9 @@ export const apiConfig = {
     address: '/address-by-sellers',
     orders: '/orders',
     ordersFilter: '/orders/filter',
-    order: '/orders/{orderId}'
+    order: '/orders/{orderId}',
+    payAndDeliver: '/orders/{orderId}/pay-and-deliver',
+    verifyPayment: '/orders/{orderId}/verify-payment',
+    updatePaymentStatus: '/orders/{orderId}/payment-status'
   }
 } as const

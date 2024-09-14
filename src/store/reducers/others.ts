@@ -1,5 +1,5 @@
 import type {TRootActions} from '../../typing/store'
-import type {Order} from '../../services/typing/userService'
+import type {Order, SellerOrder} from '../../services/typing/userService'
 
 export const OthersAction = {
   OTHERS_CREATE_ITEM: 'OTHERS_CREATE_ITEM',
@@ -8,10 +8,11 @@ export const OthersAction = {
 } as const
 
 export interface OthersState {
-  order: Order | null
+  order: Order | null,
+  sellerOrder: SellerOrder | null
 }
 
-export const initOthersState: OthersState = {order: null}
+export const initOthersState: OthersState = {order: null, sellerOrder: null}
 
 const othersReducer = (state: OthersState, action: TRootActions): OthersState => {
   switch (action.type) {

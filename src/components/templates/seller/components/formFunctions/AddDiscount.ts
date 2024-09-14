@@ -13,7 +13,7 @@ export const AddDiscount: GetFormPropsTypeFunction = handleClose => {
       inputType: 'textField',
       type: 'number',
       label: 'Discount',
-      value: values.discount ? values.discount : '',
+      value: values.discount.toString(),
       required: true,
       size: 'small',
       onChange: event => {

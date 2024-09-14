@@ -13,13 +13,13 @@ const OrderPage: NextPage = () => {
   const toast = useToast()
   const router = useRouter()
   const orderId = router.query.orderId as string
-  const order = useSelector(state => state.others.order)
+  const order = useSelector(state => state.others.sellerOrder)
 
   useEffect(() => {
     setLoading(true)
     SellerService.getOrder(orderId)
       .then(order => {
-        dispatch(createOthersItem('order', order))
+        dispatch(createOthersItem('sellerOrder', order))
       })
       .catch((error: Error) => {
         toast.error(error.message)
@@ -30,13 +30,13 @@ const OrderPage: NextPage = () => {
   }, [orderId])
 
   if (loading) {
-    return <Loader text={'Loading...'} height={200} />
+    return <Loader text={'Loading...'} height={200}/>
   }
 
   const orderType = order?.type.replace('_', ' ').toLowerCase()
   return (
     <SellerWrapper title={`${orderType?.charAt(0).toUpperCase()}${orderType?.slice(1)}: ${orderId}`}>
-      {order ? <Order order={order} /> : <></>}
+      {order ? <Order order={order}/> : <></>}
     </SellerWrapper>
   )
 }

@@ -1,32 +1,19 @@
 import type {GetFormPropsTypeFunction} from '../../../../organisms/ModalForms/model'
 import type {FormInputType} from '../../../../atoms'
-import {useDispatch, useForm, useToast} from '../../../../../hooks'
+import {useForm, useSelector, useToast} from '../../../../../hooks'
 import type {PaymentMode} from '../../../../../store/reducers/seller'
 import {useState} from 'react'
-import type {SellerOrder} from '../../../../../services/typing/userService'
 import {SellerService} from '../../../../../services'
-import {updateOthersItem} from '../../../../../store/actions'
+import {useRouter} from 'next/router'
+import {Config} from '../../../../../config'
 
-export const CollectPayment: GetFormPropsTypeFunction<{ order: SellerOrder }> = (handleClose, {order}) => {
+export const CreateOrderBySeller: GetFormPropsTypeFunction = (handleClose) => {
   const [loading, setLoading] = useState(false)
-  const {values, onClear, onChange, handleSubmit} = useForm<{ mode: PaymentMode, amount: number }>({
-    mode: 'CASH',
-    amount: order.amount
-  })
-  const dispatch = useDispatch()
-  const toast = useToast()
+  const cart = useSelector(state => state.seller.cart)
+  const router = useRouter()
 
-  const cashInputField: FormInputType = {
-    inputType: 'textField',
-    type: 'number',
-    value: values.amount,
-    label: 'Collected amount',
-    required: true,
-    onChange: (event) => {
-      onChange('amount', +event.target.value)
-    },
-    size: 'small'
-  }
+  const {values, onClear, onChange, handleSubmit} = useForm<{ mode: PaymentMode }>({mode: 'CASH',})
+  const toast = useToast()
 
   const inputFields: FormInputType[] = [
     {
@@ -40,16 +27,15 @@ export const CollectPayment: GetFormPropsTypeFunction<{ order: SellerOrder }> = 
         onChange('mode', value as PaymentMode)
       }
     },
-    ...(values.mode === 'CASH' ? [cashInputField] : [])
   ]
 
   const onSubmit = () => {
     setLoading(true)
-    SellerService.collectPaymentAndMarkDelivered(order.id, values)
+    SellerService.createSellerOrder(cart, values)
       .then(order => {
-        dispatch(updateOthersItem('sellerOrder', order))
         onClear()
         handleClose()
+        return router.push(`${Config.SELLER_ORDERS_PAGE_PATH}/${order.id}`)
       })
       .catch(toast.error)
       .finally(() => {

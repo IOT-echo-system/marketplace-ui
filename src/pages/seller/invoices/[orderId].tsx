@@ -1,5 +1,5 @@
 import type {GetServerSideProps, NextPage} from 'next'
-import {Order, SellerWrapper} from '../../../components/templates/seller'
+import {SellerWrapper} from '../../../components/templates/seller'
 import {CMSService} from '../../../services'
 import {useRouter} from 'next/router'
 
@@ -8,7 +8,7 @@ const InvoicePage: NextPage = () => {
   const orderId = router.query.orderId as string
   return (
     <SellerWrapper title={`Online order: ${orderId}`}>
-      <Order orderId={orderId} />
+      {/*<Order orderId={orderId} />*/}
     </SellerWrapper>
   )
 }

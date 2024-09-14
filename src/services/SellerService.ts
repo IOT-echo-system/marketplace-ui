@@ -1,16 +1,17 @@
 import WebClient from 'web-client-starter'
 import {apiConfig} from '../config/apiConfig'
 import type {AddressType} from '../store/reducers'
-import type {AddressResponse} from './typing/sellerService'
-import type {OnlineOrderResponse, Order} from './typing/userService'
-import type {Seller} from '../store/reducers/seller'
+import type {AddressesResponse} from './typing/sellerService'
+import type {Order, OrdersResponse, SellerOrder} from './typing/userService'
+import type {PaymentMode, Seller} from '../store/reducers/seller'
+import type {ParsedUrlQuery} from 'querystring'
 
 class SellerService_ {
   config = apiConfig.seller
   baseUrl = apiConfig.baseUrl + this.config.baseUrl
 
   async getAddress(mobileNo: number): Promise<AddressType> {
-    const response = await WebClient.get<AddressResponse>({
+    const response = await WebClient.get<AddressesResponse>({
       baseUrl: apiConfig.baseUrl,
       path: this.config.findAddress,
       uriVariables: {mobileNo}
@@ -21,23 +22,31 @@ class SellerService_ {
     return response.data.map(({id, attributes}) => ({id, ...attributes}))[0]
   }
 
+  addAddress(address: AddressType): Promise<AddressType> {
+    return WebClient.post<AddressType>({
+      baseUrl: apiConfig.baseUrl,
+      path: this.config.address,
+      body: {data: address}
+    })
+  }
+
   getOrders(data: Record<string, unknown>) {
-    return WebClient.post<OnlineOrderResponse>({
+    return WebClient.post<OrdersResponse>({
       baseUrl: this.baseUrl,
       path: this.config.ordersFilter,
       body: {data}
     })
   }
 
-  getOrder(orderId: string) {
-    return WebClient.get<Order>({
+  getOrder(orderId: string): Promise<SellerOrder> {
+    return WebClient.get<SellerOrder>({
       baseUrl: this.baseUrl,
       path: this.config.order,
       uriVariables: {orderId}
     })
   }
 
-  markAsDelivered(orderId: number) {
+  markAsDelivered(orderId: number): Promise<Order> {
     return WebClient.put<Order>({
       baseUrl: this.baseUrl,
       path: this.config.order,
@@ -46,11 +55,37 @@ class SellerService_ {
     })
   }
 
-  addOrder(cartData: Seller['cart']) {
-    return WebClient.post({
+  collectPaymentAndMarkDelivered(orderId: number, values: { mode: PaymentMode; amount: number }): Promise<Order> {
+    return WebClient.put<Order>({
+      baseUrl: this.baseUrl,
+      path: this.config.payAndDeliver,
+      uriVariables: {orderId},
+      body: values
+    })
+  }
+
+  verifyPayment(orderId: number, query: ParsedUrlQuery) {
+    return WebClient.put<'SUCCESS' | 'FAILURE'>({
+      baseUrl: this.baseUrl,
+      path: this.config.verifyPayment,
+      uriVariables: {orderId},
+      body: query
+    })
+  }
+
+  updatePaymentStatus(orderId: number): Promise<Order> {
+    return WebClient.get<Order>({
+      baseUrl: this.baseUrl,
+      path: this.config.updatePaymentStatus,
+      uriVariables: {orderId},
+    })
+  }
+
+  createSellerOrder(cart: Seller['cart'], values: { mode: PaymentMode }) {
+    return WebClient.post<Order>({
       baseUrl: this.baseUrl,
       path: this.config.orders,
-      body: cartData
+      body: {cart, mode: values.mode}
     })
   }
 }

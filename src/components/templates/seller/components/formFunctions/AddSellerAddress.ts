@@ -9,6 +9,7 @@ import type {AddressType} from '../../../../../store/reducers'
 export const AddSellerAddress: GetFormPropsTypeFunction = handleClose => {
   const [isValidMobile, setIsValidMobile] = useState(true)
   const [isValidPin, setIsValidPin] = useState(true)
+  const [loading, setLoading] = useState(false)
   const toast = useToast()
 
   const dispatch = useDispatch()
@@ -25,14 +26,14 @@ export const AddSellerAddress: GetFormPropsTypeFunction = handleClose => {
   })
 
   useEffect(() => {
-    const isValidMobile = values.mobileNo === 0 || (values.mobileNo >= 1000000000 && values.mobileNo <= 9999999999)
-    const isValidPin = values.pinCode === 0 || (values.pinCode >= 100000 && values.pinCode <= 999999)
+    const isValidMobile = values.mobileNo === 0 || values.mobileNo.isValidMobile()
+    const isValidPin = values.pinCode === 0 || values.pinCode.isValidPinCode()
     setIsValidMobile(isValidMobile)
     setIsValidPin(isValidPin)
   }, [values.pinCode, values.mobileNo])
 
   useEffect(() => {
-    if (isValidMobile && values.mobileNo > 0) {
+    if (values.mobileNo.isValidMobile()) {
       SellerService.getAddress(values.mobileNo)
         .then(address => {
           onChange('name', address.name)
@@ -50,10 +51,10 @@ export const AddSellerAddress: GetFormPropsTypeFunction = handleClose => {
           toast.error('Address not found!!')
         })
     }
-  }, [isValidMobile])
+  }, [values.mobileNo])
 
   useEffect(() => {
-    if (isValidPin && values.pinCode > 0) {
+    if (values.pinCode.isValidPinCode()) {
       CMSService.getAddressByPinCode(values.pinCode)
         .then(address => {
           onChange('city', address.city)
@@ -67,7 +68,7 @@ export const AddSellerAddress: GetFormPropsTypeFunction = handleClose => {
           toast.error('Something went wrong, please check your pin code')
         })
     }
-  }, [isValidPin])
+  }, [values.pinCode])
 
   const formInputs: FormInputType[] = [
     {
@@ -161,14 +162,25 @@ export const AddSellerAddress: GetFormPropsTypeFunction = handleClose => {
   ]
 
   const onSubmit = (finalValues: AddressType) => {
-    dispatch(addAddressInSellerCart(finalValues))
-    onClear()
-    handleClose()
+    if (finalValues.city && finalValues.district && finalValues.state) {
+      setLoading(true)
+      SellerService.addAddress(finalValues)
+        .then(address => {
+          dispatch(addAddressInSellerCart(address))
+          onClear()
+          handleClose()
+        }).catch(toast.error)
+        .finally(() => {
+          setLoading(false)
+        })
+    } else {
+      toast.error('Invalid pincode, Please enter a valid pincode')
+    }
   }
 
   return {
     handleSubmit: handleSubmit(onSubmit),
-    loading: false,
+    loading,
     inputFields: formInputs,
     title: 'Add address',
     submitBtnText: 'Add address'

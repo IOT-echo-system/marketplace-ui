@@ -21,7 +21,12 @@ export const useForm = <T extends Record<string, unknown>>(initialValues: T): Us
 
   const handleSubmit = (onSubmit: (values: T) => void) => (event: FormEvent) => {
     event.preventDefault()
-    onSubmit(values)
+    const finalValues = Object.keys(values).reduce((finalValues: T, keyName: keyof T) => {
+      const trimmedValue = typeof values[keyName] === 'string' ? (values[keyName] as string).trim() : values[keyName]
+      return {...finalValues, [keyName]: trimmedValue}
+    }, values)
+    setValues({...finalValues})
+    onSubmit(finalValues)
   }
 
   return {onChange, values, handleSubmit, onClear}

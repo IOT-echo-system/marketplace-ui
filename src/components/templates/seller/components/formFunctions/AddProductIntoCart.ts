@@ -25,23 +25,6 @@ export const AddProductIntoCart: GetFormPropsTypeFunction<
       }
   )
 
-  // useEffect(() => {
-  //   if (isValidPin && values.pinCode > 0) {
-  //     CMSService.getAddressByPinCode(values.pinCode)
-  //       .then(address => {
-  //         onChange('city', address.city)
-  //         onChange('state', address.state)
-  //         onChange('district', address.district)
-  //       })
-  //       .catch(() => {
-  //         onChange('city', '')
-  //         onChange('state', '')
-  //         onChange('district', '')
-  //         toast.error('Something went wrong, please check your pin code')
-  //       })
-  //   }
-  // }, [isValidPin])
-
   const formInputs: FormInputType[] = [
     {
       inputType: 'textField',
@@ -51,6 +34,7 @@ export const AddProductIntoCart: GetFormPropsTypeFunction<
       size: 'small',
       onChange: event => {
         onChange('productId', event.target.value)
+        onChange('slug', event.target.value)
       }
     },
     {
