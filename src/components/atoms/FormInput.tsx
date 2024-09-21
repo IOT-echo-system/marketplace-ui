@@ -7,14 +7,14 @@ export type FormSelectInputType = TextFieldProps & {
   inputType: 'selectField'
   options: readonly FormSelectOption[]
   defaultValue?: FormSelectOption
-  handleChange: <T>(value: T) => void
+  handleChange: (value: string) => void
 }
 
 export type FormRadioInputType = TextFieldProps &
   StackProps & {
     inputType: 'radioField'
     options: Array<{control?: React.ReactElement; label: React.ReactNode; value: string | number}>
-    handleChange: <T>(value: T) => void
+    handleChange: (value: string) => void
   }
 
 type FormInputTypeMap = {

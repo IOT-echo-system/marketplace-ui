@@ -30,7 +30,7 @@ const OrderPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>
   }, [])
 
   if (loading) {
-    return <Loader text={'Loading...'} height={200}/>
+    return <Loader text={'Loading...'} height={200} />
   }
 
   if (!order) {
@@ -42,9 +42,11 @@ const OrderPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>
   }
 
   return (
-    <ProfileWrapper title={`${order.type.capitalize().replace('_', ' ')} ${router.query.orderId as string}`}
-                    requiredLoggedIn={true}>
-      <Order order={order}/>
+    <ProfileWrapper
+      title={`${order.type.capitalize().replace('_', ' ')} ${router.query.orderId as string}`}
+      requiredLoggedIn={true}
+    >
+      <Order order={order} />
     </ProfileWrapper>
   )
 }

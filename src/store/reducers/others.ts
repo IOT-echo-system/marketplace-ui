@@ -8,7 +8,7 @@ export const OthersAction = {
 } as const
 
 export interface OthersState {
-  order: Order | null,
+  order: Order | null
   sellerOrder: SellerOrder | null
 }
 

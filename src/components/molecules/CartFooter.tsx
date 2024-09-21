@@ -9,6 +9,7 @@ import {Button, ButtonAsLink, Link, PriceSummary} from '../atoms'
 import {ModalForms} from '../organisms'
 import {ApplyCoupon} from '../organisms/ModalForms'
 import {updateShippingPrice} from '../../store/actions'
+import type {Payment} from '../../services/typing/userService'
 
 type CartProductPropsType = {
   products: ProductDetails[]
@@ -24,11 +25,29 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
   const isShippingChargeApplicable =
     cart.type === 'ONLINE' &&
     cart.shippingAddress !== null &&
+    // eslint-disable-next-line no-process-env
     price < +(process.env.NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD ?? 2000)
 
   useEffect(() => {
     dispatch(updateShippingPrice(isShippingChargeApplicable ? 99 : 0))
   }, [cart.type, cart.shippingAddress, price])
+
+  const discountCoupon = cart.discountCoupon
+    ? {
+      ...cart.discountCoupon,
+      amount: (cart.discountCoupon.discount * price) / 100
+    }
+    : null
+  const gst = (price - (discountCoupon?.amount ?? 0)) * 0.18
+  const payment: Payment = {
+    amount: price,
+    grandTotal: price - (discountCoupon?.amount ?? 0) + gst,
+    gst,
+    id: 0,
+    mode: 'RAZORPAY',
+    status: 'CREATED',
+    discountCoupon
+  }
 
   if (products.isEmpty()) {
     return (
@@ -42,13 +61,7 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
 
   return (
     <Stack spacing={2}>
-      <PriceSummary
-        qty={qty}
-        discountCoupon={cart.discountCoupon}
-        amount={price}
-        shippingCharge={cart.shippingCharge}
-        shippingRequired={cart.type === 'ONLINE' && cart.shippingAddress !== null}
-      />
+      <PriceSummary qty={qty} payment={payment} />
       <Stack direction={'row'} justifyContent={'flex-end'} spacing={2} alignItems={'center'}>
         <ModalForms getFormDetails={ApplyCoupon}>
           <ButtonAsLink>Apply coupon</ButtonAsLink>

@@ -1,6 +1,6 @@
 import type {TRootActions} from '../../typing/store'
 import type {AddressType} from './address'
-import type {Order} from '../../services/typing/userService'
+import type {Coupon, Order} from '../../services/typing/userService'
 
 export const CartAction = {
   ADD_ITEM_INTO_CART: 'ADD_ITEM_INTO_CART',
@@ -20,7 +20,7 @@ export type CartStateType = {
   billingAddress: AddressType | null
   shippingAddress: AddressType | null
   shippingCharge: number
-  discountCoupon: {discount: number; code: string} | null
+  discountCoupon: Coupon | null
   type: Order['type']
 }
 
@@ -32,6 +32,7 @@ export const initCartState: CartStateType = {
   discountCoupon: null,
   type: 'ONLINE'
 }
+
 const getQty = (qty: number) => (qty >= 0 ? qty : 0)
 
 const cartReducer = (state: CartStateType, action: TRootActions): CartStateType => {

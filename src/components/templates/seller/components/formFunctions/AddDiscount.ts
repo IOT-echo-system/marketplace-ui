@@ -6,18 +6,18 @@ import type {Coupon} from '../../../../../services/typing/userService'
 
 export const AddDiscount: GetFormPropsTypeFunction = handleClose => {
   const dispatch = useDispatch()
-  const {values, onClear, handleSubmit, onChange} = useForm<Coupon>({discount: 0, code: 'SELLER'})
+  const {values, onClear, handleSubmit, onChange} = useForm<Coupon>({discount: 0, code: 'SELLER', amount: 0})
 
   const formInputs: FormInputType[] = [
     {
       inputType: 'textField',
       type: 'number',
       label: 'Discount',
-      value: values.discount.toString(),
+      value: values.amount?.toString(),
       required: true,
       size: 'small',
       onChange: event => {
-        onChange('discount', +event.target.value)
+        onChange('amount', +event.target.value)
       }
     }
   ]

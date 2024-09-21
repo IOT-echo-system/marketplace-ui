@@ -10,7 +10,7 @@ type SortOrder = 'asc' | 'desc'
 type ReturnType = {
   form: FormPropsType
   orders: Order[]
-  sort: { sortBy: SortBy; order: SortOrder }
+  sort: {sortBy: SortBy; order: SortOrder}
   handleChangeSort: (by: SortBy) => () => void
   handlePageChange: (page: number) => void
 } & MetaResponseType
@@ -67,7 +67,7 @@ export const useOrdersFilterAndSort = (): ReturnType => {
     label: 'Order status',
     value: values.value,
     handleChange: option => {
-      onChange('value', option as string)
+      onChange('value', option)
     }
   }
 
@@ -94,7 +94,7 @@ export const useOrdersFilterAndSort = (): ReturnType => {
       label: 'Order type',
       value: values.type,
       handleChange: option => {
-        onChange('type', option as string)
+        onChange('type', option)
       }
     },
     {
@@ -107,7 +107,7 @@ export const useOrdersFilterAndSort = (): ReturnType => {
       label: 'Filter by',
       value: values.filterBy,
       handleChange: option => {
-        onChange('filterBy', option as string)
+        onChange('filterBy', option)
       }
     },
     values.filterBy === 'state' ? filterByState : filterById

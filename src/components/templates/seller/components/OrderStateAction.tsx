@@ -9,7 +9,7 @@ import {SellerService} from '../../../../services'
 import {useDispatch, useToast} from '../../../../hooks'
 import {updateOthersItem} from '../../../../store/actions'
 
-export const OrderStateAction: React.FC<{ order: SellerOrder }> = ({order}) => {
+export const OrderStateAction: React.FC<{order: SellerOrder}> = ({order}) => {
   const dispatch = useDispatch()
   const toast = useToast()
   const handleClick = () => {
@@ -20,31 +20,38 @@ export const OrderStateAction: React.FC<{ order: SellerOrder }> = ({order}) => {
       .catch(toast.error)
   }
 
-  if (order.type === 'STORE_PICKUP' && order.state === 'PLACED') {
+  if (order.type !== 'ONLINE' && order.state === 'PLACED') {
     return (
       <Stack direction={'row'} spacing={2}>
-        {order.payment.mode === 'RAZORPAY' &&
+        {order.payment.mode === 'RAZORPAY' && (
           <ConfirmationModal getConfirmationModalDetails={markAsDeliveredBySeller} orderId={order.id}>
             <Button variant={'outlined'}>Mark as Delivered</Button>
-          </ConfirmationModal>}
-        {order.payment.mode === 'CASH' &&
+          </ConfirmationModal>
+        )}
+        {order.payment.mode === 'CASH' && (
           <ModalForms getFormDetails={CollectPayment} order={order}>
             <Button variant={'outlined'}>Collect payment and deliver</Button>
-          </ModalForms>}
-        <Chip label={order.payment.mode}/>
-        <Chip label={`Payment: ${order.payment.status}`}/>
-        {order.payment.status === 'CREATED' && order.payment.mode === 'RAZORPAY' &&
-          <Button variant={'contained'} onClick={handleClick}>Reload payment</Button>}
+          </ModalForms>
+        )}
+        <Chip label={order.payment.mode} />
+        <Chip label={`Payment: ${order.payment.status}`} />
+        {order.payment.status === 'CREATED' && order.payment.mode === 'RAZORPAY' && (
+          <Button variant={'contained'} onClick={handleClick}>
+            Reload payment
+          </Button>
+        )}
       </Stack>
     )
   }
 
   if (order.state === 'DELIVERED') {
-    return <Stack direction={'row'} spacing={2}>
-      <Chip label={'Delivered'} color={'success'}/>
-      <Chip label={order.payment.mode}/>
-      <Chip label={`Payment: ${order.payment.status}`}/>
-    </Stack>
+    return (
+      <Stack direction={'row'} spacing={2}>
+        <Chip label={'Delivered'} color={'success'} />
+        <Chip label={order.payment.mode} />
+        <Chip label={`Payment: ${order.payment.status}`} />
+      </Stack>
+    )
   }
   return (
     <Stack direction={'row'} spacing={2}>
@@ -53,7 +60,7 @@ export const OrderStateAction: React.FC<{ order: SellerOrder }> = ({order}) => {
           <Button variant={'outlined'}>Mark as Packed</Button>
         </ModalForms>
       )}
-      {order.state === 'ORDER_NOT_PLACED' && <Chip label={'Order not placed'} color={'error'}/>}
+      {order.state === 'ORDER_NOT_PLACED' && <Chip label={'Order not placed'} color={'error'} />}
     </Stack>
   )
 }

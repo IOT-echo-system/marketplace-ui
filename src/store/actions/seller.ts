@@ -15,6 +15,10 @@ export const addItemInSellerCart = (orderProduct: OrderProduct) => {
   return {type: SellerAction.ADD_ITEM_IN_SELLER_CART, payload: {orderProduct}}
 }
 
+export const removeItemInSellerCart = (productId: string) => {
+  return {type: SellerAction.REMOVE_ITEM_IN_SELLER_CART, payload: {productId}}
+}
+
 export const setGstBillInSellerCart = (gstBill: boolean) => {
   return {type: SellerAction.SET_GST_BILL_IN_SELLER_CART, payload: {gstBill}}
 }

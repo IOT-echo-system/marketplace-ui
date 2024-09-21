@@ -12,19 +12,19 @@ import theme from '../../../theme/theme'
 import type {SiteStateType, User} from '../../../store/reducers'
 import type {PaymentMode} from '../../../store/reducers/seller'
 
-declare let window: Window & { Razorpay: new (arg: OptionsType) => { open: () => void } }
+declare let window: Window & {Razorpay: new (arg: OptionsType) => {open: () => void}}
 
-type PaymentOptionsPropsType = { onSuccess: (status: boolean) => void; products: ProductDetails[] }
+type PaymentOptionsPropsType = {onSuccess: (status: boolean) => void; products: ProductDetails[]}
 
 type OptionsType = {
   image: string
   handler: (response: Record<string, unknown>) => Promise<void>
   amount: number
-  prefill: { contact: number | null; name: string; email: string }
+  prefill: {contact: number | null; name: string; email: string}
   name: string
   description: string
   currency: 'INR'
-  theme: { color: string }
+  theme: {color: string}
   order_id: string
   key: string
 }
@@ -104,14 +104,12 @@ export const PaymentOptions: React.FC<PaymentOptionsPropsType> = ({products, onS
       <RadioGroup value={mode} onChange={handleChange}>
         <FormControlLabel
           value={'RAZORPAY'}
-          control={<Radio style={{alignSelf: 'start'}}/>}
+          control={<Radio style={{alignSelf: 'start'}} />}
           label={'Credit Card/Debit Card/UPI/Net banking (Razorpay)'}
         />
-        {cart.type !== 'ONLINE' && <FormControlLabel
-          value={'CASH'}
-          control={<Radio style={{alignSelf: 'start'}}/>}
-          label={'Cash'}
-        />}
+        {cart.type !== 'ONLINE' && (
+          <FormControlLabel value={'CASH'} control={<Radio style={{alignSelf: 'start'}} />} label={'Cash'} />
+        )}
       </RadioGroup>
       <Stack direction={'row'}>
         <Button variant={'contained'} color={'warning'} onClick={handleCreateOrder}>

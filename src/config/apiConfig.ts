@@ -50,6 +50,7 @@ export const apiConfig = {
     findAddress: '/address-by-sellers?filters[mobileNo][$eq]={mobileNo}',
     address: '/address-by-sellers',
     orders: '/orders',
+    products: '/products',
     ordersFilter: '/orders/filter',
     order: '/orders/{orderId}',
     payAndDeliver: '/orders/{orderId}/pay-and-deliver',

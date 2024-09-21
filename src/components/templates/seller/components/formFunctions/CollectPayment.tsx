@@ -7,9 +7,9 @@ import type {SellerOrder} from '../../../../../services/typing/userService'
 import {SellerService} from '../../../../../services'
 import {updateOthersItem} from '../../../../../store/actions'
 
-export const CollectPayment: GetFormPropsTypeFunction<{ order: SellerOrder }> = (handleClose, {order}) => {
+export const CollectPayment: GetFormPropsTypeFunction<{order: SellerOrder}> = (handleClose, {order}) => {
   const [loading, setLoading] = useState(false)
-  const {values, onClear, onChange, handleSubmit} = useForm<{ mode: PaymentMode, amount: number }>({
+  const {values, onClear, onChange, handleSubmit} = useForm<{mode: PaymentMode; amount: number}>({
     mode: 'CASH',
     amount: order.amount
   })
@@ -22,7 +22,7 @@ export const CollectPayment: GetFormPropsTypeFunction<{ order: SellerOrder }> = 
     value: values.amount,
     label: 'Collected amount',
     required: true,
-    onChange: (event) => {
+    onChange: event => {
       onChange('amount', +event.target.value)
     },
     size: 'small'

@@ -13,15 +13,21 @@ import {
 } from '@mui/material'
 import {ModalForms} from '../../../../organisms'
 import {AddProductIntoCart} from '../formFunctions'
-import {useSelector} from '../../../../../hooks'
+import {useDispatch, useSelector} from '../../../../../hooks'
 import {Link} from '../../../../atoms'
 import {Config} from '../../../../../config'
 import {formatPrice} from '../../../../../utils/utils'
 import {Delete, Edit} from '@mui/icons-material'
+import {removeItemInSellerCart} from '../../../../../store/actions/seller'
 
 export const CreateOrderProducts: React.FC = () => {
   const cart = useSelector(state => state.seller.cart)
+  const dispatch = useDispatch()
   const theme = useTheme()
+
+  const removeProduct = (productId: string) => () => {
+    dispatch(removeItemInSellerCart(productId))
+  }
 
   return (
     <TableContainer sx={{border: `1px solid ${theme.palette.divider}`}}>
@@ -46,20 +52,19 @@ export const CreateOrderProducts: React.FC = () => {
                 </TableCell>
                 <TableCell sx={{textAlign: 'right'}}>{orderProduct.qty}</TableCell>
                 <TableCell sx={{textAlign: 'right'}}>{formatPrice(orderProduct.price)}</TableCell>
-                <TableCell
-                  sx={{textAlign: 'right'}}>{formatPrice(orderProduct.price * orderProduct.qty)}</TableCell>
+                <TableCell sx={{textAlign: 'right'}}>{formatPrice(orderProduct.price * orderProduct.qty)}</TableCell>
                 <TableCell sx={{textAlign: 'right'}}>
                   <Stack direction={'row'} justifyContent={'flex-end'} spacing={1}>
                     <ModalForms getFormDetails={AddProductIntoCart} product={orderProduct} type={'EDIT'}>
                       <IconButton color={'success'}>
                         <Tooltip title={'Edit'}>
-                          <Edit/>
+                          <Edit />
                         </Tooltip>
                       </IconButton>
                     </ModalForms>
-                    <IconButton color={'error'}>
+                    <IconButton color={'error'} onClick={removeProduct(orderProduct.productId)}>
                       <Tooltip title={'Delete'}>
-                        <Delete/>
+                        <Delete />
                       </Tooltip>
                     </IconButton>
                   </Stack>

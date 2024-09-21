@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {useDispatch, useForm, useToast} from '../../../../hooks'
+import {useForm, useToast} from '../../../../hooks'
 import type {FormInputType} from '../../../atoms'
 import type {GetFormPropsTypeFunction} from '../model'
 import type {Order} from '../../../../services/typing/userService'
@@ -9,7 +9,7 @@ export const CreateShipmentOrder: GetFormPropsTypeFunction<{order: Order}> = (ha
   const [loading, setLoading] = useState(false)
   const toast = useToast()
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const {values, onClear, handleSubmit, onChange} = useForm({length: 10, width: 10, height: 5, weight: 0.5})
 
   const formInputs: FormInputType[] = [

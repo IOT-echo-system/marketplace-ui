@@ -2,19 +2,17 @@ import React from 'react'
 import {Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material'
 import type {SellerOrder} from '../../../services/typing/userService'
 import {Address, Link, PriceSummary} from '../../atoms'
-import {calculateTotalQtyAndPriceFromOrder, formatPrice} from '../../../utils/utils'
+import {formatPrice} from '../../../utils/utils'
 import theme from '../../../theme/theme'
 import {Config} from '../../../config'
 import {OrderStateAction} from './components/OrderStateAction'
 
-export const Order: React.FC<{ order: SellerOrder }> = ({order}) => {
-  const {price, qty} = calculateTotalQtyAndPriceFromOrder(order.products)
-
+export const Order: React.FC<{order: SellerOrder}> = ({order}) => {
   return (
     <Stack spacing={2}>
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2} justifyContent={{md: 'space-between'}}>
-        {order.shipping && <Address address={order.shipping.address} title={'Shipping address'}/>}
-        <Address address={order.billingAddress} title={'Billing address'}/>
+        {order.shipping && <Address address={order.shipping.address} title={'Shipping address'} />}
+        <Address address={order.billingAddress} title={'Billing address'} />
       </Stack>
       <TableContainer sx={{border: `1px solid ${theme.palette.divider}`}}>
         <Table>
@@ -50,15 +48,8 @@ export const Order: React.FC<{ order: SellerOrder }> = ({order}) => {
         justifyContent={'space-between'}
         alignItems={'flex-end'}
       >
-        <OrderStateAction order={order}/>
-        <PriceSummary
-          qty={qty}
-          discountCoupon={order.discountCoupon}
-          amount={price}
-          shippingCharge={order.shipping?.charge ?? 0}
-          shippingRequired={Boolean(order.shipping)}
-          amountPaid={order.payment.collectedAmount}
-        />
+        <OrderStateAction order={order} />
+        <PriceSummary qty={order.qty} payment={order.payment} shipping={order.shipping} />
       </Stack>
     </Stack>
   )

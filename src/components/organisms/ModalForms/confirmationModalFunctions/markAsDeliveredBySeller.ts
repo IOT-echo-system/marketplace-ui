@@ -14,7 +14,7 @@ export const markAsDeliveredBySeller: GetConfirmationModalPropsTypeFunction<{
   const onConfirm = () => {
     setLoading(true)
     SellerService.markAsDelivered(orderId)
-      .then((order) => {
+      .then(order => {
         dispatch(updateOthersItem('sellerOrder', order))
         handleClose()
       })

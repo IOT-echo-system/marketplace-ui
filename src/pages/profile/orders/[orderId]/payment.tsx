@@ -23,12 +23,13 @@ const OrderPaymentStatus: NextPage<InferGetServerSidePropsType<typeof getServerS
   return (
     <BoxedContainer p={4}>
       <BoxedContainer p={4} bgcolor={'background.paper'}>
-        {loading
-          ? <Loader text={'Loading'}/>
-          : <Typography>
-            Your payment is {status === 'SUCCESS' ? 'successful' : 'failed'} for
-            order no. {router.query.orderId}
-          </Typography>}
+        {loading ? (
+          <Loader text={'Loading'} />
+        ) : (
+          <Typography>
+            Your payment is {status === 'SUCCESS' ? 'successful' : 'failed'} for order no. {router.query.orderId}
+          </Typography>
+        )}
       </BoxedContainer>
     </BoxedContainer>
   )

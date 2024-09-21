@@ -8,6 +8,7 @@ export const SellerAction = {
   SET_USER_IN_SELLER: 'SET_USER_IN_SELLER',
   SET_CART_IN_SELLER: 'SET_CART_IN_SELLER',
   ADD_ITEM_IN_SELLER_CART: 'ADD_ITEM_IN_SELLER_CART',
+  REMOVE_ITEM_IN_SELLER_CART: 'REMOVE_ITEM_IN_SELLER_CART',
   SET_GST_BILL_IN_SELLER_CART: 'SET_GST_BILL_IN_SELLER_CART',
   SET_DISCOUNT_IN_SELLER_CART: 'SET_DISCOUNT_IN_SELLER_CART',
   ADD_ADDRESS_IN_SELLER_CART: 'ADD_ADDRESS_IN_SELLER_CART',
@@ -63,13 +64,20 @@ const sellerReducer = (state: Seller, action: TRootActions): Seller => {
       })
       return {...state, cart: {...state.cart, products}}
     }
+    case SellerAction.REMOVE_ITEM_IN_SELLER_CART: {
+      const products = state.cart.products.filter(product => product.productId !== action.payload.productId)
+      return {...state, cart: {...state.cart, products}}
+    }
     case SellerAction.SET_GST_BILL_IN_SELLER_CART: {
       return {...state, cart: {...state.cart, gstBill: action.payload.gstBill}}
     }
     case SellerAction.SET_DISCOUNT_IN_SELLER_CART: {
       const discount = action.payload.discount
       if (state.cart.gstBill) {
-        return {...state, cart: {...state.cart, discount: {discount: discount.discount / 1.18, code: discount.code}}}
+        return {
+          ...state,
+          cart: {...state.cart, discount: {discount: 0, amount: (discount.amount ?? 0) / 1.18, code: discount.code}}
+        }
       }
       return {...state, cart: {...state.cart, discount: action.payload.discount}}
     }

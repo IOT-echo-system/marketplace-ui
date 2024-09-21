@@ -4,19 +4,18 @@ import type {Order as OrderType} from '../../../services/typing/userService'
 import {Address, Link, PriceSummary} from '../../atoms'
 import {useMedia} from '../../../hooks'
 import theme from '../../../theme/theme'
-import {calculateTotalQtyAndPriceFromOrder, formatPrice} from '../../../utils/utils'
+import {formatPrice} from '../../../utils/utils'
 import {Config} from '../../../config'
 import {OrderStatus} from './components/OrderStatus'
 
-export const Order: React.FC<{ order: OrderType }> = ({order}) => {
+export const Order: React.FC<{order: OrderType}> = ({order}) => {
   const media = useMedia()
-  const {price, qty} = calculateTotalQtyAndPriceFromOrder(order.products)
 
   return (
     <Stack spacing={2}>
       <Stack direction={{xs: 'column', md: 'row'}} spacing={2} justifyContent={{md: 'space-between'}}>
-        {order.shipping && <Address address={order.shipping.address} title={'Shipping address'}/>}
-        <Address address={order.billingAddress} title={'Billing address'}/>
+        {order.shipping && <Address address={order.shipping.address} title={'Shipping address'} />}
+        <Address address={order.billingAddress} title={'Billing address'} />
       </Stack>
       <TableContainer sx={{border: `1px solid ${theme.palette.divider}`}}>
         <Table>
@@ -52,15 +51,8 @@ export const Order: React.FC<{ order: OrderType }> = ({order}) => {
         justifyContent={'space-between'}
         alignItems={'flex-end'}
       >
-        <OrderStatus order={order}/>
-        <PriceSummary
-          qty={qty}
-          discountCoupon={order.discountCoupon}
-          amount={price}
-          shippingCharge={order.shipping?.charge ?? 0}
-          shippingRequired={Boolean(order.shipping)}
-          amountPaid={order.payment.collectedAmount}
-        />
+        <OrderStatus order={order} />
+        <PriceSummary qty={order.qty} shipping={order.shipping} payment={order.payment} />
       </Stack>
     </Stack>
   )

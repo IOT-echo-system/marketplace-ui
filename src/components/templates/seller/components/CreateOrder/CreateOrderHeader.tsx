@@ -11,16 +11,20 @@ export const CreateOrderHeader: React.FC = () => {
   return (
     <Stack direction={'row'} justifyContent={'space-between'} alignItems={'end'}>
       <ModalForms getFormDetails={AddProductIntoCart} type={'ADD'}>
-        <Button startIcon={<Add/>} variant={'contained'} size={'large'}>
+        <Button startIcon={<Add />} variant={'contained'} size={'large'}>
           Add item
         </Button>
       </ModalForms>
       <Stack spacing={1} alignItems={'start'}>
-        {cart.billingAddress && <Address address={cart.billingAddress} title={'Billing address'}/>}
+        {cart.billingAddress && <Address address={cart.billingAddress} title={'Billing address'} />}
         <ModalForms getFormDetails={AddSellerAddress}>
-          {cart.billingAddress
-            ? <ButtonAsLink title={'Update address'}>Update address</ButtonAsLink>
-            : <Button variant={'contained'} color={'warning'}>Add billing address</Button>}
+          {cart.billingAddress ? (
+            <ButtonAsLink title={'Update address'}>Update address</ButtonAsLink>
+          ) : (
+            <Button variant={'contained'} color={'warning'}>
+              Add billing address
+            </Button>
+          )}
         </ModalForms>
       </Stack>
     </Stack>

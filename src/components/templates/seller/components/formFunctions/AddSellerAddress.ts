@@ -169,7 +169,8 @@ export const AddSellerAddress: GetFormPropsTypeFunction = handleClose => {
           dispatch(addAddressInSellerCart(address))
           onClear()
           handleClose()
-        }).catch(toast.error)
+        })
+        .catch(toast.error)
         .finally(() => {
           setLoading(false)
         })

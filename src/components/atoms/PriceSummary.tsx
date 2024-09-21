@@ -1,43 +1,31 @@
 import React from 'react'
 import {Stack, Typography} from '@mui/material'
-import type {Coupon} from '../../services/typing/userService'
 import {formatPrice} from '../../utils/utils'
 import '../../utils/extenstions'
+import type {Payment, Shipping} from '../../services/typing/userService'
 
 type PriceSummaryPropsType = {
   qty: number
-  discountCoupon?: Coupon | null
-  amount: number
-  shippingCharge: number
-  shippingRequired?: boolean
-  withoutGST?: boolean,
-  amountPaid?: number
+  payment: Payment
+  shipping?: Shipping
 }
 
 export const PriceSummary: React.FC<PriceSummaryPropsType> = props => {
-  const {qty, discountCoupon, amount, shippingCharge, shippingRequired, withoutGST} = props
-  const isSellerDiscount = discountCoupon?.code === 'SELLER'
-  const discount = isSellerDiscount ? discountCoupon.discount : (amount * (discountCoupon?.discount ?? 0)) / 100
-  const amountWithGST = (amount - discount) * (withoutGST ? 1 : 1.18)
-  const grandTotalAmount = amountWithGST + shippingCharge
+  const {qty, payment, shipping} = props
+
   return (
     <Stack justifyContent={'flex-end'} alignItems={'flex-end'} spacing={1}>
       <Typography variant={'subtitle1'}>
-        Subtotal ({qty} items): {formatPrice(amount)}
+        Subtotal ({qty} items): {formatPrice(payment.amount)}
       </Typography>
-      {discountCoupon?.discount.isGreaterThanZero() && (
-        <Typography>
-          Discount {isSellerDiscount ? '' : `(${discountCoupon.discount}%)`}: {formatPrice(-discount)}
-        </Typography>
+      {payment.discountCoupon && (
+        <Typography>Discount: {formatPrice(-(payment.discountCoupon.amount ?? 0))}</Typography>
       )}
-      {!withoutGST && <Typography>GST (18%): {formatPrice((amount - discount) * 0.18)}</Typography>}
-      {shippingRequired && <Typography>Shipping charge: {formatPrice(shippingCharge)}</Typography>}
+      {payment.gst.isGreaterThanZero() && <Typography>GST (18%): {formatPrice(payment.gst)}</Typography>}
+      {shipping && <Typography>Shipping charge: {formatPrice(shipping.charge)}</Typography>}
       <Typography fontWeight={'bold'} variant={'subtitle1'}>
-        Grand total: {formatPrice(grandTotalAmount)}
+        Grand total: {formatPrice(payment.grandTotal)}
       </Typography>
-      {props.amountPaid && <Typography fontWeight={'bold'} variant={'subtitle1'}>
-        Amount paid: {formatPrice(props.amountPaid)}
-      </Typography>}
     </Stack>
   )
 }

@@ -3,7 +3,7 @@ import {apiConfig} from '../config/apiConfig'
 import type {AddressType} from '../store/reducers'
 import type {AddressesResponse} from './typing/sellerService'
 import type {Order, OrdersResponse, SellerOrder} from './typing/userService'
-import type {PaymentMode, Seller} from '../store/reducers/seller'
+import type {OrderProduct, PaymentMode, Seller} from '../store/reducers/seller'
 import type {ParsedUrlQuery} from 'querystring'
 
 class SellerService_ {
@@ -55,7 +55,7 @@ class SellerService_ {
     })
   }
 
-  collectPaymentAndMarkDelivered(orderId: number, values: { mode: PaymentMode; amount: number }): Promise<Order> {
+  collectPaymentAndMarkDelivered(orderId: number, values: {mode: PaymentMode; amount: number}): Promise<Order> {
     return WebClient.put<Order>({
       baseUrl: this.baseUrl,
       path: this.config.payAndDeliver,
@@ -77,15 +77,23 @@ class SellerService_ {
     return WebClient.get<Order>({
       baseUrl: this.baseUrl,
       path: this.config.updatePaymentStatus,
-      uriVariables: {orderId},
+      uriVariables: {orderId}
     })
   }
 
-  createSellerOrder(cart: Seller['cart'], values: { mode: PaymentMode }) {
+  createSellerOrder(cart: Seller['cart'], values: {mode: PaymentMode}) {
     return WebClient.post<Order>({
       baseUrl: this.baseUrl,
       path: this.config.orders,
       body: {cart, mode: values.mode}
+    })
+  }
+
+  getProductsByIdOrName(nameOrId: string) {
+    return WebClient.get<OrderProduct[]>({
+      baseUrl: this.baseUrl,
+      path: this.config.products,
+      queryParams: {nameOrId}
     })
   }
 }

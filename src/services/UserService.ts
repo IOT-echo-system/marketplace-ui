@@ -32,7 +32,7 @@ class AuthService_ {
     })
   }
 
-  login(data: { identifier: string; password: string }): Promise<UserResponse> {
+  login(data: {identifier: string; password: string}): Promise<UserResponse> {
     return WebClient.post<UserResponse>({
       baseUrl: this.baseUrl,
       path: this.config.login,
@@ -52,7 +52,7 @@ class AuthService_ {
     return WebClient.post<OrderWithPayment>({
       baseUrl: this.baseUrl,
       path: this.config.orders,
-      body: {...data, paymentMode: mode}
+      body: {...data, mode}
     })
   }
 
@@ -80,7 +80,7 @@ class AuthService_ {
     })
   }
 
-  async applyCoupon({code}: { code: string }): Promise<Coupon> {
+  async applyCoupon({code}: {code: string}): Promise<Coupon> {
     const response = await WebClient.get<Coupon[]>({
       baseUrl: this.baseUrl,
       path: this.config.coupon,
@@ -105,7 +105,7 @@ class AuthService_ {
     return response[0]
   }
 
-  changePassword(values: { password: string; currentPassword: string }) {
+  changePassword(values: {password: string; currentPassword: string}) {
     return WebClient.post({
       baseUrl: this.baseUrl,
       path: this.config.changePassword,
@@ -113,7 +113,7 @@ class AuthService_ {
     })
   }
 
-  forgetPassword(values: { email: string }) {
+  forgetPassword(values: {email: string}) {
     return WebClient.post({
       baseUrl: this.baseUrl,
       path: this.config.forgetPassword,

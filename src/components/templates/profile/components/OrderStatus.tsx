@@ -10,16 +10,20 @@ const storePickupLabels: Record<Order['state'], string> = {
   PLACED: 'Ready for pickup'
 }
 
-export const OrderStatus: React.FC<{ order: Order }> = ({order}) => {
+export const OrderStatus: React.FC<{order: Order}> = ({order}) => {
   if (order.type === 'STORE_PICKUP') {
-    return <Stack direction={'row'} spacing={2} flexWrap={'wrap'}>
-      <Chip label={storePickupLabels[order.state]}/>
-      <Chip label={order.payment.mode}/>
-      <Chip label={`Payment: ${order.payment.status}`}/>
-    </Stack>
+    return (
+      <Stack direction={'row'} spacing={2} flexWrap={'wrap'}>
+        <Chip label={storePickupLabels[order.state]} />
+        <Chip label={order.payment.mode} />
+        <Chip label={`Payment: ${order.payment.status}`} />
+      </Stack>
+    )
   }
 
-  return <Button variant={'outlined'} component={Link} href={`${Config.ORDERS_PAGE_PATH}/${order.id}/track`}>
-    Track order
-  </Button>
+  return (
+    <Button variant={'outlined'} component={Link} href={`${Config.ORDERS_PAGE_PATH}/${order.id}/track`}>
+      Track order
+    </Button>
+  )
 }

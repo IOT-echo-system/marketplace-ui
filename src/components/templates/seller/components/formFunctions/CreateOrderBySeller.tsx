@@ -7,12 +7,12 @@ import {SellerService} from '../../../../../services'
 import {useRouter} from 'next/router'
 import {Config} from '../../../../../config'
 
-export const CreateOrderBySeller: GetFormPropsTypeFunction = (handleClose) => {
+export const CreateOrderBySeller: GetFormPropsTypeFunction = handleClose => {
   const [loading, setLoading] = useState(false)
   const cart = useSelector(state => state.seller.cart)
   const router = useRouter()
 
-  const {values, onClear, onChange, handleSubmit} = useForm<{ mode: PaymentMode }>({mode: 'CASH',})
+  const {values, onClear, onChange, handleSubmit} = useForm<{mode: PaymentMode}>({mode: 'CASH'})
   const toast = useToast()
 
   const inputFields: FormInputType[] = [
@@ -26,7 +26,7 @@ export const CreateOrderBySeller: GetFormPropsTypeFunction = (handleClose) => {
       handleChange: value => {
         onChange('mode', value as PaymentMode)
       }
-    },
+    }
   ]
 
   const onSubmit = () => {

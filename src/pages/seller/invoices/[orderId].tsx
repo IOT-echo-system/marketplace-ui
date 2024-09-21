@@ -6,11 +6,7 @@ import {useRouter} from 'next/router'
 const InvoicePage: NextPage = () => {
   const router = useRouter()
   const orderId = router.query.orderId as string
-  return (
-    <SellerWrapper title={`Online order: ${orderId}`}>
-      {/*<Order orderId={orderId} />*/}
-    </SellerWrapper>
-  )
+  return <SellerWrapper title={`Online order: ${orderId}`}>{/*<Order orderId={orderId} />*/}</SellerWrapper>
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {

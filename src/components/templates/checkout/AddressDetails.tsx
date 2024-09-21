@@ -8,7 +8,7 @@ import {AddAddress} from '../../organisms/ModalForms'
 import {addBillingAddress, addShippingAddress} from '../../../store/actions'
 import {ShippingService} from '../../../services/ShippingService'
 
-type AddressDetailsPropsType = CheckoutStatePropsType & { type: 'shipping' | 'billing' }
+type AddressDetailsPropsType = CheckoutStatePropsType & {type: 'shipping' | 'billing'}
 export const AddressDetails: React.FC<AddressDetailsPropsType> = ({onSuccess, type}) => {
   const dispatch = useDispatch()
   const {addresses} = useSelector(state => state.address)
@@ -44,8 +44,8 @@ export const AddressDetails: React.FC<AddressDetailsPropsType> = ({onSuccess, ty
               <Stack spacing={2} alignItems={'start'}>
                 <FormControlLabel
                   value={index}
-                  control={<Radio style={{alignSelf: 'start'}}/>}
-                  label={<Address address={address} title={''}/>}
+                  control={<Radio style={{alignSelf: 'start'}} />}
+                  label={<Address address={address} title={''} />}
                 />
                 {selected === index && (
                   <Stack spacing={1} pl={6}>
@@ -57,14 +57,14 @@ export const AddressDetails: React.FC<AddressDetailsPropsType> = ({onSuccess, ty
                         {estimateDelivery ? (
                           <Typography>{estimateDelivery}</Typography>
                         ) : (
-                          <LoadingText text={'Loading'}/>
+                          <LoadingText text={'Loading'} />
                         )}
                       </>
                     )}
                   </Stack>
                 )}
               </Stack>
-              <Divider/>
+              <Divider />
             </Stack>
           )
         })}

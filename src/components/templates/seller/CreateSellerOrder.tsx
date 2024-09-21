@@ -8,6 +8,7 @@ import {AddDiscount, CreateOrderBySeller} from './components/formFunctions'
 import {setGstBillInSellerCart} from '../../../store/actions/seller'
 import {storage, StorageKeys} from '../../../utils/storage'
 import {CreateOrderHeader, CreateOrderProducts} from './components/CreateOrder'
+import type {Payment} from '../../../services/typing/userService'
 
 export const CreateSellerOrder: React.FC = () => {
   const {cart} = useSelector(state => state.seller)
@@ -21,10 +22,22 @@ export const CreateSellerOrder: React.FC = () => {
     storage.setItem(StorageKeys.SELLER_CART, cart)
   }, [cart])
 
+  const priceAfterDiscount = price - (cart.discount.amount ?? 0)
+
+  const payment: Payment = {
+    grandTotal: priceAfterDiscount * (cart.gstBill ? 1.18 : 1),
+    id: 0,
+    mode: 'CASH',
+    status: 'CREATED',
+    amount: price,
+    gst: priceAfterDiscount * (cart.gstBill ? 0.18 : 0),
+    discountCoupon: cart.discount
+  }
+
   return (
     <Stack spacing={2}>
-      <CreateOrderHeader/>
-      <CreateOrderProducts/>
+      <CreateOrderHeader />
+      <CreateOrderProducts />
       <Stack direction={'row'} justifyContent={'space-between'} alignItems={'end'}>
         <ModalForms getFormDetails={CreateOrderBySeller}>
           <Button variant={'contained'} size={'large'} disabled={!cart.billingAddress || cart.products.isEmpty()}>
@@ -32,22 +45,14 @@ export const CreateSellerOrder: React.FC = () => {
           </Button>
         </ModalForms>
         <Stack direction={'row'} justifyContent={'end'} spacing={8}>
-
           <Stack>
             <FormControlLabel
               label={'Without GST'}
-              control={<Checkbox onChange={handleChange} checked={!cart.gstBill}/>}
+              control={<Checkbox onChange={handleChange} checked={!cart.gstBill} />}
             />
           </Stack>
           <Stack alignItems={'end'}>
-            <PriceSummary
-              withoutGST={!cart.gstBill}
-              qty={qty}
-              amount={price}
-              shippingCharge={0}
-              discountCoupon={cart.discount}
-              shippingRequired={false}
-            />
+            <PriceSummary qty={qty} payment={payment} />
             <ModalForms getFormDetails={AddDiscount}>
               <ButtonAsLink>Add discount</ButtonAsLink>
             </ModalForms>

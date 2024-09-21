@@ -30,13 +30,13 @@ const OrderPage: NextPage = () => {
   }, [orderId])
 
   if (loading) {
-    return <Loader text={'Loading...'} height={200}/>
+    return <Loader text={'Loading...'} height={200} />
   }
 
   const orderType = order?.type.replace('_', ' ').toLowerCase()
   return (
     <SellerWrapper title={`${orderType?.charAt(0).toUpperCase()}${orderType?.slice(1)}: ${orderId}`}>
-      {order ? <Order order={order}/> : <></>}
+      {order ? <Order order={order} /> : <></>}
     </SellerWrapper>
   )
 }
