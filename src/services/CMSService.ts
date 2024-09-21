@@ -146,7 +146,7 @@ class CMSService_ {
 
   getAddressByPinCode(pinCode: number): Promise<PostalAddress> {
     return WebClient.get<PostalAddress>({
-      baseUrl: '/api',
+      baseUrl: this.baseUrl,
       path: this.postal.address,
       queryParams: {pinCode}
     })

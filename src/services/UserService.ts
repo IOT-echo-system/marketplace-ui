@@ -1,15 +1,7 @@
 import {apiConfig} from '../config/apiConfig'
 import '../utils/extenstions'
 import WebClient from './webClient'
-import type {
-  Coupon,
-  MeResponse,
-  Order,
-  OrderResponse,
-  OrderWithPayment,
-  PaymentResponse,
-  UserResponse
-} from './typing/userService'
+import type {Coupon, MeResponse, Order, OrderWithPayment, PaymentResponse, UserResponse} from './typing/userService'
 import type {AddressType, CartStateType} from '../store/reducers'
 import type {PaymentMode} from '../store/reducers/seller'
 
@@ -56,14 +48,14 @@ class AuthService_ {
     })
   }
 
-  async getOrderDetails(orderId: string) {
-    const response = await WebClient.get<OrderResponse>({
-      baseUrl: this.baseUrl,
-      path: this.config.orderDetails,
-      uriVariables: {orderId}
-    })
-    return {...response.data.attributes, id: response.data.id}
-  }
+  // async getOrderDetails(orderId: string) {
+  //   const response = await WebClient.get<OrderResponse>({
+  //     baseUrl: this.baseUrl,
+  //     path: this.config.orderDetails,
+  //     uriVariables: {orderId}
+  //   })
+  //   return {...response.data.attributes, id: response.data.id}
+  // }
 
   verifyPayment(data: Record<string, unknown>): Promise<PaymentResponse> {
     return WebClient.post<PaymentResponse>({

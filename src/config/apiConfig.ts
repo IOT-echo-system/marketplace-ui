@@ -41,8 +41,6 @@ export const apiConfig = {
     baseUrl: '/shipping'
   },
   postal: {
-    baseUrl: 'https://api.postalpincode.in',
-    pinCode: '/pincode/{pinCode}',
     address: '/address'
   },
   seller: {
