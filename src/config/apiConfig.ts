@@ -1,4 +1,4 @@
-const API_BACKEND_URL = process.env.API_BACKEND_URL ?? 'http://127.0.0.1:1337'
+const API_BACKEND_URL = process.env.API_BACKEND_URL ?? ''
 
 export const apiConfig = {
   baseUrl: `${API_BACKEND_URL}/api`,

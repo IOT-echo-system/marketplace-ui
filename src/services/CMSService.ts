@@ -1,6 +1,6 @@
 import WebClient from 'web-client-starter'
 import {apiConfig} from '../config/apiConfig'
-import type {FooterInfo, OrderProduct, SiteInfo, SiteStateType} from '../store/reducers'
+import type {FooterInfo, SiteInfo, SiteStateType} from '../store/reducers'
 import type {
   FooterResponse,
   MainMenuResponse,
@@ -136,13 +136,13 @@ class CMSService_ {
     })
   }
 
-  findProductsByNameOrId(nameOrId: string): Promise<OrderProduct[]> {
-    return WebClient.get<OrderProduct[]>({
-      baseUrl: this.baseUrl,
-      path: this.config.search,
-      queryParams: {query: nameOrId}
-    })
-  }
+  // findProductsByNameOrId(nameOrId: string): Promise<OrderProduct[]> {
+  //   return WebClient.get<OrderProduct[]>({
+  //     baseUrl: this.baseUrl,
+  //     path: this.config.search,
+  //     queryParams: {query: nameOrId}
+  //   })
+  // }
 
   getAddressByPinCode(pinCode: number): Promise<PostalAddress> {
     return WebClient.get<PostalAddress>({
