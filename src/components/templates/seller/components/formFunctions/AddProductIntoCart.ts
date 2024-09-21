@@ -15,13 +15,13 @@ export const AddProductIntoCart: GetFormPropsTypeFunction<AddProductIntoCartType
     props.type === 'EDIT'
       ? props.product
       : {
-        mrp: 0,
-        price: 0,
-        productId: '',
-        qty: 1,
-        slug: '',
-        title: ''
-      }
+          mrp: 0,
+          price: 0,
+          productId: '',
+          qty: 1,
+          slug: '',
+          title: ''
+        }
   )
 
   useEffect(() => {

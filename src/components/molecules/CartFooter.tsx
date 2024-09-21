@@ -23,10 +23,7 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
   const {qty, price} = calculateTotalQtyAndPrice(cart, products)
 
   const isShippingChargeApplicable =
-    cart.type === 'ONLINE' &&
-    cart.shippingAddress !== null &&
-    // eslint-disable-next-line no-process-env
-    price < +(process.env.NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD ?? 2000)
+    cart.type === 'ONLINE' && cart.shippingAddress !== null && price < Config.FREE_DELIVERY_THRESHOLD_VALUE
 
   useEffect(() => {
     dispatch(updateShippingPrice(isShippingChargeApplicable ? 99 : 0))
@@ -34,9 +31,9 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
 
   const discountCoupon = cart.discountCoupon
     ? {
-      ...cart.discountCoupon,
-      amount: (cart.discountCoupon.discount * price) / 100
-    }
+        ...cart.discountCoupon,
+        amount: (cart.discountCoupon.discount * price) / 100
+      }
     : null
   const gst = (price - (discountCoupon?.amount ?? 0)) * 0.18
   const payment: Payment = {

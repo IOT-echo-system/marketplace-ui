@@ -20,5 +20,7 @@ export const Config = {
   SELLER_GST_INVOICES_PAGE_PATH: '/seller/invoices/gst',
   SELLER_ORDERS_PAGE_PATH: '/seller/orders',
   SELLER_ORDERS_CREATE_PAGE_PATH: '/seller/orders/create',
-  SELLER_INVOICES_CREATE_PAGE_PATH: '/seller/invoices/create'
+  SELLER_INVOICES_CREATE_PAGE_PATH: '/seller/invoices/create',
+  // eslint-disable-next-line no-process-env
+  FREE_DELIVERY_THRESHOLD_VALUE: +(process.env.NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD ?? 2000)
 } as const

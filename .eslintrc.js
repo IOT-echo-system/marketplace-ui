@@ -61,7 +61,7 @@ module.exports = {
     '@typescript-eslint/unified-signatures': 'error',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
-    indent: ['warn', 2, {SwitchCase: 1, ignoredNodes: ['JSXAttribute', 'JSXSpreadAttribute']}],
+    indent: 'off',
     quotes: ['error', 'single'],
     'linebreak-style': ['error', 'unix'],
     semi: ['error', 'never'],
