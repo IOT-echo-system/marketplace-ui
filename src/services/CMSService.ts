@@ -65,7 +65,7 @@ class CMSService_ {
   async getOfficeLocation(): Promise<LocationPropsType> {
     const response = await WebClient.get<OfficeLocationResponse>({
       baseUrl: this.baseUrl,
-      path: this.config.officeLocation
+      path: this.config.storeLocation
     })
     return response.data.attributes
   }

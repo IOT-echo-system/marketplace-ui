@@ -8,7 +8,7 @@ export const apiConfig = {
     mainMenu: '/main-menu?populate=*',
     footer: '/footer?populate[sections][populate]=*&populate[socials][populate]=*',
     pageList: '/pages',
-    officeLocation: '/office-location',
+    storeLocation: '/store-location?populate=*',
     productDetails: '/products?filters[slug][$eq]={productSlug}&populate=*',
     productsSummary:
       // eslint-disable-next-line max-len
