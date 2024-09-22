@@ -1,8 +1,8 @@
 import type {Order} from '../../../../services/typing/userService'
-import {Button, Link} from '../../../atoms'
+import {Button, Link, Stack} from '../../../atoms'
 import {Config} from '../../../../config'
 import React from 'react'
-import {Chip, Stack} from '@mui/material'
+import {Chip} from '@mui/material'
 
 const storePickupLabels: Record<Order['state'], string> = {
   DELIVERED: 'Delivered',
@@ -13,7 +13,7 @@ const storePickupLabels: Record<Order['state'], string> = {
 export const OrderStatus: React.FC<{order: Order}> = ({order}) => {
   if (order.type === 'STORE_PICKUP') {
     return (
-      <Stack direction={'row'} spacing={2} flexWrap={'wrap'}>
+      <Stack direction={'row'} rowspacing={1} spacing={2} flexWrap={'wrap'}>
         <Chip label={storePickupLabels[order.state]} />
         <Chip label={order.payment.mode} />
         <Chip label={`Payment: ${order.payment.status}`} />

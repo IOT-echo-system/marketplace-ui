@@ -1,5 +1,4 @@
 export const Config = {
-  // eslint-disable-next-line no-process-env,@typescript-eslint/no-non-null-assertion
   RAZORPAY_KEY_ID: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
   LOGIN_PAGE_PATH: '/profile/login',
   PRODUCT_PAGE_PATH: '/products',
@@ -21,6 +20,6 @@ export const Config = {
   SELLER_ORDERS_PAGE_PATH: '/seller/orders',
   SELLER_ORDERS_CREATE_PAGE_PATH: '/seller/orders/create',
   SELLER_INVOICES_CREATE_PAGE_PATH: '/seller/invoices/create',
-  // eslint-disable-next-line no-process-env
-  FREE_DELIVERY_THRESHOLD_VALUE: +(process.env.NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD ?? 2000)
+  FREE_DELIVERY_THRESHOLD_VALUE: +(process.env.NEXT_PUBLIC_FREE_DELIVERY_THRESHOLD ?? 2000),
+  SHIPPING_CHARGE: +(process.env.NEXT_PUBLIC_SHIPPING_CHARGE ?? 99)
 } as const

@@ -44,9 +44,8 @@ export const SiteHeader: React.FC<SiteHeaderPropsType> = ({toggleDrawer}) => {
           <Toolbar
             variant={media.tablet ? 'dense' : 'regular'}
             sx={{
-              padding: 0,
-              width: `calc(100% + ${media.sm ? -12 : media.tablet ? 36 : 48}px)`,
-              marginLeft: `${media.sm ? 0 : -(media.tablet ? 18 : 24)}px`
+              width: `calc(100% + ${media.sm ? -12 : media.tablet ? 12 : 24}px)`,
+              marginLeft: `${media.sm ? 0 : -(media.tablet ? 6 : 12)}px`
             }}
           >
             {media.laptop && (
@@ -68,7 +67,7 @@ export const SiteHeader: React.FC<SiteHeaderPropsType> = ({toggleDrawer}) => {
             </Stack>
           </Toolbar>
           {media.tablet && (
-            <WiderBoxedContainer pb={1} direction={'row'}>
+            <WiderBoxedContainer p={1} pt={0} direction={'row'}>
               <Stack width={'100%'}>
                 <SearchBox size={'small'} />
               </Stack>

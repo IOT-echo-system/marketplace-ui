@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {FormControlLabel, Radio, RadioGroup, Stack, Typography} from '@mui/material'
 import type {CheckoutStatePropsType} from './Checkout'
-import {useDispatch} from '../../../hooks'
+import {useDispatch, useMedia} from '../../../hooks'
 import {Button} from '../../atoms'
 import {updateOrderType} from '../../../store/actions'
 import type {Order} from '../../../services/typing/userService'
@@ -10,9 +10,10 @@ import {AddressDetails} from './AddressDetails'
 
 export const OrderTypeDetails: React.FC<CheckoutStatePropsType> = ({onSuccess}) => {
   const dispatch = useDispatch()
+  const media = useMedia()
   const orderTypes: Array<{label: string; value: Order['type']}> = [
-    {label: 'Home delivery', value: 'ONLINE'},
-    {label: 'Pick from store', value: 'STORE_PICKUP'}
+    {label: 'Pick from store', value: 'STORE_PICKUP'},
+    {label: 'Home delivery', value: 'ONLINE'}
   ]
 
   const [value, setValue] = useState<Order['type']>(orderTypes[0].value)
@@ -32,7 +33,7 @@ export const OrderTypeDetails: React.FC<CheckoutStatePropsType> = ({onSuccess}) 
   return (
     <Stack justifyContent={'space-around'} spacing={2}>
       <RadioGroup value={value} onChange={handleChange}>
-        <Stack direction={'row'} spacing={8} flexWrap={'wrap'}>
+        <Stack direction={media.sm ? 'column' : 'row'} spacing={media.sm ? 0 : 8} flexWrap={'wrap'}>
           {orderTypes.map(orderType => {
             return (
               <Stack key={orderType.value}>

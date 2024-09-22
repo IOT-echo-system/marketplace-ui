@@ -14,13 +14,23 @@ import {
   AccordionSummary as MuiAccordionSummary,
   Button as MuiButton,
   ButtonBase,
-  Stack,
+  Stack as MuiStack,
   styled,
   TextField,
   type TextFieldProps
 } from '@mui/material'
 import type {LinkProps} from 'next/link'
 import LinkComponent from 'next/link'
+
+export const Stack = styled(MuiStack)<StackProps & {rowspacing?: number}>(props => ({
+  gap: props.theme.spacing(props.rowspacing ?? 0, Number(props.spacing ?? 0)),
+  '& > *': {
+    margin: props.spacing
+  },
+  '& > *:nth-of-type(n)': {
+    marginLeft: 0
+  }
+}))
 
 export const BoxedContainer = styled(Stack)(({theme}) => ({
   margin: 'auto',

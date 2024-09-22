@@ -1,7 +1,6 @@
 import type {GetServerSideProps, InferGetServerSidePropsType, NextPage} from 'next'
 import React from 'react'
-import {ProfileWrapper} from '../../../components/templates/profile/ProfileWrapper'
-import {Orders} from '../../../components/templates/profile/Orders'
+import {Orders, ProfileWrapper} from '../../../components/templates/profile'
 import {CMSService} from '../../../services'
 
 const OrdersPage: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {

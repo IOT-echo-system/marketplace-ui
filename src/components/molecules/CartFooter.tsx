@@ -9,7 +9,7 @@ import {Button, ButtonAsLink, Link, PriceSummary} from '../atoms'
 import {ModalForms} from '../organisms'
 import {ApplyCoupon} from '../organisms/ModalForms'
 import {updateShippingPrice} from '../../store/actions'
-import type {Payment} from '../../services/typing/userService'
+import type {Payment, Shipping} from '../../services/typing/userService'
 
 type CartProductPropsType = {
   products: ProductDetails[]
@@ -26,7 +26,7 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
     cart.type === 'ONLINE' && cart.shippingAddress !== null && price < Config.FREE_DELIVERY_THRESHOLD_VALUE
 
   useEffect(() => {
-    dispatch(updateShippingPrice(isShippingChargeApplicable ? 99 : 0))
+    dispatch(updateShippingPrice(isShippingChargeApplicable ? Config.SHIPPING_CHARGE : 0))
   }, [cart.type, cart.shippingAddress, price])
 
   const discountCoupon = cart.discountCoupon
@@ -38,13 +38,20 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
   const gst = (price - (discountCoupon?.amount ?? 0)) * 0.18
   const payment: Payment = {
     amount: price,
-    grandTotal: price - (discountCoupon?.amount ?? 0) + gst,
+    grandTotal: price - (discountCoupon?.amount ?? 0) + gst + cart.shippingCharge,
     gst,
     id: 0,
     mode: 'RAZORPAY',
     status: 'CREATED',
     discountCoupon
   }
+
+  const shipping: Shipping | undefined = cart.shippingAddress
+    ? {
+        address: cart.shippingAddress,
+        charge: cart.shippingCharge
+      }
+    : undefined
 
   if (products.isEmpty()) {
     return (
@@ -58,7 +65,7 @@ export const CartFooter: React.FC<CartProductPropsType> = ({products, type, onSu
 
   return (
     <Stack spacing={2}>
-      <PriceSummary qty={qty} payment={payment} />
+      <PriceSummary qty={qty} payment={payment} shipping={shipping} />
       <Stack direction={'row'} justifyContent={'flex-end'} spacing={2} alignItems={'center'}>
         <ModalForms getFormDetails={ApplyCoupon}>
           <ButtonAsLink>Apply coupon</ButtonAsLink>

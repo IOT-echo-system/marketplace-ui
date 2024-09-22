@@ -34,7 +34,7 @@ const SubmenuContainer = styled(Stack)<
   return {
     zIndex: 5,
     position: 'absolute',
-    top: theme.spacing(isRow ? -0.125 : 5),
+    top: theme.spacing(isRow ? -0.125 : 5.5),
     left: theme.spacing(isRow ? 30 : 0),
     [theme.breakpoints.down('xl')]: {
       left: isNotLast ? theme.spacing(isRow ? 30 : 0) : 'auto',
@@ -113,7 +113,9 @@ const NavMenuItem: React.FC<NavMenuItemPropsType> = ({menuItem, direction, isLas
         onClick={handleClose}
       >
         <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-          <Typography p={isRow ? 0 : 0.5}>{menuItem.name}</Typography>
+          <Typography p={0.5} pr={1.5}>
+            {menuItem.name}
+          </Typography>
           {isRow && (menuItem.children?.length ?? 0) > 0 && <NavigateNext fontSize={'small'} />}
         </Stack>
       </Link>

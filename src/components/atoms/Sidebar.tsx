@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import type {StackProps} from '@mui/material'
 import {Stack, styled, Typography} from '@mui/material'
 import {ScreenWidth, useMedia} from '../../hooks'
+import {Menu} from '@mui/icons-material'
 
 export const FixedContainer = styled(Stack)<StackProps>(({theme}) => ({
   position: 'fixed',
@@ -13,7 +14,7 @@ export const FixedContainer = styled(Stack)<StackProps>(({theme}) => ({
     top: theme.spacing(11)
   },
   [theme.breakpoints.down('sm')]: {
-    top: theme.spacing(11.5)
+    top: theme.spacing(11)
   },
   background: theme.palette.background.paper,
   zIndex: 3,
@@ -37,18 +38,20 @@ export const Sidebar: React.FC<SidebarPropsType> = ({children, title, mobileTitl
 
   if (media.md) {
     return (
-      <FixedContainer>
-        <Typography
-          variant={'subtitle1'}
-          component={'h2'}
-          p={1}
-          onClick={toggleOpen}
-          whiteSpace={'nowrap'}
-          overflow={'hidden'}
-          textOverflow={'ellipsis'}
-        >
-          {mobileTitle ?? title}
-        </Typography>
+      <FixedContainer onClick={toggleOpen}>
+        <Stack direction={'row'} alignItems={'center'} pl={2} pr={2}>
+          <Menu />
+          <Typography
+            variant={'subtitle1'}
+            component={'h2'}
+            p={1}
+            whiteSpace={'nowrap'}
+            overflow={'hidden'}
+            textOverflow={'ellipsis'}
+          >
+            {mobileTitle ?? title}
+          </Typography>
+        </Stack>
         {open && <Container>{children}</Container>}
       </FixedContainer>
     )

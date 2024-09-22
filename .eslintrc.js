@@ -137,12 +137,6 @@ module.exports = {
       }
     },
     {
-      files: ['./data/*.ts'],
-      rules: {
-        'max-len': 'off',
-      }
-    },
-    {
       files: ['**/actions/*.ts', '**/services/*.tsx'],
       rules: {
         '@typescript-eslint/explicit-module-boundary-types': 'off'
@@ -163,7 +157,7 @@ module.exports = {
       }
     },
     {
-      files: ['src/config/apiConfig.ts'],
+      files: ['src/config/*.ts'],
       rules: {
         'no-process-env': 'off',
       }
