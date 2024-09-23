@@ -6,7 +6,7 @@ export const SiteAction = {
   SITE_UPDATE_STATE: 'SITE_UPDATE_STATE'
 } as const
 
-export type SiteInfo = {title: string; subtitle?: string}
+export type SiteInfo = {title: string; subtitle?: string; hostname: string}
 export type MenuLink = {link: string; name: string}
 export type Section = {title: string; ctas: CTAPropsType[]}
 export type Social = {icon: string; cta: CTAPropsType}
@@ -28,7 +28,8 @@ export const initSiteState: SiteStateType = {
   header: {menus: []},
   siteInfo: {
     title: '',
-    subtitle: ''
+    subtitle: '',
+    hostname: ''
   }
 }
 
