@@ -16,7 +16,7 @@ export const OrderTypeDetails: React.FC<CheckoutStatePropsType> = ({onSuccess}) 
     {label: 'Home delivery', value: 'ONLINE'}
   ]
 
-  const [value, setValue] = useState<Order['type']>(orderTypes[0].value)
+  const [value, setValue] = useState<Order['type']>(orderTypes[1].value)
 
   const handleClick = () => {
     if (value !== 'ONLINE') {
